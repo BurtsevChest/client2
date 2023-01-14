@@ -1,0 +1,15 @@
+/* Темная тема */
+html[data-theme='dark'] {
+   --background-color: #1e293b;
+   --text-color: #f1f5f9;
+   --text-block-hover: #334155;
+   --text-hover: #f1f5f9;
+}
+
+/* Светлая тема */
+html[data-theme='light'] {
+   --background-color: #f1f5f9;
+   --text-color: #1e293b;
+   --text-block-hover: #334155;
+   --text-hover: #f1f5f9;
+}

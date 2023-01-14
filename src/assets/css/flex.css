@@ -1,0 +1,11 @@
+.flex {
+   display: flex;
+}
+
+.flex-column {
+   flex-direction: column;
+}
+
+.flex-space {
+   justify-content: space-between;
+}
