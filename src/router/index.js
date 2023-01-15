@@ -5,7 +5,7 @@ import config from '@/components/Sidebar/config'
 let routes = [
    {
       path: '/settings',
-      component: () => import('@/components/SidebarPages/Settings.vue')
+      component: () => import('@/components/SidebarPages/Settings/Settings.vue')
    }
 ]
 

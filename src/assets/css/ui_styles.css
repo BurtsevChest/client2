@@ -1,0 +1,19 @@
+.greyBlock {
+   cursor: pointer;
+   background: rgba(30, 41, 59, 0.1);
+   border-radius: 10px;
+   padding: 8px;
+}
+
+.h2 {
+   font-size: 24px;
+}
+
+.h3 {
+   font-size: 20px;
+}
+
+.image {
+   width: 100%;
+   height: auto;
+}

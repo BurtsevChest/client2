@@ -2,10 +2,26 @@
    display: flex;
 }
 
+.flex-col {
+   padding: 0 6px 12px 6px;
+}
+
 .flex-column {
    flex-direction: column;
 }
 
 .flex-space {
    justify-content: space-between;
+}
+
+.flex-center {
+   justify-content: center;
+}
+
+.a-items-center {
+   align-items: center;
+}
+
+.a-self-end {
+   align-self: end;
 }
