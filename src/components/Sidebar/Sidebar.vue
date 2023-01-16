@@ -13,7 +13,7 @@
       <div class="empty_flex"></div>
       <router-link @click="setProperty('settings', 'Настройки')" class="light pl-8 sidebar_button flex a-items-center mb-12" to="/settings">
          <span class="material-icons">settings</span>
-            <span class="sidebar_link">Настройки</span>
+         <span class="sidebar_link">Настройки</span>
       </router-link>
    </aside>
 </template>
@@ -47,9 +47,11 @@ export default {
    background-color: var(--background-color);
    padding: 0 12px;
    box-shadow: 0 0 15px rgba(128, 128, 128, 0.5);
+   transition: 0.3s;
 }
 
 .light {
+   transition: 0.3s;
    color: var(--text-color);
 }
 

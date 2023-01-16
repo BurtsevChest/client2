@@ -1,6 +1,7 @@
 /* Темная тема */
 html[data-theme='dark'] {
    --background-color: #1e293b;
+   --background-right-aside-color: #1e293b;
    --text-color: #f1f5f9;
    --text-block-hover: #334155;
    --text-hover: #f1f5f9;
@@ -9,6 +10,7 @@ html[data-theme='dark'] {
 /* Светлая тема */
 html[data-theme='light'] {
    --background-color: #f1f5f9;
+   --background-right-aside-color: white;
    --text-color: #1e293b;
    --text-block-hover: #ffffff;
    --text-hover: #1e293b;

@@ -1,5 +1,5 @@
 <template>
-  <div class="flex app">
+  <div class="flex flex-nowrap app">
     <!-- Sidebar -->
     <Sidebar/>
 
@@ -10,19 +10,23 @@
 
     <!-- RightAside -->
     <RightAiside/>
+
+    <!-- Модальное окно -->
+    <ModalView/>
   </div>
 </template>
 
 <script>
 import Sidebar from '@/components/Sidebar/Sidebar.vue';
 import RightAiside from '@/components/RightAside/RightAside.vue';
+import ModalView from '@/components/Common/modalView/modalView.vue';
 
 export default {
   name: 'App',
   components: {
-    Sidebar, RightAiside
+    Sidebar, RightAiside, ModalView
   },
-  mounted() {
+  beforeCreate() {
     if(localStorage.theme) {
       document.documentElement.setAttribute('data-theme', localStorage.theme)
     }else{

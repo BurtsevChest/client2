@@ -17,3 +17,28 @@
    width: 100%;
    height: auto;
 }
+
+.input, .textarea {
+   padding: 10px 15px;
+   border-radius: 12px;
+   border: 1px solid rgba(51, 65, 85, 0.2);
+   transition: 0.3s;
+   width: 100%;
+}
+
+.input:focus, .input:hover, .textarea:hover, .textarea:focus {
+   border: 1px solid #334155;
+}
+
+.button {
+   padding: 10px 15px;
+   background: #334155;
+   color: white;
+   border-radius: 12px;
+   transition: 0.3s;
+}
+
+.button:hover {
+   box-shadow: 0 0 5px #334155;
+   text-shadow: 0 0 2px white;
+}

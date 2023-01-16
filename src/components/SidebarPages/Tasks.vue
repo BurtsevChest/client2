@@ -1,6 +1,6 @@
 <template>
    <div class="Tasks flex flex-column">
-      <button class="Tasks-addTask-btn flex flex-center a-items-center mb-16">
+      <button @click="openAddTaskView" class="Tasks-addTask-btn flex flex-center a-items-center mb-16">
          <span class="material-icons Tasks-addTask-btn-icon">add</span>
       </button>
       <div class="Tasks-itemsWrapper">
@@ -133,11 +133,10 @@ export default {
       }
    },
    methods: {
-      ...mapMutations(['openTask']),
+      ...mapMutations(['openTask', 'openAddTaskView']),
    }
 }
 </script>
-
 
 <style lang="less" scoped>
 .Tasks {

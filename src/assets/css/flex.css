@@ -1,5 +1,10 @@
 .flex {
    display: flex;
+   flex-wrap: wrap;
+}
+
+.flex-nowrap {
+   flex-wrap: nowrap;
 }
 
 .flex-col {
@@ -24,4 +29,8 @@
 
 .a-self-end {
    align-self: end;
+}
+
+.text-center {
+   text-align: center;
 }
