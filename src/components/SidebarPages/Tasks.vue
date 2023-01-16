@@ -6,7 +6,7 @@
       <div class="Tasks-itemsWrapper">
          <div class="flex flex-column">
             <div v-for="item in tasks" v-bind:key="item.id" class="flex-col flex-col-8">
-               <div @click="open" class="Tasks-item greyBlock">
+               <div @click="openTask(item)" class="Tasks-item greyBlock">
                   <h2 class="Tasks-item-title">{{ item.title }}</h2>
                   <p class="Tasks-item-desc">{{ item.desc }}</p>
                </div>
@@ -133,7 +133,7 @@ export default {
       }
    },
    methods: {
-      ...mapMutations(['open']),
+      ...mapMutations(['openTask']),
    }
 }
 </script>

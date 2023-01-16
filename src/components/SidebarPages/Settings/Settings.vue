@@ -8,7 +8,6 @@
                <div class="Settings-themesWrapper-item p-6" :class="{ 'Settings-themesWrapper-item-active' : activeTheme == 'dark'}">
                   <img class="image" src="@/components/SidebarPages/Settings/resources/images/dark_theme.jpg" alt="Темная тема" @click="setTheme('dark')">
                </div>
-               
             </div>
             <div class="flex-col flex-col-2">
                <div class="Settings-themesWrapper-item p-6" :class="{ 'Settings-themesWrapper-item-active' : activeTheme == 'light'}">
@@ -44,7 +43,6 @@ export default {
 }
 </script>
 
-
 <style lang="less" scoped>
 .Settings{
    &-themesWrapper {
@@ -58,5 +56,4 @@ export default {
       }
    }
 }
-
 </style>
