@@ -1,11 +1,18 @@
 <template>
    <div class="Tasks flex flex-column">
-      <button @click="openAddTaskView" class="Tasks-addTask-btn flex flex-center a-items-center mb-16">
-         <span class="material-icons Tasks-addTask-btn-icon">add</span>
-      </button>
+      <div class="flex">
+         <div class="flex-col">
+            <button @click="openAddTaskView" class="Tasks-addTask-btn flex flex-center a-items-center mb-16">
+               <span class="material-icons Tasks-addTask-btn-icon">add</span>
+            </button>
+         </div>
+         <div class="flex-col">
+            <input type="text" class="input" @input="filterList" v-model.trim="filterString" placeholder="Найти по тексту">
+         </div>
+      </div>
       <div class="Tasks-itemsWrapper">
          <div class="flex flex-column">
-            <div v-for="item in tasks" v-bind:key="item.id" class="flex-col flex-col-8">
+            <div v-for="item in filterList" v-bind:key="item.id" class="flex-col flex-col-8">
                <div @click="openTask(item)" class="Tasks-item greyBlock">
                   <h2 class="Tasks-item-title">{{ item.title }}</h2>
                   <p class="Tasks-item-desc">{{ item.desc }}</p>
@@ -47,106 +54,123 @@ export default {
                desc: 'descrwefjweofiwejoiewjewj weoijweoif wefjwe wiejfweoifj ergu rge herogner erghero erog erg eg  eogei erhgoe oerighe oerhergorgherou rh'
             },
             {
-               id: '1',
+               id: '5',
                title: 'task 1',
                desc: 'descrwefjweofiwejoiewjewj weoijweoif wefjwe wiejfweoifj ergu rge herogner erghero erog erg eg  eogei erhgoe oerighe oerhergorgherou rh'
             },
             {
-               id: '2',
+               id: '6',
                title: 'task 2',
                desc: 'descrwefjweofiwejoiewjewj weoijweoif wefjwe wiejfweoifj ergu rge herogner erghero erog erg eg  eogei erhgoe oerighe oerhergorgherou rh'
             },
             {
-               id: '3',
+               id: '7',
                title: 'task 3',
                desc: 'descrwefjweofiwejoiewjewj weoijweoif wefjwe wiejfweoifj ergu rge herogner erghero erog erg eg  eogei erhgoe oerighe oerhergorgherou rh'
             },
             {
-               id: '4',
+               id: '8',
                title: 'task 4',
                desc: 'descrwefjweofiwejoiewjewj weoijweoif wefjwe wiejfweoifj ergu rge herogner erghero erog erg eg  eogei erhgoe oerighe oerhergorgherou rh'
             },
             {
-               id: '1',
+               id: '9',
                title: 'task 1',
                desc: 'descrwefjweofiwejoiewjewj weoijweoif wefjwe wiejfweoifj ergu rge herogner erghero erog erg eg  eogei erhgoe oerighe oerhergorgherou rh'
             },
             {
-               id: '2',
+               id: '10',
                title: 'task 2',
                desc: 'descrwefjweofiwejoiewjewj weoijweoif wefjwe wiejfweoifj ergu rge herogner erghero erog erg eg  eogei erhgoe oerighe oerhergorgherou rh'
             },
             {
-               id: '3',
+               id: '11',
                title: 'task 3',
                desc: 'descrwefjweofiwejoiewjewj weoijweoif wefjwe wiejfweoifj ergu rge herogner erghero erog erg eg  eogei erhgoe oerighe oerhergorgherou rh'
             },
             {
-               id: '4',
+               id: '12',
                title: 'task 4',
                desc: 'descrwefjweofiwejoiewjewj weoijweoif wefjwe wiejfweoifj ergu rge herogner erghero erog erg eg  eogei erhgoe oerighe oerhergorgherou rh'
             },
             {
-               id: '1',
+               id: '13',
                title: 'task 1',
                desc: 'descrwefjweofiwejoiewjewj weoijweoif wefjwe wiejfweoifj ergu rge herogner erghero erog erg eg  eogei erhgoe oerighe oerhergorgherou rh'
             },
             {
-               id: '2',
+               id: '14',
                title: 'task 2',
                desc: 'descrwefjweofiwejoiewjewj weoijweoif wefjwe wiejfweoifj ergu rge herogner erghero erog erg eg  eogei erhgoe oerighe oerhergorgherou rh'
             },
             {
-               id: '3',
+               id: '15',
                title: 'task 3',
                desc: 'descrwefjweofiwejoiewjewj weoijweoif wefjwe wiejfweoifj ergu rge herogner erghero erog erg eg  eogei erhgoe oerighe oerhergorgherou rh'
             },
             {
-               id: '4',
+               id: '16',
                title: 'task 4',
                desc: 'descrwefjweofiwejoiewjewj weoijweoif wefjwe wiejfweoifj ergu rge herogner erghero erog erg eg  eogei erhgoe oerighe oerhergorgherou rh'
             },
             {
-               id: '1',
+               id: '17',
                title: 'task 1',
                desc: 'descrwefjweofiwejoiewjewj weoijweoif wefjwe wiejfweoifj ergu rge herogner erghero erog erg eg  eogei erhgoe oerighe oerhergorgherou rh'
             },
             {
-               id: '2',
+               id: '18',
                title: 'task 2',
                desc: 'descrwefjweofiwejoiewjewj weoijweoif wefjwe wiejfweoifj ergu rge herogner erghero erog erg eg  eogei erhgoe oerighe oerhergorgherou rh'
             },
             {
-               id: '3',
+               id: '19',
                title: 'task 3',
                desc: 'descrwefjweofiwejoiewjewj weoijweoif wefjwe wiejfweoifj ergu rge herogner erghero erog erg eg  eogei erhgoe oerighe oerhergorgherou rh'
             },
             {
-               id: '4',
+               id: '20',
                title: 'task 4',
                desc: 'descrwefjweofiwejoiewjewj weoijweoif wefjwe wiejfweoifj ergu rge herogner erghero erog erg eg  eogei erhgoe oerighe oerhergorgherou rh'
             }
          ],
          params: {
             userId: '2'
-         }
+         },
+         filterString: '',
+         filteredArr: []
       }
    },
    methods: {
       ...mapMutations(['openTask', 'openAddTaskView']),
+   },
+   computed: {
+      filterList() {
+         let filt = this.filterString
+         return this.tasks.filter((item) => {
+            if(filt==='') return true
+            else return item.title.includes(this.filterString) || item.desc.includes(this.filterString)
+         })
+      }
+   },
+   mounted() {
+      this.filterList
    }
 }
 </script>
 
 <style lang="less" scoped>
 .Tasks {
+   height: 100%;
+   flex-wrap: unset;
+
    &-addTask-btn {
-      color: var(--text-block-hover);
+      color: black;
       cursor: pointer;
       width: 40px;
       height: 40px;
       background: rgba(128, 128, 128, 0.3);
-      border-radius: 50%;
+      border-radius: 50%;   
 
       &-icon {
          font-size: 30px;
@@ -156,7 +180,6 @@ export default {
    &-itemsWrapper {
       overflow: hidden;
       overflow-y: scroll;
-      height: 100vh;
    }
 
    &-item {
