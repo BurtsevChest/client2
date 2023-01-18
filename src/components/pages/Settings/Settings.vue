@@ -6,12 +6,12 @@
          <div class="flex">
             <div class="flex-col flex-col-2">
                <div class="Settings-themesWrapper-item p-6" :class="{ 'Settings-themesWrapper-item-active' : activeTheme == 'dark'}">
-                  <img class="image" src="@/components/SidebarPages/Settings/resources/images/dark_theme.jpg" alt="Темная тема" @click="setTheme('dark')">
+                  <img class="image" src="@/components/pages/Settings/resources/images/dark_theme.jpg" alt="Темная тема" @click="setTheme('dark')">
                </div>
             </div>
             <div class="flex-col flex-col-2">
                <div class="Settings-themesWrapper-item p-6" :class="{ 'Settings-themesWrapper-item-active' : activeTheme == 'light'}">
-                  <img class="image" src="@/components/SidebarPages/Settings/resources/images/light_theme.jpg" alt="Светлая тема" @click="setTheme('light')">
+                  <img class="image" src="@/components/pages/Settings/resources/images/light_theme.jpg" alt="Светлая тема" @click="setTheme('light')">
                </div>
             </div>
          </div>

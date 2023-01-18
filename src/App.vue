@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-nowrap app">
     <!-- Sidebar -->
-    <Sidebar/>
+    <Sidebar v-if="activeURL != '/login'"/>
 
     <!-- Content -->
     <main>
@@ -26,12 +26,21 @@ export default {
   components: {
     Sidebar, RightAiside, ModalView
   },
+  data() {
+    return {
+      activeURL: ''
+    }
+  },
   beforeCreate() {
     if(localStorage.theme) {
       document.documentElement.setAttribute('data-theme', localStorage.theme)
     }else{
       document.documentElement.setAttribute('data-theme', 'light')
     }
+  },
+  beforeMount() {
+    const url = new URL(window.location)
+    this.activeURL = url.pathname
   }
 }
 </script>

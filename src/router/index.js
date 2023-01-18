@@ -5,7 +5,11 @@ import config from '@/components/Sidebar/config'
 let routes = [
    {
       path: '/settings',
-      component: () => import('@/components/SidebarPages/Settings/Settings.vue')
+      component: () => import('@/components/pages/Settings/Settings.vue')
+   },
+   {
+      path: '/login',
+      component: () => import('@/components/pages/Login/Login.vue')
    }
 ]
 

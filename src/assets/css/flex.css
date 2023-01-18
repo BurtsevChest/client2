@@ -23,6 +23,10 @@
    justify-content: center;
 }
 
+.flex-end {
+   justify-content: end;
+}
+
 .a-items-center {
    align-items: center;
 }

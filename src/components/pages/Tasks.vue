@@ -1,13 +1,28 @@
 <template>
    <div class="Tasks flex flex-column">
       <div class="flex">
-         <div class="flex-col">
+         <div class="flex flex-col-8">
+            <div class="flex-col">
             <button @click="openAddTaskView" class="Tasks-addTask-btn flex flex-center a-items-center mb-16">
                <span class="material-icons Tasks-addTask-btn-icon">add</span>
             </button>
-         </div>
-         <div class="flex-col">
-            <input type="text" class="input" @input="filterList" v-model.trim="filterString" placeholder="Найти по тексту">
+            </div>
+            <div class="flex-col">
+               <input type="text" class="input" @input="filterList" v-model.trim="filterString" placeholder="Найти по тексту">
+            </div>
+            <div class="empty_flex"></div>
+            <div class="flex a-self-end">
+               <div class="flex-col">
+                  <div class="select_tab active">
+                     Мои
+                  </div>
+               </div>
+               <div class="flex-col">
+                  <div class="select_tab">
+                     От меня
+                  </div>
+               </div>
+            </div>
          </div>
       </div>
       <div class="Tasks-itemsWrapper">
@@ -193,5 +208,9 @@ export default {
          white-space: nowrap;
       }
    }
+}
+
+.empty_flex {
+   flex: 1 1 0%;
 }
 </style>

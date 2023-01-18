@@ -42,3 +42,18 @@
    box-shadow: 0 0 5px #334155;
    text-shadow: 0 0 2px white;
 }
+
+.select_tab {
+   padding: 5px 15px;
+   color: black;
+   border: 1px solid #334155;
+   border-radius: 15px;
+   cursor: pointer;
+   background-color: white;
+   transition: 0.3s ease;
+}
+
+.select_tab.active, .select_tab:hover, .select_tab:focus {
+   background-color: #334155;
+   color: white;
+}

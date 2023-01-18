@@ -3,14 +3,14 @@ export default [
       id: 'home',
       title: 'Домашняя страница',
       href: '/',
-      component: () => import('@/components/SidebarPages/Home.vue'),
+      component: () => import('@/components/pages/Home.vue'),
       icon: 'home'
    },
    {
       id: 'tasks',
       title: 'Задачи',
       href: '/tasks',
-      component: () => import('@/components/SidebarPages/Tasks.vue'),
+      component: () => import('@/components/pages/Tasks.vue'),
       icon: 'task'
    },
    {

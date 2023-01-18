@@ -21,9 +21,7 @@ export default {
 }
 </script>
 
-
 <style lang="less">
-
 .RightAside {
    position: absolute;
    width: 600px;
