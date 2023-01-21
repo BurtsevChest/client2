@@ -67,7 +67,7 @@ export default {
          let filt = this.filterString
          return this.tasks.filter((item) => {
             if(filt==='') return true
-            else return item.title.includes(this.filterString) || item.desc.includes(this.filterString)
+            else return item.title.includes(this.filterString) || item.description.includes(this.filterString)
          })
       }
    },
