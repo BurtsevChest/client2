@@ -4,11 +4,11 @@
       {{ getConfig.title }}
    </h2>
    <p class="pb-32">
-      {{ getConfig.desc }}
+      {{ getConfig.description }}
    </p>
    <div class="flex">
       <div class="flex-col flex-col-3">
-         <div @click="openAddTaskView(getConfig.id)" class="flex a-items-center Task-subTask">
+         <div @click="openAddTaskView(getConfig.task_id)" class="flex a-items-center Task-subTask">
             <span class="material-icons">
                task
             </span>

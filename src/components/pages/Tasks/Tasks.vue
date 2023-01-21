@@ -27,10 +27,10 @@
       </div>
       <div class="Tasks-itemsWrapper">
          <div class="flex flex-column">
-            <div v-for="item in filterList" v-bind:key="item.id" class="flex-col flex-col-8">
+            <div v-for="item in filterList" v-bind:key="item.task_id" class="flex-col flex-col-8">
                <div @click="openTask(item)" class="Tasks-item greyBlock">
                   <h2 class="Tasks-item-title">{{ item.title }}</h2>
-                  <p class="Tasks-item-desc">{{ item.desc }}</p>
+                  <p class="Tasks-item-desc">{{ item.description }}</p>
                </div>
             </div>
          </div>
@@ -47,108 +47,7 @@ export default {
    name: "",
    data() {
       return {
-         tasks: [
-            {
-               id: '1',
-               title: 'task 1',
-               desc: 'descrwefjweofiwejoiewjewj weoijweoif wefjwe wiejfweoifj ergu rge herogner erghero erog erg eg  eogei erhgoe oerighe oerhergorgherou rh'
-            },
-            {
-               id: '2',
-               title: 'task 2',
-               desc: 'descrwefjweofiwejoiewjewj weoijweoif wefjwe wiejfweoifj ergu rge herogner erghero erog erg eg  eogei erhgoe oerighe oerhergorgherou rh'
-            },
-            {
-               id: '3',
-               title: 'task 3',
-               desc: 'descrwefjweofiwejoiewjewj weoijweoif wefjwe wiejfweoifj ergu rge herogner erghero erog erg eg  eogei erhgoe oerighe oerhergorgherou rh'
-            },
-            {
-               id: '4',
-               title: 'task 4',
-               desc: 'descrwefjweofiwejoiewjewj weoijweoif wefjwe wiejfweoifj ergu rge herogner erghero erog erg eg  eogei erhgoe oerighe oerhergorgherou rh'
-            },
-            {
-               id: '5',
-               title: 'task 1',
-               desc: 'descrwefjweofiwejoiewjewj weoijweoif wefjwe wiejfweoifj ergu rge herogner erghero erog erg eg  eogei erhgoe oerighe oerhergorgherou rh'
-            },
-            {
-               id: '6',
-               title: 'task 2',
-               desc: 'descrwefjweofiwejoiewjewj weoijweoif wefjwe wiejfweoifj ergu rge herogner erghero erog erg eg  eogei erhgoe oerighe oerhergorgherou rh'
-            },
-            {
-               id: '7',
-               title: 'task 3',
-               desc: 'descrwefjweofiwejoiewjewj weoijweoif wefjwe wiejfweoifj ergu rge herogner erghero erog erg eg  eogei erhgoe oerighe oerhergorgherou rh'
-            },
-            {
-               id: '8',
-               title: 'task 4',
-               desc: 'descrwefjweofiwejoiewjewj weoijweoif wefjwe wiejfweoifj ergu rge herogner erghero erog erg eg  eogei erhgoe oerighe oerhergorgherou rh'
-            },
-            {
-               id: '9',
-               title: 'task 1',
-               desc: 'descrwefjweofiwejoiewjewj weoijweoif wefjwe wiejfweoifj ergu rge herogner erghero erog erg eg  eogei erhgoe oerighe oerhergorgherou rh'
-            },
-            {
-               id: '10',
-               title: 'task 2',
-               desc: 'descrwefjweofiwejoiewjewj weoijweoif wefjwe wiejfweoifj ergu rge herogner erghero erog erg eg  eogei erhgoe oerighe oerhergorgherou rh'
-            },
-            {
-               id: '11',
-               title: 'task 3',
-               desc: 'descrwefjweofiwejoiewjewj weoijweoif wefjwe wiejfweoifj ergu rge herogner erghero erog erg eg  eogei erhgoe oerighe oerhergorgherou rh'
-            },
-            {
-               id: '12',
-               title: 'task 4',
-               desc: 'descrwefjweofiwejoiewjewj weoijweoif wefjwe wiejfweoifj ergu rge herogner erghero erog erg eg  eogei erhgoe oerighe oerhergorgherou rh'
-            },
-            {
-               id: '13',
-               title: 'task 1',
-               desc: 'descrwefjweofiwejoiewjewj weoijweoif wefjwe wiejfweoifj ergu rge herogner erghero erog erg eg  eogei erhgoe oerighe oerhergorgherou rh'
-            },
-            {
-               id: '14',
-               title: 'task 2',
-               desc: 'descrwefjweofiwejoiewjewj weoijweoif wefjwe wiejfweoifj ergu rge herogner erghero erog erg eg  eogei erhgoe oerighe oerhergorgherou rh'
-            },
-            {
-               id: '15',
-               title: 'task 3',
-               desc: 'descrwefjweofiwejoiewjewj weoijweoif wefjwe wiejfweoifj ergu rge herogner erghero erog erg eg  eogei erhgoe oerighe oerhergorgherou rh'
-            },
-            {
-               id: '16',
-               title: 'task 4',
-               desc: 'descrwefjweofiwejoiewjewj weoijweoif wefjwe wiejfweoifj ergu rge herogner erghero erog erg eg  eogei erhgoe oerighe oerhergorgherou rh'
-            },
-            {
-               id: '17',
-               title: 'task 1',
-               desc: 'descrwefjweofiwejoiewjewj weoijweoif wefjwe wiejfweoifj ergu rge herogner erghero erog erg eg  eogei erhgoe oerighe oerhergorgherou rh'
-            },
-            {
-               id: '18',
-               title: 'task 2',
-               desc: 'descrwefjweofiwejoiewjewj weoijweoif wefjwe wiejfweoifj ergu rge herogner erghero erog erg eg  eogei erhgoe oerighe oerhergorgherou rh'
-            },
-            {
-               id: '19',
-               title: 'task 3',
-               desc: 'descrwefjweofiwejoiewjewj weoijweoif wefjwe wiejfweoifj ergu rge herogner erghero erog erg eg  eogei erhgoe oerighe oerhergorgherou rh'
-            },
-            {
-               id: '20',
-               title: 'task 4',
-               desc: 'descrwefjweofiwejoiewjewj weoijweoif wefjwe wiejfweoifj ergu rge herogner erghero erog erg eg  eogei erhgoe oerighe oerhergorgherou rh'
-            }
-         ],
+         tasks: [],
          params: {
             userId: '1'
          },
