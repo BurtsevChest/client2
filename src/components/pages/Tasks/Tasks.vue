@@ -174,6 +174,8 @@ export default {
    },
    mounted() {
       this.filterList
+   },
+   beforeMount() {
       Tasks.getTasks(this.params).then((res)=> {
          this.tasks = res.data
       })
