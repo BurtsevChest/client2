@@ -39,7 +39,7 @@
 </template>
 
 <script>
-// import Tasks from '@/components/service/task/index.js';
+import Tasks from '@/components/service/task/index.js';
 import {mapMutations} from 'vuex'
 
 export default {
@@ -150,7 +150,7 @@ export default {
             }
          ],
          params: {
-            userId: '2'
+            userId: '1'
          },
          filterString: '',
          filteredArr: [],
@@ -174,6 +174,9 @@ export default {
    },
    mounted() {
       this.filterList
+      Tasks.getTasks(this.params).then((res)=> {
+         this.tasks = res.data
+      })
    }
 }
 </script>
