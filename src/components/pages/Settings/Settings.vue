@@ -20,6 +20,7 @@
 </template>
 
 <script>
+import settingItem from './templates/settingItem.vue';
 
 export default {
    // eslint-disable-next-line
@@ -38,7 +39,8 @@ export default {
       }
    },
    mounted() {
-      this.activeTheme = localStorage.theme
+      this.activeTheme = localStorage.theme,
+      console.log(settingItem.data)
    }
 }
 </script>

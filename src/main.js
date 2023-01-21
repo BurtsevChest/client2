@@ -2,7 +2,15 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
+import global from './components/Common/global'
 
-createApp(App, {
+const app = createApp(App, {
    store
-}).use(store).use(router).mount('#app')
+})
+
+app.use(store).use(router).mount('#app')
+
+global.forEach(element => {
+   app.component(element.name, element)
+})
+

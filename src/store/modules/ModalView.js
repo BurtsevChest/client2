@@ -7,14 +7,16 @@ export default {
          state.ModalViewStatus = false
          state.ModalViewTemplate = ''
       },
-      openAddTaskView(state) {
+      openAddTaskView(state, cfg) {
          state.ModalViewTemplate = modalView,
-         state.ModalViewStatus = true
+         state.ModalViewStatus = true,
+         state.config = cfg
       }
    },
    state: {
       ModalViewStatus: false,
-      ModalViewTemplate: ''
+      ModalViewTemplate: '',
+      config: []
    },
    getters: {
       getModalViewStatus(state) {
@@ -22,6 +24,9 @@ export default {
       },
       getModalViewTemplate(state) {
          return state.ModalViewTemplate
+      },
+      getModalViewConfig(state) {
+         return state.config
       }
    }
 }

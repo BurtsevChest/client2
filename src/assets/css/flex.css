@@ -31,6 +31,10 @@
    align-items: center;
 }
 
+.a-items-end {
+   align-items: flex-end;
+}
+
 .a-self-end {
    align-self: end;
 }

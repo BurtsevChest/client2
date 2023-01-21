@@ -1,5 +1,5 @@
-// делаем импорты шаблонов для rightAside
-import taskPage from '@/components/RightAside/templates/taskPage/taskPage.vue'
+// отказ от proxy
+import {defineAsyncComponent, markRaw} from "vue";
 
 export default {
    actions: {},
@@ -11,9 +11,10 @@ export default {
          state.config = ''
       },
       // заводим мутации для различных шаблонов и прокидываем конфиг, если нужно
+      // в config можно прокинуть все необходимые данные для компонента(замена props) и сразу расчехлить в data()
       openTask(state, cfg) {
          state.status = true
-         state.openedTemplate = taskPage
+         state.openedTemplate = markRaw(defineAsyncComponent(()=>import ('@/components/RightAside/templates/taskPage/taskPage.vue')))
          state.config = cfg
       }
    },

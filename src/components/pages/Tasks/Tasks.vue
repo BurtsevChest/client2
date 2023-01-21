@@ -13,12 +13,12 @@
             <div class="empty_flex"></div>
             <div class="flex a-self-end">
                <div class="flex-col">
-                  <div class="select_tab active">
+                  <div class="select_tab" :class="{'active' : activeTab === 'my'}" @click="setTab('my')">
                      Мои
                   </div>
                </div>
                <div class="flex-col">
-                  <div class="select_tab">
+                  <div class="select_tab" :class="{'active' : activeTab === 'from'}" @click="setTab('from')">
                      От меня
                   </div>
                </div>
@@ -153,11 +153,15 @@ export default {
             userId: '2'
          },
          filterString: '',
-         filteredArr: []
+         filteredArr: [],
+         activeTab: 'my'
       }
    },
    methods: {
       ...mapMutations(['openTask', 'openAddTaskView']),
+      setTab(name) {
+         this.activeTab = name
+      }
    },
    computed: {
       filterList() {
