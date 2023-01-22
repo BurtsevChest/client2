@@ -31,7 +31,7 @@
       v-model:show="showDate"
       :config="configDate"
    >
-      Тут будет календарь
+   <v-calendar is-expanded />
    </SuperPopup>
 
    <!-- Для выбора исполнителя -->

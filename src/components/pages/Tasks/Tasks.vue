@@ -47,7 +47,28 @@ export default {
    name: "",
    data() {
       return {
-         tasks: [],
+         tasks: [
+            {
+               task_id: 1,
+               title: 'Задача 1',
+               description: 'Пояснение к задаче 1'
+            },
+            {
+               task_id: 2,
+               title: 'Задача 2',
+               description: 'Пояснение к задаче 2'
+            },
+            {
+               task_id: 3,
+               title: 'Задача 3',
+               description: 'Пояснение к задаче 3'
+            },
+            {
+               task_id: 4,
+               title: 'Задача 4',
+               description: 'Пояснение к задаче 4'
+            }
+         ],
          params: {
             userId: '1'
          },
