@@ -1,8 +1,8 @@
 <template>
    <div v-if="show" class="SuperPopup p-8" :style="{left: cfg.x + 'px', top: cfg.y + 'px'}">
       <div class="SuperPopup-wrapper">
-         <div class="flex flex-end">
-            <span @click="close" class="material-icons pointer">close</span>
+         <div class="flex flex-end pb-4">
+            <span @click="close" class="material-icons pointer" :style="{ color : colorBtn }"> {{ btn ? btn : 'close' }}</span>
          </div>
          <slot class="SuperPopup-content"></slot>
       </div>
@@ -20,6 +20,12 @@ export default {
       config: {
          type: Object,
          required: true
+      },
+      btn: {
+         type: String
+      },
+      colorBtn: {
+         type: String
       }
    },
    watch: {
@@ -36,7 +42,8 @@ export default {
    },
    date() {
       return {
-         cfg: this.config
+         cfg: this.config,
+         button: this.btn
       }
    }
 }

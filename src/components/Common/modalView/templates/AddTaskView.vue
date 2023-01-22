@@ -30,6 +30,8 @@
    <SuperPopup
       v-model:show="showDate"
       :config="configDate"
+      :btn="'check_circle'"
+      :colorBtn = "'green'"
    >
    <v-calendar is-expanded />
    </SuperPopup>

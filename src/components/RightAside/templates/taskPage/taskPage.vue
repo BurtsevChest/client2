@@ -17,7 +17,7 @@
       </div>
       <div class="flex-col flex-col-3">
          <div class="flex a-items-center Task-subTask" @click="openAddFile">
-            <!-- <span class="material-icons">attach_file_add</span> хуйня какая-то -->
+            <span class="material-icons">file_open</span>
             <p class="pl-4 Task-subTask-text">Прикрепить</p>
          </div>
       </div>
