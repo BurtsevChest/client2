@@ -10,8 +10,10 @@ export default {
          state.openedTemplate = ''
          state.config = ''
       },
-      // заводим мутации для различных шаблонов и прокидываем конфиг, если нужно
-      // в config можно прокинуть все необходимые данные для компонента(замена props) и сразу расчехлить в data()
+      /**
+       * @param {*} cfg принимает любой набор данных, которые идут в date(), заменяет props
+       * @result При клике на задачу открывает правый сайдбар с этой задачей
+       */
       openTask(state, cfg) {
          state.status = true
          state.openedTemplate = markRaw(defineAsyncComponent(()=>import ('@/components/RightAside/templates/taskPage/taskPage.vue')))

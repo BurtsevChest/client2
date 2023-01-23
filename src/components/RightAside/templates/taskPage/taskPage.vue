@@ -1,10 +1,12 @@
 <template>
 <div class="Task">
    <h2 class="h2 pb-16">
-      {{ getConfig.title }}
+      <div contenteditable=true>
+         <input type="text" class="redact_input" :value="getConfig.title">
+      </div>
    </h2>
    <p class="pb-32">
-      {{ getConfig.description }}
+      <input type="text" class="redact_input" :value="getConfig.description">
    </p>
    <div class="flex">
       <div class="flex-col flex-col-3">
@@ -17,7 +19,7 @@
       </div>
       <div class="flex-col flex-col-3">
          <div class="flex a-items-center Task-subTask" @click="openAddFile">
-            <span class="material-icons">file_open</span>
+            <span class="material-icons">attach_file</span>
             <p class="pl-4 Task-subTask-text">Прикрепить</p>
          </div>
       </div>
@@ -29,8 +31,25 @@
    v-model:show="showAddFile"
    :config="configAddFile"
 >
-   <input type="file" name="" id="">
-   <input type="file" name="" id="">
+   <div class="flex Task-addFiles-wrapper">
+      <div class="flex-col flex-col-12">
+         <label for="addFiles" class="flex a-items-center">
+            <span class="material-icons">desktop_windows</span>
+            <p class="pl-4">
+               С устройства
+            </p>
+         </label>
+         <input type="file" class="image" name="" id="addFiles" multiple style="display: none;">
+      </div>
+      <div class="flex-col flex-col-12">
+         <label @click="loadBuffer" class="flex a-items-center">
+            <span class="material-icons">upload_file</span>
+            <p class="pl-4">
+               Из буфера обмена
+            </p>
+         </label>
+      </div>
+   </div>
 </SuperPopup>
 </template>
 
@@ -49,6 +68,9 @@ export default {
             x: e.clientX,
             y: e.clientY
          }
+      },
+      loadBuffer() {
+         console.log(navigator.clipboard.read);
       }
    },
    data() {
@@ -70,6 +92,10 @@ export default {
             text-decoration: underline;
          }
       }
+   }
+
+   &-addFiles-wrapper {
+      width: 200px;
    }
 }
 </style>

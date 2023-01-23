@@ -61,3 +61,13 @@
 .pointer {
    cursor: pointer;
 }
+
+.redact_input {
+   width: auto;
+   height: auto;
+   border: 1px solid transparent;
+}
+
+.redact_input:focus {
+   border: 1px solid gray;
+}
