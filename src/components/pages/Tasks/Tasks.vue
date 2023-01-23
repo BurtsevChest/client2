@@ -39,7 +39,7 @@
 </template>
 
 <script>
-import Tasks from '@/components/service/task/index.js';
+import Tasks from '@/service/task/index.js';
 import {mapMutations} from 'vuex'
 
 export default {

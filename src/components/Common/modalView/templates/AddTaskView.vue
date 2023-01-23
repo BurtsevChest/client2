@@ -61,7 +61,7 @@
 
 <script>
 import { mapGetters } from "vuex";
-import Tasks from '@/components/service/task'
+import Tasks from '@/service/task'
 import { dateToNumbers } from '@/components/Common/helpers/dateToNumbers'
 
 export default {
