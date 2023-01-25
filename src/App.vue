@@ -41,6 +41,9 @@ export default {
   beforeMount() {
     const url = new URL(window.location)
     this.activeURL = url.pathname
+
+    // Определяем локаль и сохраняем в истории бразуера
+    localStorage.setItem('locale', navigator.language)
   }
 }
 </script>
