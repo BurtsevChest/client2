@@ -1,5 +1,5 @@
 <template>
-   <div v-if="show" class="SuperPopup p-8" :style="{left: cfg.x + 'px', top: cfg.y + 'px'}">
+   <div v-if="show" class="SuperPopup p-8" :style="{left: cfg.clientX + 'px', top: cfg.clientY + 'px'}">
       <div class="SuperPopup-wrapper">
          <div class="flex flex-end pb-4">
             <span @click="close" class="material-icons pointer" :style="{ color : colorBtn }"> {{ btn ? btn : 'close' }}</span>

@@ -61,7 +61,7 @@
 
 <script>
 import { mapGetters } from "vuex";
-import Tasks from '@/service/task'
+import Tasks from '@/api/task'
 import { dateToNumbers } from '@/components/Common/helpers/dateToNumbers'
 
 export default {
@@ -71,7 +71,7 @@ export default {
    data() {
       return {
          taskParams: {
-            userId: '2',
+            userId: '1',
             response: '',
             time: '',
             title: '',
@@ -89,28 +89,24 @@ export default {
    },
    methods: {
       setTask() {
-         Tasks.setTask()
+         Tasks.setTask(this.taskParams)
       },
       openDate(e) {
          this.showDate = true
-         this.configDate = {
-            x: e.clientX,
-            y: e.clientY
-         }
+         this.configDate = e
       },
       openPersonView(e) {
          this.showPersonView = true
-         this.configPersonView = {
-            x: e.clientX,
-            y: e.clientY
-         }
+         this.configPersonView = e
       },
       setDate(date) {
          this.date = dateToNumbers(date.date)
+         this.taskParams.time = date.date
       },
       setUser(user) {
          this.user = user,
          this.showPersonView = false
+         this.response = user.userId
       }
    }
 

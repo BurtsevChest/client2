@@ -39,7 +39,7 @@
 </template>
 
 <script>
-import Tasks from '@/service/task/index.js';
+import Tasks from '@/api/task/index.js';
 import {mapMutations} from 'vuex'
 
 export default {
@@ -47,30 +47,9 @@ export default {
    name: "",
    data() {
       return {
-         tasks: [
-            {
-               task_id: 1,
-               title: 'Задача 1',
-               description: 'Пояснение к задаче 1'
-            },
-            {
-               task_id: 2,
-               title: 'Задача 2',
-               description: 'Пояснение к задаче 2'
-            },
-            {
-               task_id: 3,
-               title: 'Задача 3',
-               description: 'Пояснение к задаче 3'
-            },
-            {
-               task_id: 4,
-               title: 'Задача 4',
-               description: 'Пояснение к задаче 4'
-            }
-         ],
+         tasks: [],
          params: {
-            userId: '1'
+            userId: 1
          },
          filterString: '',
          filteredArr: [],
@@ -81,13 +60,18 @@ export default {
       ...mapMutations(['openTask', 'openAddTaskView']),
       setTab(name) {
          this.activeTab = name
+      },
+      getTask() {
+         Tasks.getTasks(this.params).then((res)=> {
+            this.tasks = res.data
+         })
       }
    },
    computed: {
       filterList() {
          let filt = this.filterString
          return this.tasks.filter((item) => {
-            if(filt==='') return true
+            if( filt === '') return true
             else return item.title.includes(this.filterString) || item.description.includes(this.filterString)
          })
       }
@@ -96,9 +80,7 @@ export default {
       this.filterList
    },
    beforeMount() {
-      Tasks.getTasks(this.params).then((res)=> {
-         this.tasks = res.data
-      })
+      this.getTask()
    }
 }
 </script>

@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-nowrap app">
     <!-- Sidebar -->
-    <Sidebar v-if="activeURL != '/login'"/>
+    <Sidebar v-if="activeURL"/>
 
     <!-- Content -->
     <main>
@@ -28,7 +28,7 @@ export default {
   },
   data() {
     return {
-      activeURL: ''
+      activeURL: true
     }
   },
   beforeCreate() {
@@ -39,11 +39,13 @@ export default {
     }
   },
   beforeMount() {
-    const url = new URL(window.location)
-    this.activeURL = url.pathname
-
     // Определяем локаль и сохраняем в истории бразуера
     localStorage.setItem('locale', navigator.language)
+
+    if(!localStorage.token) {
+      this.$router.push('/login')
+      this.activeURL = false
+    }
   }
 }
 </script>

@@ -64,10 +64,7 @@ export default {
       ...mapMutations(['openAddTaskView']),
       openAddFile(e) {
          this.showAddFile = true
-         this.configAddFile = {
-            x: e.clientX,
-            y: e.clientY
-         }
+         this.configAddFile = e
       },
       loadBuffer() {
          console.log(navigator.clipboard.read);
