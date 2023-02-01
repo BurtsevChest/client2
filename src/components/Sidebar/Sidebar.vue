@@ -11,6 +11,10 @@
          </router-link>
       </div>
       <div class="empty_flex"></div>
+      <router-link @click="clearLocalStorage" class="light pl-8 sidebar_button flex a-items-center mb-12" to="/settings">
+         <span class="material-icons">settings</span>
+         <span class="sidebar_link">Очистить localStorage</span>
+      </router-link>
       <router-link @click="setProperty('settings', 'Настройки')" class="light pl-8 sidebar_button flex a-items-center mb-12" to="/settings">
          <span class="material-icons">settings</span>
          <span class="sidebar_link">Настройки</span>
@@ -33,6 +37,10 @@ export default {
       setProperty(id, title) {
          localStorage.setItem('activePage', id)
          document.title = title
+      },
+      clearLocalStorage() {
+         localStorage.clear(),
+         this.$router.push('/login')
       }
    }
 

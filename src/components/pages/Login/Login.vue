@@ -31,6 +31,7 @@
 <script>
 import User from '@/api/user';
 import { mapMutations } from 'vuex';
+import store from '@/store';
 
 export default {
    // eslint-disable-next-line
@@ -58,7 +59,10 @@ export default {
 
                   case 200:
                      localStorage.setItem('token', res.data.token)
-                     this.setUser(res.data.user)
+                     localStorage.setItem('user', res.data.user)
+                     store.commit('setUser', res.data.user)
+                     // this.setUser(res.data.user)
+                     console.log(res.data);
                      this.$router.push('/')
                      break;
                }

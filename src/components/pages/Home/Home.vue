@@ -1,7 +1,8 @@
 <template>
    {{ lang.title }}
-   {{ getUser.name }}
-   {{ getUser.last_name }}
+   {{ getUser[0].name }}
+   {{ getUser[0].last_name }}
+   {{ getUser[0].date_of_creation }}
 </template>
 
 <script>
@@ -15,9 +16,9 @@ export default {
    data() {
       return {
          lang: locale,
-         ...mapGetters(['getUser'])
       }
    },
+   computed: mapGetters(['getUser']),
    beforeMount() {
       // Lang.getTranslate('Home').then((res) => {
       //    this.lang = res.default
