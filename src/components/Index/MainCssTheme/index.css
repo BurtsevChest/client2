@@ -20,6 +20,30 @@
    }
 }
 
+.h2 {
+   font-size: 36px;
+
+   @media (max-width: 800px) {
+      font-size: 28px;
+   }
+
+   @media (max-width: 400px) {
+      font-size: 18px;
+   }
+}
+
+.h3 {
+   font-size: 28px;
+
+   @media (max-width: 800px) {
+      font-size: 20px;
+   }
+
+   @media (max-width: 400px) {
+      font-size: 16px;
+   }
+}
+
 .h-100 {
    height: 100%;
 }
@@ -34,4 +58,19 @@
    @media (max-width: 300px) {
       padding-bottom: 24px;
    }
+}
+
+.ovefflow-hidden {
+   overflow: hidden;
+}
+
+.li-circle {
+   position: relative;
+   list-style-image: url('./green_mark.svg');
+   padding-left: 4px;
+   font-size: 18px;
+}
+
+.li-circle::marker {
+   font-size: 2em;
 }

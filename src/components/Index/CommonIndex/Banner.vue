@@ -1,8 +1,8 @@
 <template>
-   <div class="Banner box-shadow radius-block">
+   <div class="Banner p-40 p-sm-20 box-shadow radius-block">
       <div class="flex flex-noGutter h-100">
          <div class="flex-col flex-col-6 flex-col-xm-12">
-            <div class="Banner-text pt-40 pl-40">
+            <div class="Banner-text ">
                <h1 class="h1 pb-32">{{ title }}</h1>
                <p class="Banner-desc">{{ desc }}</p>
             </div>

@@ -4,9 +4,11 @@
          <div class="container">
             <div class="flex flex-space flex-noGutter">
                <div class="flex-col">
-                  <div class="Header-logo">
-                     ProjectManager
-                  </div>
+                  <a href="/main">
+                     <div class="Header-logo">
+                        ProjectManager
+                     </div>
+                  </a>
                </div>
                <div class="flex a-items-center flex-col">
                   <a class="pointer Header-signUp" @click="openLoginView">Войти</a>

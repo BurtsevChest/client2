@@ -151,180 +151,180 @@ body {
   // padding tablet
   .p-xm-@{i} {
     @media (max-width: 800px) {
-      padding: @i*1px;
+      padding: @i*1px !important;
     }
   }
 
   .pv-xm-@{i} {
     @media (max-width: 800px) {
-      padding-left: @i*1px;
-      padding-right: @i*1px;
+      padding-left: @i*1px !important;
+      padding-right: @i*1px !important;
     }
   }
 
   .ph-xm-@{i} {
     @media (max-width: 800px) {
-      padding-top: @i*1px;
-      padding-left: @i*1px;
+      padding-top: @i*1px !important;
+      padding-left: @i*1px !important;
     }
   }
 
   .pt-xm-@{i} {
     @media (max-width: 800px) {
-      padding-top: @i*1px;
+      padding-top: @i*1px !important;
     }
   }
 
   .pb-xm-@{i} {
     @media (max-width: 800px) {
-      padding-bottom: @i*1px;
+      padding-bottom: @i*1px !important;
     }
   }
 
   .pr-xm-@{i} {
     @media (max-width: 800px) {
-      padding-right: @i*1px;
+      padding-right: @i*1px !important;
     }
   }
 
   .pl-xm-@{i} {
     @media (max-width: 800px) {
-      padding-left: @i*1px;
+      padding-left: @i*1px !important;
     }
   }
 
   // margin tablet
   .m-xm-@{i} {
     @media (max-width: 800px) {
-      margin: @i*1px;
+      margin: @i*1px !important;
     }
   }
 
   .mv-xm-@{i} {
     @media (max-width: 800px) {
-      margin-left: @i*1px;
-      margin-right: @i*1px;
+      margin-left: @i*1px !important;
+      margin-right: @i*1px !important;
     }
   }
 
   .mh-xm-@{i} {
     @media (max-width: 800px) {
-      margin-top: @i*1px;
-      margin-left: @i*1px;
+      margin-top: @i*1px !important;
+      margin-left: @i*1px !important;
     }
   }
 
   .mt-xm-@{i} {
     @media (max-width: 800px) {
-      margin-top: @i*1px;
+      margin-top: @i*1px !important;
     }
   }
 
   .mb-xm-@{i} {
     @media (max-width: 800px) {
-      margin-bottom: @i*1px;
+      margin-bottom: @i*1px !important;
     }
   }
 
   .mr-xm-@{i} {
     @media (max-width: 800px) {
-      margin-right: @i*1px;
+      margin-right: @i*1px !important;
     }
   }
 
   .ml-xm-@{i} {
     @media (max-width: 800px) {
-      margin-left: @i*1px;
+      margin-left: @i*1px !important;
     }
   }
 
   // padding mobile
   .p-sm-@{i} {
     @media (max-width: 400px) {
-      padding: @i*1px;
+      padding: @i*1px !important;
     }
   }
 
   .pv-sm-@{i} {
     @media (max-width: 400px) {
-      padding-left: @i*1px;
-      padding-right: @i*1px;
+      padding-left: @i*1px !important;
+      padding-right: @i*1px !important;
     }
   }
 
   .ph-sm-@{i} {
     @media (max-width: 400px) {
-      padding-top: @i*1px;
-      padding-left: @i*1px;
+      padding-top: @i*1px !important;
+      padding-left: @i*1px !important;
     }
   }
 
   .pt-sm-@{i} {
     @media (max-width: 400px) {
-      padding-top: @i*1px;
+      padding-top: @i*1px !important;
     }
   }
 
   .pb-sm-@{i} {
     @media (max-width: 400px) {
-      padding-bottom: @i*1px;
+      padding-bottom: @i*1px !important;
     }
   }
 
   .pr-sm-@{i} {
     @media (max-width: 400px) {
-      padding-right: @i*1px;
+      padding-right: @i*1px !important;
     }
   }
 
   .pl-sm-@{i} {
     @media (max-width: 400px) {
-      padding-left: @i*1px;
+      padding-left: @i*1px !important;
     }
   }
 
   // margin mobile
   .m-sm-@{i} {
     @media (max-width: 400px) {
-      margin: @i*1px;
+      margin: @i*1px !important;
     }
   }
 
   .mv-sm-@{i} {
     @media (max-width: 400px) {
-      margin-left: @i*1px;
-      margin-right: @i*1px;
+      margin-left: @i*1px !important;
+      margin-right: @i*1px !important;
     }
   }
 
   .mh-sm-@{i} {
     @media (max-width: 400px) {
-      margin-top: @i*1px;
-      margin-left: @i*1px;
+      margin-top: @i*1px !important;
+      margin-left: @i*1px !important;
     }
   }
 
   .mt-sm-@{i} {
     @media (max-width: 400px) {
-      margin-top: @i*1px;
+      margin-top: @i*1px !important;
     }
   }
 
   .mb-sm-@{i} {
     @media (max-width: 400px) {
-      margin-bottom: @i*1px;
+      margin-bottom: @i*1px !important;
     }
   }
 
   .mr-sm-@{i} {
     @media (max-width: 400px) {
-      margin-right: @i*1px;
+      margin-right: @i*1px !important;
     }
   }
 
   .ml-sm-@{i} {
     @media (max-width: 400px) {
-      margin-left: @i*1px;
+      margin-left: @i*1px !important;
     }
   }
 
