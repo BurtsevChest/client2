@@ -7,9 +7,21 @@
 
 <script>
 import ModalView from '@/components/Common/modalView/modalView.vue';
+import store from './store';
+import { setPageName } from '@/components/Common/helpers/setPageName';
 
 export default {
   name: 'App',
+  watch: {
+    // Отслеживаем перемещение по ссылкам
+    '$route.path'() {
+      // Задаем Title страницe
+      setPageName(this.$route.path);
+
+      // Закрываем модальное окно
+        store.commit('closeModalView')
+    }
+  },
   components: {ModalView},
   data() {
     return {

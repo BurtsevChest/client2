@@ -5,7 +5,7 @@
       </div>
       <h3 class="menu_title">Menu</h3>
       <div class="menu">
-         <router-link  v-for="item in menuList" v-bind:key="item.id" :to="item.href" @click="setProperty(item.id, item.title)" class="light pl-8 sidebar_button flex a-items-center">
+         <router-link  v-for="item in menuList" v-bind:key="item.id" :to="item.href" class="light pl-8 sidebar_button flex a-items-center">
             <span class="material-icons">{{ item.icon }}</span>
             <span class="sidebar_link">{{ item.title }}</span>
          </router-link>
@@ -15,7 +15,7 @@
          <span class="material-icons">settings</span>
          <span class="sidebar_link">Выйти</span>
       </router-link>
-      <router-link @click="setProperty('settings', 'Настройки')" class="light pl-8 sidebar_button flex a-items-center mb-12" to="/settings">
+      <router-link class="light pl-8 sidebar_button flex a-items-center mb-12" to="/settings">
          <span class="material-icons">settings</span>
          <span class="sidebar_link">Настройки</span>
       </router-link>
@@ -34,10 +34,6 @@ export default {
       }
    },
    methods: {
-      setProperty(id, title) {
-         localStorage.setItem('activePage', id)
-         document.title = title
-      },
       clearLocalStorage() {
          localStorage.token = '',
          localStorage.user = ''

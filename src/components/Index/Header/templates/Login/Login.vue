@@ -21,7 +21,9 @@
                <button @click="signUp" class="button">Войти</button>
             </div>
             <div class="flex-col flex flex-center">
-               <a href="/register">Зарегистрироваться</a>
+               <router-link to="/register">
+                  Зарегистрироваться
+               </router-link>
             </div>
          </div>
       </div>
