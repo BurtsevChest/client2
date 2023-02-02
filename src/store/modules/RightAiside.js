@@ -16,7 +16,7 @@ export default {
        */
       openTask(state, cfg) {
          state.status = true
-         state.openedTemplate = markRaw(defineAsyncComponent(()=>import ('@/components/RightAside/templates/taskPage/taskPage.vue')))
+         state.openedTemplate = markRaw(defineAsyncComponent(()=>import ('@/components/UserAccount/RightAside/templates/taskPage/taskPage.vue')))
          state.config = cfg
       }
    },

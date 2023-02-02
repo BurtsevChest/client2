@@ -27,7 +27,7 @@
       </div>
       <div class="Tasks-itemsWrapper">
          <div class="flex flex-column">
-            <div v-for="item in filterList" v-bind:key="item.task_id" class="flex-col flex-col-8">
+            <div v-for="item in tasks" v-bind:key="item.task_id" class="flex-col flex-col-8">
                <div @click="openTask(item)" class="Tasks-item greyBlock">
                   <h2 class="Tasks-item-title">{{ item.title }}</h2>
                   <p class="Tasks-item-desc">{{ item.description }}</p>
@@ -49,7 +49,7 @@ export default {
       return {
          tasks: [],
          params: {
-            userId: 1
+            userId: 4
          },
          filterString: '',
          filteredArr: [],
@@ -62,8 +62,8 @@ export default {
          this.activeTab = name
       },
       getTask() {
-         Tasks.getTasks(this.params).then((res)=> {
-            this.tasks = res.data
+         Tasks.getTasks(this.params.userId).then((res)=> {
+            this.tasks = res.data.tasks
          })
       }
    },
@@ -77,7 +77,7 @@ export default {
       }
    },
    mounted() {
-      this.filterList
+      // this.filterList
    },
    beforeMount() {
       this.getTask()

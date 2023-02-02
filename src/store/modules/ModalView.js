@@ -1,4 +1,5 @@
-import modalView from'@/components/Common/modalView/templates/AddTaskView.vue'
+import modalView from'@/components/Common/modalView/templates/AddTaskView.vue';
+import Login from '@/components/Index/Header/templates/Login/Login.vue';
 
 export default {
    actions: {},
@@ -9,6 +10,11 @@ export default {
       },
       openAddTaskView(state, cfg) {
          state.ModalViewTemplate = modalView,
+         state.ModalViewStatus = true,
+         state.config = cfg
+      },
+      openLoginView(state, cfg) {
+         state.ModalViewTemplate = Login,
          state.ModalViewStatus = true,
          state.config = cfg
       }

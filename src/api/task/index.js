@@ -4,7 +4,7 @@ const API_URL = 'http://localhost:5763/apiV0/'
 
 class Tasks {
    async getTasks(param) {
-      return await axios.post(`${API_URL}getTask`, JSON.stringify(param), { headers: { 
+      return await axios.get(`${API_URL}task/${param}`, JSON.stringify(param), { headers: { 
          "Content-Type": "application/json",
          "Authorization": "Bearer " + localStorage.token 
       } })

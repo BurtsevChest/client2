@@ -1,6 +1,6 @@
 <template>
    <div class="Login flex flex-center a-items-center">
-      <div class="Login-view p-12">
+      <div class="Login-view">
          <div class="flex flex-column">
             <div class="flex-col flex flex-center">
                <div class="Login-view-nameSite">
@@ -59,11 +59,11 @@ export default {
 
                   case 200:
                      localStorage.setItem('token', res.data.token)
-                     localStorage.setItem('user', res.data.user)
-                     store.commit('setUser', res.data.user)
+                     localStorage.setItem('user', res.data)
+                     store.commit('setUser', res.data)
                      // this.setUser(res.data.user)
                      console.log(res.data);
-                     this.$router.push('/')
+                     this.$router.push('/user_account/home')
                      break;
                }
             })
@@ -108,13 +108,9 @@ export default {
 
 <style lang="less" scoped>
 .Login {
-   height: 100%;
-
    &-view {
-      box-shadow: 0 0 12px rgba(128, 128, 128, 0.3);
-      border-radius: 12px;
       width: 500px;
-
+      max-width: 100%;
       &-nameSite {
          font-size: 30px;
          text-shadow: 0 0 15px rgba(128, 128, 128, 0.3);

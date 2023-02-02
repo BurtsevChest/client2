@@ -1,31 +1,16 @@
 <template>
-  <div class="flex flex-nowrap app">
-    <!-- Sidebar -->
-    <Sidebar v-if="activeURL"/>
+  <router-view/>
 
-    <!-- Content -->
-    <main>
-      <router-view/>
-    </main>
-
-    <!-- RightAside -->
-    <RightAiside/>
-
-    <!-- Модальное окно -->
-    <ModalView/>
-  </div>
+  <!-- Модалка -->
+  <ModalView/>
 </template>
 
 <script>
-import Sidebar from '@/components/Sidebar/Sidebar.vue';
-import RightAiside from '@/components/RightAside/RightAside.vue';
 import ModalView from '@/components/Common/modalView/modalView.vue';
 
 export default {
   name: 'App',
-  components: {
-    Sidebar, RightAiside, ModalView
-  },
+  components: {ModalView},
   data() {
     return {
       activeURL: true
@@ -42,10 +27,11 @@ export default {
     // Определяем локаль и сохраняем в истории бразуера
     localStorage.setItem('locale', navigator.language)
 
-    if(!localStorage.token) {
-      this.$router.push('/login')
-      this.activeURL = false
-    }
+    // if(!localStorage.token) {
+    //   this.$router.push('/login')
+    //   localStorage.setItem('sidebar', false)
+    //   this.activeURL = localStorage.sidebar
+    // }
   }
 }
 </script>
@@ -59,6 +45,11 @@ export default {
 main {
   padding: 24px;
   width: 100%;
+}
+
+body {
+  min-width: 375px;
+  
 }
 
 .app {

@@ -11,9 +11,9 @@
          </router-link>
       </div>
       <div class="empty_flex"></div>
-      <router-link @click="clearLocalStorage" class="light pl-8 sidebar_button flex a-items-center mb-12" to="/settings">
+      <router-link @click="clearLocalStorage" class="light pl-8 sidebar_button flex a-items-center mb-12" to="/">
          <span class="material-icons">settings</span>
-         <span class="sidebar_link">Очистить localStorage</span>
+         <span class="sidebar_link">Выйти</span>
       </router-link>
       <router-link @click="setProperty('settings', 'Настройки')" class="light pl-8 sidebar_button flex a-items-center mb-12" to="/settings">
          <span class="material-icons">settings</span>
@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import config from '@/components/Sidebar/config'
+import config from '@/components/UserAccount/Sidebar/config'
 
 export default {
    // eslint-disable-next-line
@@ -39,8 +39,8 @@ export default {
          document.title = title
       },
       clearLocalStorage() {
-         localStorage.clear(),
-         this.$router.push('/login')
+         localStorage.token = '',
+         localStorage.user = ''
       }
    }
 

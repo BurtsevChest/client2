@@ -1,8 +1,8 @@
 <template>
    {{ lang.title }}
-   {{ getUser[0].name }}
-   {{ getUser[0].last_name }}
-   {{ getUser[0].date_of_creation }}
+   {{ getUser.name }}
+   {{ getUser.last_name }}
+   {{ getUser.date_of_creation }}
 </template>
 
 <script>

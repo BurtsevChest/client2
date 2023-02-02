@@ -1,17 +1,14 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import config from '@/components/Sidebar/config'
+import config from '@/components/UserAccount/Sidebar/config'
+import indexConfig from '@/components/Index/config'
 
-// Для других роутов вдруг если что
-let routes = [
-   {
-      path: '/settings',
-      component: () => import('@/components/pages/Settings/Settings.vue')
-   },
-   {
-      path: '/login',
-      component: () => import('@/components/pages/Login/Login.vue')
+// Тянем страницы Indexа
+const indexPages = indexConfig.map(function(item) {
+   return {
+      path: item.path,
+      component: item.component
    }
-]
+})
 
 // Тянем страницы сайдбара
 const sidebarRoutes = config.map(function(item) {
@@ -27,8 +24,31 @@ const sidebarRoutes = config.map(function(item) {
    }
 })
 
+// Основной роутер, делящий приложение на две части. Index и UserAccount
+let routes = [
+   {
+      path: '/',
+      component: () => import('@/components/Index/Index.vue'),
+      children: indexPages,
+      redirect: '/main'
+   },
+   {
+      path: '/user_account',
+      component: () => import('@/components/UserAccount/UserAccount.vue'),
+      children: sidebarRoutes.concat(
+         {
+            path: '/settings',
+            component: () => import('@/components/UserAccount/pages/Settings/Settings.vue')
+         }
+      )
+   }
+]
+
+
+
+
 const router = createRouter( {
-   routes: routes.concat(sidebarRoutes),
+   routes: routes,
    history: createWebHistory(process.env.BASE_URL)
 })
 
