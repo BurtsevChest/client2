@@ -63,7 +63,7 @@ export default {
       },
       getTask() {
          Tasks.getTasks(this.params.userId).then((res)=> {
-            this.tasks = res.data.tasks
+            this.tasks = res.data
          })
       }
    },
