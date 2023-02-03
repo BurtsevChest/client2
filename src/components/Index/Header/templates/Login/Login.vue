@@ -63,8 +63,6 @@ export default {
                      localStorage.setItem('token', res.data.token)
                      localStorage.setItem('user', res.data)
                      store.commit('setUser', res.data)
-                     // this.setUser(res.data.user)
-                     console.log(res.data);
                      this.$router.push('/user_account/home')
                      break;
                }
