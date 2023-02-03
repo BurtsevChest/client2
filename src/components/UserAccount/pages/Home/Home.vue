@@ -3,6 +3,9 @@
    {{ getUser.name }}
    {{ getUser.last_name }}
    {{ getUser.date_of_creation }}
+   <router-link to="/main">
+      Выйти      
+   </router-link>
 </template>
 
 <script>

@@ -28,14 +28,14 @@
          </div>
          <div class="flex-col flex-col-12">
             <h3 class="h3 pb-8">Задача</h3>
-            <input type="text" class="input mb-8" v-model.trim="taskParams.title">
+            <input type="text" class="input mb-8" v-model.trim="task.title">
          </div>
          <div class="flex-col flex-col-12">
             <h3 class="h3 pb-8">Описание</h3>
-            <textarea class="textarea" v-model.trim="taskParams.description" style="resize: none; " name="" id="" cols="30" rows="10"></textarea>
+            <textarea class="textarea" v-model.trim="task.description" style="resize: none; " name="" id="" cols="30" rows="10"></textarea>
          </div>
       </div>
-      <button class="button">Добавить</button>
+      <button @click="setTask" class="button">Добавить</button>
    </div>
 
    <!-- Для календаря -->
@@ -70,13 +70,15 @@ export default {
    computed: mapGetters(["getModalViewConfig"]),
    data() {
       return {
-         taskParams: {
-            userId: '1',
-            response: '',
-            time: '',
-            title: '',
-            description: '',
-            parentId: this.getModalViewConfig
+         task: {
+            title: "Таск уже не не новый",
+            description: "Сделай вывод блять подтасков Илья",
+            creator_id: 4,
+            responsible_id: 4,
+            date_of_creation: "2023-01-24T02:07:21.000Z",
+            date_of_completion: null,
+            parent_id: null,
+            status_task_id: null
          },
          showDate: false,
          configDate: {},
@@ -89,7 +91,7 @@ export default {
    },
    methods: {
       setTask() {
-         Tasks.setTask(this.taskParams)
+         Tasks.setTask(this.task)
       },
       openDate(e) {
          this.showDate = true

@@ -11,7 +11,7 @@ class Tasks {
    }
 
    async setTask(param) {
-      return await axios.post(`${API_URL}`, JSON.stringify(param), {
+      return await axios.post(`${API_URL}task`, JSON.stringify(param), {
          headers: {
             "Content-Type": "application/json",
             "Authorization": "Bearer " + localStorage.token 
