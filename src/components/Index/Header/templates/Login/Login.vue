@@ -61,7 +61,7 @@ export default {
 
                   case 200:
                      localStorage.setItem('token', res.data.token);
-                     localStorage.setItem('user_id', res.data.user_id);
+                     localStorage.setItem('user', JSON.stringify(res.data));
                      store.commit('setUser', res.data);
                      this.$router.push('/user_account/home');
                      break;

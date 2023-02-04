@@ -1,27 +1,28 @@
 import store from "@/store";
 
-// const CHECK_USER = localStorage.user.userId && localStorage.token;
+// В LocalSrorage хранится юзер в виде JSON
+const USER = JSON.parse(localStorage.user)
 
 export function getTasks() {
-   if(localStorage.user_id && localStorage.token) {
-      store.dispatch('getTask', localStorage.user_id)
+   if(USER.user_id && localStorage.token) {
+      store.dispatch('getTask', USER.user_id)
    }
 }
 
 // Создаем таск и обновляем список тасков у себя
 export function setTask(task) {
-   if(task && localStorage.user_id && localStorage.token) {
+   if(task && USER.user_id && localStorage.token) {
       store.dispatch('setTask', task).then(() => {
-         store.dispatch('getTask', localStorage.user_id);
+         store.dispatch('getTask', USER.user_id);
       })
    }
 }
 
 // Редачим задачу и обновляем у себя
 export function updateTask(task) {
-   if(task && localStorage.user_id && localStorage.token) {
+   if(task && USER.user_id && localStorage.token) {
       store.dispatch('updateTask', task).then(() => {
-         store.dispatch('getTask', localStorage.user_id);
+         store.dispatch('getTask', USER.user_id);
       })
    }
 }
