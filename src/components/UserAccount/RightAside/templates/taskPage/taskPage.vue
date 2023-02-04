@@ -1,12 +1,10 @@
 <template>
 <div class="Task">
    <h2 class="h2 pb-16">
-      <div contenteditable=true>
-         <input type="text" class="redact_input" :value="getConfig.title">
-      </div>
+      {{ getConfig.title }}
    </h2>
    <p class="pb-32">
-      <input type="text" class="redact_input" :value="getConfig.description">
+      {{ getConfig.description }}
    </p>
    <div class="flex">
       <div class="flex-col flex-col-3">

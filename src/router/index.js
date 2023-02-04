@@ -35,6 +35,13 @@ let routes = [
    {
       path: '/user_account',
       component: () => import('@/components/UserAccount/UserAccount.vue'),
+      beforeEnter(to, from, next) {
+         if(!localStorage.token  && !localStorage.user) {
+            next(false)
+         }else{
+            next()
+         }
+      },
       children: sidebarRoutes.concat(
          {
             path: '/settings',

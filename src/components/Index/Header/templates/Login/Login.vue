@@ -60,10 +60,10 @@ export default {
                      break;
 
                   case 200:
-                     localStorage.setItem('token', res.data.token)
-                     localStorage.setItem('user', res.data)
-                     store.commit('setUser', res.data)
-                     this.$router.push('/user_account/home')
+                     localStorage.setItem('token', res.data.token);
+                     localStorage.setItem('user_id', res.data.user_id);
+                     store.commit('setUser', res.data);
+                     this.$router.push('/user_account/home');
                      break;
                }
             })

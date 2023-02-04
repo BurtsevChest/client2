@@ -6,12 +6,21 @@ class Tasks {
    async getTasks(param) {
       return await axios.get(`${API_URL}task/${param}`, JSON.stringify(param), { headers: { 
          "Content-Type": "application/json",
-         "Authorization": "Bearer " + localStorage.token 
+         "Authorization": "Bearer " + localStorage.token
       } })
    }
 
-   async setTask(param) {
-      return await axios.post(`${API_URL}task`, JSON.stringify(param), {
+   async setTask(task) {
+      return await axios.post(`${API_URL}task`, JSON.stringify({task}), {
+         headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer " + localStorage.token 
+         }
+      })
+   }
+
+   async updateTask(task) {
+      return await axios.put(`${API_URL}task`, JSON.stringify({task}), {
          headers: {
             "Content-Type": "application/json",
             "Authorization": "Bearer " + localStorage.token 

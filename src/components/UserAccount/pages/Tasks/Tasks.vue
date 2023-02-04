@@ -27,7 +27,7 @@
       </div>
       <div class="Tasks-itemsWrapper">
          <div class="flex flex-column">
-            <div v-for="item in tasks" v-bind:key="item.task_id" class="flex-col flex-col-8">
+            <div v-for="item in returnTasks" v-bind:key="item.task_id" class="flex-col flex-col-8">
                <div @click="openTask(item)" class="Tasks-item greyBlock">
                   <h2 class="Tasks-item-title">{{ item.title }}</h2>
                   <p class="Tasks-item-desc">{{ item.description }}</p>
@@ -39,18 +39,14 @@
 </template>
 
 <script>
-import Tasks from '@/api/task/index.js';
-import {mapMutations} from 'vuex'
+import { mapMutations, mapGetters } from 'vuex';
+import { getTasks } from '@/websync/tasks';
 
 export default {
    // eslint-disable-next-line
    name: "",
    data() {
       return {
-         tasks: [],
-         params: {
-            userId: 4
-         },
          filterString: '',
          filteredArr: [],
          activeTab: 'my'
@@ -60,27 +56,11 @@ export default {
       ...mapMutations(['openTask', 'openAddTaskView']),
       setTab(name) {
          this.activeTab = name
-      },
-      getTask() {
-         Tasks.getTasks(this.params.userId).then((res)=> {
-            this.tasks = res.data
-         })
       }
    },
-   computed: {
-      filterList() {
-         let filt = this.filterString
-         return this.tasks.filter((item) => {
-            if( filt === '') return true
-            else return item.title.includes(this.filterString) || item.description.includes(this.filterString)
-         })
-      }
-   },
-   mounted() {
-      // this.filterList
-   },
+   computed: mapGetters(["returnTasks"]),
    beforeMount() {
-      this.getTask()
+      getTasks()
    }
 }
 </script>

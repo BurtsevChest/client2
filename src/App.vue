@@ -9,7 +9,6 @@
 import ModalView from '@/components/Common/modalView/modalView.vue';
 import store from './store';
 import { setPageName } from '@/components/Common/helpers/setPageName';
-import { restrictAccess } from '@/components/Common/helpers/restrictAccess';
 
 export default {
   name: 'App',
@@ -18,9 +17,6 @@ export default {
     '$route.path'() {
       // Задаем Title страницe
       setPageName(this.$route.path);
-
-      // Ограничиваем доступ к страницам, если юзер не авторизован
-      restrictAccess(this.$route.path);
 
       // Закрываем модальное окно
         store.commit('closeModalView')

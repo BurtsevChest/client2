@@ -11,7 +11,7 @@
                   </router-link>
                </div>
                <div class="flex a-items-center flex-col">
-                  <a class="pointer Header-signUp" @click="openLoginView">Войти</a>
+                  <a class="pointer Header-signUp" @click="signUp">Войти</a>
                </div>
             </div>
          </div>
@@ -26,6 +26,13 @@ export default {
    // eslint-disable-next-line
    name: "Header",
    methods: {
+      signUp() {
+         if(localStorage.token) {
+            this.$router.push('/user_account/home')
+         }else {
+            this.openLoginView()
+         }
+      },
       ...mapMutations(['openLoginView'])
    }
 

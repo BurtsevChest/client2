@@ -12,7 +12,7 @@
       </div>
       <div class="empty_flex"></div>
       <router-link @click="clearLocalStorage" class="light pl-8 sidebar_button flex a-items-center mb-12" to="/">
-         <span class="material-icons">settings</span>
+         <span class="material-icons">wash</span>
          <span class="sidebar_link">Очистить Storage</span>
       </router-link>
       <router-link class="light pl-8 sidebar_button flex a-items-center mb-12" to="/settings">
@@ -35,8 +35,7 @@ export default {
    },
    methods: {
       clearLocalStorage() {
-         localStorage.token = '',
-         localStorage.user = ''
+         localStorage.clear()
       }
    }
 
