@@ -52,14 +52,17 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations } from "vuex";
+import { mapGetters } from "vuex";
+import { openDialog } from '@/components/Common/modalView';
 
 export default {
    // eslint-disable-next-line
    name: "",
    computed: mapGetters(["getConfig"]), // лучше сразу использовать геттер, чтобы компонент рендерил с новым конфигом
    methods: {
-      ...mapMutations(['openAddTaskView']),
+      openAddTaskView(task_id) {
+         openDialog('components/Common/modalView/templates/AddTaskView.vue', task_id)
+      },
       openAddFile(e) {
          this.showAddFile = true
          this.configAddFile = e

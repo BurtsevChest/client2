@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import { mapMutations } from 'vuex';
+import { openDialog } from '@/components/Common/modalView';
 
 export default {
    // eslint-disable-next-line
@@ -30,12 +30,10 @@ export default {
          if(localStorage.token) {
             this.$router.push('/user_account/home')
          }else {
-            this.openLoginView()
+            openDialog('components/Index/Header/templates/Login/Login.vue')
          }
-      },
-      ...mapMutations(['openLoginView'])
+      }
    }
-
 }
 </script>
 

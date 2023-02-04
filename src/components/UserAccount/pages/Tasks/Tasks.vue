@@ -41,6 +41,7 @@
 <script>
 import { mapMutations, mapGetters } from 'vuex';
 import { getTasks } from '@/websync/tasks';
+import { openDialog } from '@/components/Common/modalView';
 
 export default {
    // eslint-disable-next-line
@@ -53,7 +54,10 @@ export default {
       }
    },
    methods: {
-      ...mapMutations(['openTask', 'openAddTaskView']),
+      ...mapMutations(['openTask']),
+      openAddTaskView() {
+         openDialog('components/Common/modalView/templates/AddTaskView.vue')
+      },
       setTab(name) {
          this.activeTab = name
       }
