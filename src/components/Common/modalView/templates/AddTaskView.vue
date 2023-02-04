@@ -28,11 +28,11 @@
          </div>
          <div class="flex-col flex-col-12">
             <h3 class="h3 pb-8">Задача</h3>
-            <input type="text" class="input mb-8" v-model.trim="task.title">
+            <input type="text" class="input mb-8" v-model.trim="taskParams.title">
          </div>
          <div class="flex-col flex-col-12">
             <h3 class="h3 pb-8">Описание</h3>
-            <textarea class="textarea" v-model.trim="task.description" style="resize: none; " name="" id="" cols="30" rows="10"></textarea>
+            <textarea class="textarea" v-model.trim="taskParams.description" style="resize: none; " name="" id="" cols="30" rows="10"></textarea>
          </div>
       </div>
       <button @click="setTask" class="button">Добавить</button>
@@ -61,8 +61,10 @@
 
 <script>
 import { mapGetters } from "vuex";
-import Tasks from '@/api/task'
-import { dateToNumbers } from '@/components/Common/helpers/dateToNumbers'
+// import Tasks from '@/api/task';
+import { dateToNumbers } from '@/components/Common/helpers/dateToNumbers';
+
+const USER = JSON.parse(localStorage.user);
 
 export default {
    // eslint-disable-next-line
@@ -70,13 +72,13 @@ export default {
    computed: mapGetters(["getModalViewConfig"]),
    data() {
       return {
-         task: {
-            title: "Таск уже не не новый",
-            description: "Сделай вывод блять подтасков Илья",
-            creator_id: 4,
-            responsible_id: 4,
-            date_of_creation: "2023-01-24T02:07:21.000Z",
-            date_of_completion: null,
+         taskParams: {
+            title: "",
+            description: "",
+            creator_id: USER.user_id,
+            responsible_id: '',
+            date_of_creation: new Date(),
+            date_of_completion: this.date1,
             parent_id: null,
             status_task_id: null
          },
@@ -91,7 +93,11 @@ export default {
    },
    methods: {
       setTask() {
-         Tasks.setTask(this.task)
+         console.log(this.getModalViewConfig);
+         this.taskParams.date_of_completion = this.date1;
+         this.taskParams.parent_id = this.getModalViewConfig;
+         console.log(this.taskParams);
+         // Tasks.setTask(this.taskParams)
       },
       openDate(e) {
          this.showDate = true
@@ -108,7 +114,7 @@ export default {
       setUser(user) {
          this.user = user,
          this.showPersonView = false
-         this.response = user.userId
+         this.taskParams.responsible_id = user.userId
       }
    }
 

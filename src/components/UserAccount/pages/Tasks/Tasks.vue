@@ -26,7 +26,7 @@
          </div>
       </div>
       <div class="Tasks-itemsWrapper">
-         <div class="flex flex-column">
+         <div v-if="returnTasks" class="flex flex-column">
             <div v-for="item in returnTasks" v-bind:key="item.task_id" class="flex-col flex-col-8">
                <div @click="openTask(item)" class="Tasks-item greyBlock">
                   <h2 class="Tasks-item-title">{{ item.title }}</h2>
@@ -34,6 +34,7 @@
                </div>
             </div>
          </div>
+         <p v-else class="h2">Задач нет</p>
       </div>
    </div>
 </template>

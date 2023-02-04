@@ -14,13 +14,7 @@ const indexPages = indexConfig.map(function(item) {
 const sidebarRoutes = config.map(function(item) {
    return {
       path: item.href,
-      component: item.component,
-      beforeEnter() {
-         // сохраняем в localStorage активную страницу
-         if(localStorage.getItem('activePage') != '') {
-            localStorage.setItem('activePage', item.id)
-         }
-      }
+      component: item.component
    }
 })
 
