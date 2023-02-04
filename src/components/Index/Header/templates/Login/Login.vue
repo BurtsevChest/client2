@@ -17,6 +17,7 @@
                <input type="password" class="input" v-model.trim="params.password">
                <p v-if="error.password" class="Login-view-error">Введите пароль</p>
             </div>
+            <p v-if="error.api_err" class="Login-view-error text-center ph-8">{{error.api_err}}</p>
             <div class="flex-col flex flex-center">
                <button @click="signUp" class="button">Войти</button>
             </div>
@@ -46,26 +47,22 @@ export default {
          },
          error: {
             email: '',
-            password: ''
+            password: '',
+            api_err: ''
          }
       }
    },
    methods: {
       signUp() {
+         this.error.api_err = '';
          if(this.validation()) {
             User.signUp(this.params).then((res) => {
-               switch(res.status) {
-                  case 400:
-                     this.checkApiAnswer(res.data.message)
-                     break;
-
-                  case 200:
-                     localStorage.setItem('token', res.data.token);
-                     localStorage.setItem('user', JSON.stringify(res.data));
-                     store.commit('setUser', res.data);
-                     this.$router.push('/user_account/home');
-                     break;
-               }
+               localStorage.setItem('token', res.data.token);
+               localStorage.setItem('user', JSON.stringify(res.data));
+               store.commit('setUser', res.data);
+               this.$router.push('/user_account/home');
+            }).catch(err => {
+               this.error.api_err = err.response.data.message
             })
          }
       },
@@ -87,19 +84,6 @@ export default {
          }else {
             return false
          }
-      },
-      checkApiAnswer(message) {
-         switch(message) {
-            case 'Пользователь не найден':
-               this.error.email = 'Пользователь не найден'
-               return false
-
-            case 'Неверный пароль':
-               this.error.email = 'Неверный пароль'
-               return false
-            }
-
-         return true
       },
       ...mapMutations(['setUser'])
    }
