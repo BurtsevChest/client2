@@ -65,7 +65,10 @@ import { dateToNumbers } from '@/components/Common/helpers/dateToNumbers';
 import { setTask } from "@/websync/tasks";
 import { closeDialog } from '@/components/Common/modalView/index';
 
-const USER = JSON.parse(localStorage.user);
+let USER;
+if(localStorage.user) {
+   USER = JSON.parse(localStorage.user);
+}
 
 export default {
    // eslint-disable-next-line
