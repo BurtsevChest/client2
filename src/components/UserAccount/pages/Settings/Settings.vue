@@ -1,7 +1,7 @@
 <template>
    <div class="Settings">
-      <h2 class="h2 pb-16">Настройки интерфейса</h2>
-      <h3 class="h3 pb-8">Тема оформления</h3>
+      <h2 class="user_account-h2 pb-16">Настройки интерфейса</h2>
+      <h3 class="user_account-h3 pb-8">Тема оформления</h3>
       <div class="Settings-themesWrapper">
          <div class="flex">
             <div class="flex-col flex-col-2">

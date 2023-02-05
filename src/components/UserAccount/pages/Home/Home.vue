@@ -8,7 +8,7 @@
          </div>
          <div class="flex-col flex-col-4">
             <div class="Home-user_name-wrapper pt-20">
-               <h1 class="h1 pb-8">{{ user.name }} {{ user.last_name }}</h1>
+               <h1 class="user_account-h1 pb-8">{{ user.name }} {{ user.last_name }}</h1>
                <p class="Home-user-emal pointer pb-16">
                   <a href="mailto:{{ user.email }}">
                      {{ user.email }}
@@ -21,7 +21,7 @@
          </div>
       </div>
       <div class="">
-         <h2 class="h2 pb-20">Обучение и навыки</h2>
+         <h2 class="user_account-h2 pb-20">Обучение и навыки</h2>
          <div class="flex">
             <div class="flex-col flex-col-1">
                <div class="Home-user_skill">Node.js</div>

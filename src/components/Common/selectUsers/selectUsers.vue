@@ -4,13 +4,15 @@
          <div class="flex-col flex-col-12">
             <input type="text" class="input pv-8 ph-4" placeholder="Найти...">
          </div>
-         <div v-for="user in users" v-bind:key="user.userId" class="flex-col flex-col-12">
-            <div class="SelectUsers-user flex a-items-center" @click="setUser(user)">
-               <div class="flex-col flex-col-1">
+         <div v-for="user in getUsersCommandList" v-bind:key="user.user_id" class="flex-col flex-col-12">
+            <div class="SelectUsers-user flex flex-noGutter a-items-center p-10 radius-block" @click="setUser(user)">
+               <div class="flex-col flex a-items-center flex-col-1">
                   <span class="material-icons">person</span>
                </div>
-               <div class="flex-col flex-col-11">
-                  {{ user.name }} {{ user.family }}
+               <div class="flex-col flex a-items-center flex-col-11">
+                  <div class="pl-8">
+                     {{ user.name }} {{ user.last_name }}
+                  </div>
                </div>
             </div>
          </div>
@@ -19,6 +21,8 @@
 </template>
 
 <script>
+import { getUsersList } from '@/websync/user';
+import { mapGetters } from 'vuex';
 
 /**
  * @purpose Компонент для отображения юзеров.
@@ -32,54 +36,14 @@ export default {
          users: []
       }
    },
+   computed: mapGetters(['getUsersCommandList']),
    methods: {
       setUser(user) {
          this.$emit('onClickUser', user)
       }
    },
    beforeMount() {
-      this.users = [  
-         {
-            userId: 1,
-            name: 'Андрей',
-            family: 'Чурилов'
-         },
-         {
-            userId: 2,
-            name: 'Илья',
-            family: 'Бурцев'
-         },
-         {
-            userId: 3,
-            name: 'Татьяна',
-            family: 'Химкова'
-         },
-         {
-            userId: 4,
-            name: 'Алексей',
-            family: 'Навальный'
-         },
-         {
-            userId: 5,
-            name: 'Владимир',
-            family: 'Пу....'
-         },
-         {
-            userId: 6,
-            name: 'Хуба',
-            family: 'Петрович'
-         },
-         {
-            userId: 7,
-            name: 'И Буба',
-            family: 'Петрович'
-         },
-         {
-            userId: 8,
-            name: 'Крутое',
-            family: 'Пике'
-         }
-      ]
+      getUsersList()
    }
 }
 </script>

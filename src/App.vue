@@ -85,6 +85,9 @@ body {
   min-width: 375px;
   
 }
+.vc-container {
+  border: none !important;
+}
 
 .app {
   position: relative;

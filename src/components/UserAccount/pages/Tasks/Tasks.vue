@@ -34,7 +34,7 @@
                </div>
             </div>
          </div>
-         <p v-else class="h2">Задач нет</p>
+         <p v-else class="user_account-h2">Задач нет</p>
       </div>
    </div>
 </template>
@@ -57,7 +57,9 @@ export default {
    methods: {
       ...mapMutations(['openTask']),
       openAddTaskView() {
-         openDialog('components/Common/modalView/templates/AddTaskView.vue')
+         openDialog({
+            template: 'components/Common/modalView/templates/AddTaskView.vue'
+         })
       },
       setTab(name) {
          this.activeTab = name

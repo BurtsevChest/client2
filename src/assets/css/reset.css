@@ -4,7 +4,7 @@
    margin: 0px;
    border: none;
    word-break: break-word;
-   font-family: 'Roboto';
+   font-family: 'Inter';
 }
 
 *,
@@ -105,7 +105,12 @@ legend {
 
 @font-face {
    font-family: 'Roboto';
-   src: url('../fonts/Roboto-Regular.ttf');
+   src: url('../fonts/Roboto/Roboto-Regular.ttf');
+}
+
+@font-face {
+   font-family: 'Inter';
+   src: url('../fonts/Inter/Inter-Regular.ttf');
 }
 
 textarea#story {

@@ -27,7 +27,7 @@ export default {
 }
 </script>
 
-<style scoped>
-
+<style lang="less">
+   @import '@/components/UserAccount/Common/styles/styles';
 
 </style>

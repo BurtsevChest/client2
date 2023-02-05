@@ -12,9 +12,7 @@ export function getTasks() {
 // Создаем таск и обновляем список тасков у себя
 export function setTask(task) {
    if(task && USER.user_id && USER.token) {
-      store.dispatch('setTask', task).then(() => {
-         store.dispatch('getTask', USER.user_id);
-      })
+      store.dispatch('setTask', task)
    }
 }
 

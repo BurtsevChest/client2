@@ -1,4 +1,5 @@
 import Tasks from '@/api/task/index.js';
+const USER = JSON.parse(localStorage.user);
 
 export default {
    actions: {
@@ -10,13 +11,20 @@ export default {
             state.commit('setTasks', res.data)
          })
       },
-      setTask(task) {
-         Tasks.setTask(task)
+      setTask(state, task) {
+         Tasks.setTask(task).then((res)=>{
+            if(res.data.responsible_id === USER.user_id) {
+               state.commit('setOneTask', res.data)
+            }
+         })
       }
    },
    mutations: {
       setTasks(state, Tasks) {
          state.tasks = Tasks
+      },
+      setOneTask(state, Task) {
+         state.tasks.push(Task) 
       }
    },
    state: {

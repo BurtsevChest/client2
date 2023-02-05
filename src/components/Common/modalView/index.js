@@ -1,5 +1,9 @@
 import store from "@/store";
 
-export function openDialog(template, options) {
-   store.commit('openModalView', template, options)
+export function openDialog(options) {
+   store.commit('openModalView', options)
+}
+
+export function closeDialog() {
+   store.commit('closeModalView')
 }

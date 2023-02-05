@@ -7,7 +7,7 @@
                <h3 class="h3">Исполнитель</h3>
                <span @click="openPersonView" class="material-icons pl-4 AddTaskView-pointer">person</span>
                <div class="flex a-items-center pl-4">
-                  {{ user.name }} {{ user.family }}
+                  {{ user.name }} {{ user.last_name }}
                </div>
             </div>
          </div>
@@ -21,7 +21,7 @@
                      {{ date }}
                   </div>
                </div>
-               <div class="flex-col">
+               <div class="flex-col flex a-items-center">
                   <span @click="openDate" class="material-icons pl-4 AddTaskView-pointer">calendar_month</span>
                </div>
             </div>
@@ -61,8 +61,9 @@
 
 <script>
 import { mapGetters } from "vuex";
-// import Tasks from '@/api/task';
 import { dateToNumbers } from '@/components/Common/helpers/dateToNumbers';
+import { setTask } from "@/websync/tasks";
+import { closeDialog } from '@/components/Common/modalView/index';
 
 const USER = JSON.parse(localStorage.user);
 
@@ -93,11 +94,9 @@ export default {
    },
    methods: {
       setTask() {
-         console.log(this.getModalViewConfig);
-         this.taskParams.date_of_completion = this.date1;
-         this.taskParams.parent_id = this.getModalViewConfig;
-         console.log(this.taskParams);
-         // Tasks.setTask(this.taskParams)
+         this.createParams();
+         setTask(this.taskParams);
+         closeDialog()
       },
       openDate(e) {
          this.showDate = true
@@ -114,7 +113,14 @@ export default {
       setUser(user) {
          this.user = user,
          this.showPersonView = false
-         this.taskParams.responsible_id = user.userId
+         this.taskParams.responsible_id = user.user_id
+      },
+      createParams() {
+         this.taskParams.date_of_completion = this.date1;
+         if(this.getModalViewConfig) {
+            this.taskParams.parent_id = this.getModalViewConfig;
+         }
+         delete this.taskParams.time
       }
    }
 

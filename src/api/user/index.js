@@ -8,6 +8,12 @@ class User {
          "Content-Type": "application/json"
       }})
    }
+
+   async getCommandUsers() {
+      return await axios.get(`${API_URL}userOnTeam/1`, { headers: { 
+         "Content-Type": "application/json"
+      }})
+   }
 }
 
 export default new User()

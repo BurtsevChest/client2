@@ -30,7 +30,9 @@ export default {
          if(localStorage.token) {
             this.$router.push('/user_account/home')
          }else {
-            openDialog('components/Index/Header/templates/Login/Login.vue')
+            openDialog({
+               template: 'components/Index/Header/templates/Login/Login.vue'
+            })
          }
       }
    }

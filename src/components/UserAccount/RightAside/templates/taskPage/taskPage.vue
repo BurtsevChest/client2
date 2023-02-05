@@ -1,6 +1,6 @@
 <template>
 <div class="Task">
-   <h2 class="h2 pb-16">
+   <h2 class="user_account-h2 pb-16">
       {{ getConfig.title }}
    </h2>
    <p class="pb-32">
@@ -61,7 +61,10 @@ export default {
    computed: mapGetters(["getConfig"]), // лучше сразу использовать геттер, чтобы компонент рендерил с новым конфигом
    methods: {
       openAddTaskView(task_id) {
-         openDialog('components/Common/modalView/templates/AddTaskView.vue', task_id)
+         openDialog({
+            template: 'components/Common/modalView/templates/AddTaskView.vue',
+            options: task_id
+         })
       },
       openAddFile(e) {
          this.showAddFile = true

@@ -4,19 +4,20 @@ export default {
       closeModalView(state) {
          state.ModalViewStatus = false
          state.ModalViewTemplate = ''
+         state.config = ''
       },
-      openModalView(state, template, options) {
-         import('@/' + template).then((res)=>{
+      openModalView(state, options) {
+         import('@/' + options.template).then((res)=>{
             state.ModalViewTemplate = res.default
             state.ModalViewStatus = true
-            state.config = options
+            state.config = options.options
          })
       }
    },
    state: {
       ModalViewStatus: false,
       ModalViewTemplate: '',
-      config: []
+      config: null
    },
    getters: {
       getModalViewStatus(state) {
