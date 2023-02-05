@@ -1,5 +1,9 @@
 import Tasks from '@/api/task/index.js';
-const USER = JSON.parse(localStorage.user);
+let USER;
+if(localStorage.user) {
+   USER = JSON.parse(localStorage.user);
+}
+
 
 export default {
    actions: {

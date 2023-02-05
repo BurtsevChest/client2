@@ -5,18 +5,6 @@
    padding: 8px;
 }
 
-.h1 {
-   font-size: 40px;
-}
-
-.h2 {
-   font-size: 24px;
-}
-
-.h3 {
-   font-size: 20px;
-}
-
 .image {
    width: 100%;
    height: auto;
@@ -90,4 +78,8 @@
 
 .text-center {
    text-align: center;
+}
+
+.empty_flex {
+   flex: 1 1 0%;
 }
