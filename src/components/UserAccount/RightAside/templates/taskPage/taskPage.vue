@@ -7,7 +7,7 @@
       {{ getConfig.description }}
    </p>
    <div class="flex">
-      <div class="flex-col flex-col-3">
+      <div class="flex-col">
          <div @click="openAddTaskView(getConfig.task_id)" class="flex a-items-center Task-subTask">
             <span class="material-icons">
                task
@@ -15,7 +15,7 @@
             <p class="pl-4 Task-subTask-text">Подзадача</p>
          </div>
       </div>
-      <div class="flex-col flex-col-3">
+      <div class="flex-col">
          <div class="flex a-items-center Task-subTask" @click="openAddFile">
             <span class="material-icons">attach_file</span>
             <p class="pl-4 Task-subTask-text">Прикрепить</p>

@@ -23,19 +23,19 @@
       <div class="">
          <h2 class="user_account-h2 pb-20">Обучение и навыки</h2>
          <div class="flex">
-            <div class="flex-col flex-col-1">
+            <div class="flex-col">
                <div class="Home-user_skill">Node.js</div>
             </div>
-            <div class="flex-col flex-col-1">
+            <div class="flex-col">
                <div class="Home-user_skill">Webpack</div>
             </div>
-            <div class="flex-col flex-col-1">
+            <div class="flex-col">
                <div class="Home-user_skill">JavaScript</div>
             </div>
-            <div class="flex-col flex-col-1">
+            <div class="flex-col">
                <div class="Home-user_skill">Vue3</div>
             </div>
-            <div class="flex-col flex-col-1">
+            <div class="flex-col">
                <div class="Home-user_skill">Ассемблер</div>
             </div>
          </div>

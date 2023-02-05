@@ -45,7 +45,7 @@ export default {
 
 <style scoped>
 .sidebar {
-   width: 300px;
+   min-width: 300px;
    background-color: var(--background-color);
    padding: 0 12px 12px 12px;
    box-shadow: 0 0 15px rgba(128, 128, 128, 0.5);
