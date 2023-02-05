@@ -51,13 +51,13 @@ export default {
 <style lang="less" scoped>
 .SelectUsers {
    width: 300px;
-   height: 300px;
+   max-height: 300px;
    overflow: hidden;
    overflow-y: scroll;
 
    &-user {
       cursor: pointer;
-
+      transition: 0.3s;
       &:hover, :focus {
          background: rgba(30, 41, 59, 0.1);
       }
