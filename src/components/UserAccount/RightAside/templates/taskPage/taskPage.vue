@@ -67,6 +67,7 @@ export default {
          })
       },
       openAddFile(e) {
+         console.log(e);
          this.showAddFile = true
          this.configAddFile = e
       },

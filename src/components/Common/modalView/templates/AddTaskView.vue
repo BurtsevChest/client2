@@ -1,10 +1,10 @@
 <template>
    <div class="AddTaskView">
-      <h2 class="h2 text-center pb-8">Добавить задачу</h2>
+      <h2 class="user_account-h2 text-center pb-8">Добавить задачу</h2>
       <div class="flex">
          <div class="flex-col flex-col-6">
             <div class="flex a-items-center">
-               <h3 class="h3">Исполнитель</h3>
+               <h3 class="user_account-h3">Исполнитель</h3>
                <span @click="openPersonView" class="material-icons pl-4 AddTaskView-pointer">person</span>
                <div class="flex a-items-center pl-4">
                   {{ user.name }} {{ user.last_name }}
@@ -14,7 +14,7 @@
          <div class="flex-col flex-col-6">
             <div class="flex">
                <div class="flex-col">
-                  <h3 class="h3">Срок</h3>
+                  <h3 class="user_account-h3">Срок</h3>
                </div>
                <div class="flex-col flex a-items-center">
                   <div class="">
@@ -27,11 +27,11 @@
             </div>
          </div>
          <div class="flex-col flex-col-12">
-            <h3 class="h3 pb-8">Задача</h3>
+            <h3 class="user_account-h3 pb-8">Задача</h3>
             <input type="text" class="input mb-8" v-model.trim="taskParams.title">
          </div>
          <div class="flex-col flex-col-12">
-            <h3 class="h3 pb-8">Описание</h3>
+            <h3 class="user_account-h3 pb-8">Описание</h3>
             <textarea class="textarea" v-model.trim="taskParams.description" style="resize: none; " name="" id="" cols="30" rows="10"></textarea>
          </div>
       </div>
@@ -111,7 +111,6 @@ export default {
       },
       setDate(date) {
          this.date = dateToNumbers(date.date)
-         this.taskParams.time = date.date
       },
       setUser(user) {
          this.user = user,
@@ -123,7 +122,6 @@ export default {
          if(this.getModalViewConfig) {
             this.taskParams.parent_id = this.getModalViewConfig;
          }
-         delete this.taskParams.time
       }
    }
 

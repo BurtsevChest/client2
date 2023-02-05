@@ -25,24 +25,55 @@
             </div>
          </div>
       </div>
-      <div class="Tasks-itemsWrapper">
-         <div v-if="returnTasks" class="flex flex-column">
-            <div v-for="item in returnTasks" v-bind:key="item.task_id" class="flex-col flex-col-8">
-               <div @click="openTask(item)" class="Tasks-item greyBlock">
-                  <h2 class="Tasks-item-title">{{ item.title }}</h2>
-                  <p class="Tasks-item-desc">{{ item.description }}</p>
+      <div class="flex">
+         <div class="flex-col flex-col-8 flex flex-noGutter flex-column Tasks-itemsWrapper">
+            <div v-if="returnTasks" class="flex flex-noGutter flex-column">
+               <div v-for="item in returnTasks" v-bind:key="item.task_id" class="flex-col">
+                  <div @click="openTask(item)" class="Tasks-item pointer flex flex-space ph-10 pv-16 mb-8" :class="{'active' : activeTask === item}">
+                     <div class="flex">
+                        <div class="Tasks-item-image">
+                           <img src="@/components/UserAccount/pages/Home/resources/images/users/andrey.jpg" class="">
+                        </div>
+                        <div class="pl-16">
+                           <h2 class="Tasks-item-title">Andrey Churilov</h2>
+                           <p class="Tasks-item-desc pl-10">{{ item.title }}</p>
+                        </div>
+                     </div>
+                     <div class="">
+                        {{ item.date_of_creation }}
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <p v-else class="user_account-h2">Задач нет</p>
+         </div>
+         <div class="flex-col flex flex-column">
+            <div class="flex-col">
+               <div class="greyBlock ph-10 pv-16">
+                  По Дате
+               </div>
+            </div>
+            <div class="flex-col">
+               <div class="greyBlock ph-10 pv-16">
+                  По Создателю
+               </div>
+            </div>
+            <div class="flex-col">
+               <div class="greyBlock ph-10 pv-16">
+                  По Команде
                </div>
             </div>
          </div>
-         <p v-else class="user_account-h2">Задач нет</p>
       </div>
    </div>
 </template>
 
 <script>
-import { mapMutations, mapGetters } from 'vuex';
+import { mapGetters } from 'vuex';
 import { getTasks } from '@/websync/tasks';
 import { openDialog } from '@/components/Common/modalView';
+import { openRightAside } from '@/components/UserAccount/RightAside/index';
+import { dateToNumbers } from '@/components/Common/helpers/dateToNumbers';
 
 export default {
    // eslint-disable-next-line
@@ -51,11 +82,19 @@ export default {
       return {
          filterString: '',
          filteredArr: [],
-         activeTab: 'my'
+         activeTab: 'my',
+         activeTask: '',
+         tasks: []
       }
    },
    methods: {
-      ...mapMutations(['openTask']),
+      openTask(task) {
+         this.activeTask = task
+         openRightAside({
+            template: 'components/UserAccount/RightAside/templates/taskPage/taskPage.vue',
+            options: task
+         })
+      },
       openAddTaskView() {
          openDialog({
             template: 'components/Common/modalView/templates/AddTaskView.vue'
@@ -63,11 +102,21 @@ export default {
       },
       setTab(name) {
          this.activeTab = name
+      },
+      convertDates() {
+         this.tasks.forEach((item) => {
+            item.date_of_creation = new Date(item.date_of_creation)
+            item.date_of_creation = dateToNumbers(item.date_of_creation)
+         })
       }
    },
    computed: mapGetters(["returnTasks"]),
    beforeMount() {
       getTasks()
+   },
+   mounted() {
+      this.tasks = this.returnTasks
+      this.convertDates()
    }
 }
 </script>
@@ -96,14 +145,39 @@ export default {
    }
 
    &-item {
+      border-radius: 10px;
+      transition: 0.2s;
+      &:hover, &:focus {
+         background: #f1f5f9;
+      }
+
+      &.active {
+         background: #f1f5f9;
+      }
+
       &-title {
-         font-size: 25px;
+         font-size: 18px;
+         font-weight: bold;
       }
 
       &-desc {
          text-overflow: ellipsis;
          overflow: hidden;
          white-space: nowrap;
+      }
+
+      &-image {
+         width: 40px;
+         height: 40px;
+         overflow: hidden;
+         display: flex;
+         justify-content: center;
+         border-radius: 50%;
+
+         &>img{
+            max-width: none;
+            height: auto;
+         }
       }
    }
 }

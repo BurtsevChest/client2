@@ -18,6 +18,13 @@ export default {
          state.status = true
          state.openedTemplate = markRaw(defineAsyncComponent(()=>import ('@/components/UserAccount/RightAside/templates/taskPage/taskPage.vue')))
          state.config = cfg
+      },
+      openRightAside(state, options) {
+         import('@/' + options.template).then((res)=>{
+            state.openedTemplate = res.default
+            state.status = true
+            state.config = options.options
+         })
       }
    },
    state: {
