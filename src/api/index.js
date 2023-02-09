@@ -3,6 +3,7 @@ import axios from "axios";
 const AxiosRequest = axios.create({
    baseURL: 'http://localhost:5763/apiV0/',
    headers: {
+      withCredentials: true,
       "Authorization": "Bearer " + localStorage.accessToken,
       "Content-Type": "application/json",
    }
@@ -13,15 +14,12 @@ AxiosRequest.interceptors.response.use((response) => {
 }, (error) => {
    if(error.request.status === 401) {
       refreshToken()
-         .then(()=> {
-            return AxiosRequest.request(error.config);
-         })
-      throw error
+      return AxiosRequest.request(error.config);
    }
 })
 
-async function refreshToken() {
-   await AxiosRequest.get('refresh', { headers: {
+function refreshToken() {
+   AxiosRequest.get('refresh', { headers: {
       "Authorization": "Bearer " + localStorage.accessToken
    }})
       .then((res) => {
