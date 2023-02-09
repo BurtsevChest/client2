@@ -16,6 +16,7 @@ AxiosRequest.interceptors.response.use((response) => {
          .then(()=> {
             return AxiosRequest.request(error.config);
          })
+      throw error
    }
 })
 
