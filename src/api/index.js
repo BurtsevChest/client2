@@ -14,7 +14,7 @@ AxiosRequest.interceptors.response.use((response) => {
    if(error.request.status === 401) {
       refreshToken()
          .then(()=> {
-            return axios.request(error.config);
+            return AxiosRequest.request(error.config);
          })
    }
    return Promise.reject(error);
