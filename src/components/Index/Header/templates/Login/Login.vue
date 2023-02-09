@@ -33,6 +33,7 @@
 
 <script>
 import User from '@/api/user';
+import AxiosRequest from '@/api/index';
 
 export default {
    // eslint-disable-next-line
@@ -85,6 +86,9 @@ export default {
       registerUser(res) {
          localStorage.setItem('accessToken', res.data.accessToken);
          localStorage.setItem('refreshToken', res.data.refreshToken);
+         AxiosRequest.defaults.headers = {
+            "Authorization": "Bearer " + localStorage.accessToken,
+         }
          localStorage.setItem('user', JSON.stringify(res.data.user));
          this.$router.push('/user_account/home');
       }
