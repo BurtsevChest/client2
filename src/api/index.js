@@ -25,6 +25,9 @@ async function refreshToken() {
       "Authorization": "Bearer " + localStorage.accessToken
    }})
       .then((res) => {
+         AxiosRequest.defaults.headers = {
+            "Authorization": "Bearer " +  res.data.accessToken,
+         }
          localStorage.accessToken = res.data.accessToken;
          localStorage.refreshToken = res.data.refreshToken;
          localStorage.user = JSON.stringify(res.data.user);
