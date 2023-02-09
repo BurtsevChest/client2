@@ -11,17 +11,19 @@ const AxiosRequest = axios.create({
 AxiosRequest.interceptors.response.use((response) => {
    return response;
 }, (error) => {
-   if(error.response.status === 401) {
+   if(error.request.status === 401) {
       refreshToken()
          .then(()=> {
-            returnaxios.request(error.config)
+            return axios.request(error.config)
          })
    }
    return Promise.reject(error);
 })
 
 async function refreshToken() {
-   AxiosRequest.post('refresh', localStorage.refreshToken)
+   await AxiosRequest.post('refresh', { headers: {
+      "Authorization": "Bearer " + localStorage.refreshToken
+   }})
       .then((res) => {
          localStorage.accessToken = res.data.accessToken;
          localStorage.refreshToken = res.data.refreshToken;
