@@ -21,7 +21,7 @@ AxiosRequest.interceptors.response.use((response) => {
 })
 
 async function refreshToken() {
-   await AxiosRequest.post('refresh', { headers: {
+   await AxiosRequest.get('refresh', { headers: {
       "Authorization": "Bearer " + localStorage.accessToken
    }})
       .then((res) => {
