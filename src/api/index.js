@@ -17,7 +17,6 @@ AxiosRequest.interceptors.response.use((response) => {
             return AxiosRequest.request(error.config);
          })
    }
-   return Promise.reject(error);
 })
 
 async function refreshToken() {
