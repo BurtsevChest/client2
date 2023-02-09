@@ -4,7 +4,6 @@ if(localStorage.user) {
    USER = JSON.parse(localStorage.user);
 }
 
-
 export default {
    actions: {
       updateTask(task) {

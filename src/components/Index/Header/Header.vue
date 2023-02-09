@@ -27,7 +27,7 @@ export default {
    name: "Header",
    methods: {
       signUp() {
-         if(localStorage.token) {
+         if(localStorage.accessToken) {
             this.$router.push('/user_account/home')
          }else {
             openDialog({

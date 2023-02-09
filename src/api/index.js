@@ -14,7 +14,7 @@ AxiosRequest.interceptors.response.use((response) => {
    if(error.request.status === 401) {
       refreshToken()
          .then(()=> {
-            return axios.request(error.config)
+            return axios.request(error.config);
          })
    }
    return Promise.reject(error);
@@ -22,7 +22,7 @@ AxiosRequest.interceptors.response.use((response) => {
 
 async function refreshToken() {
    await AxiosRequest.post('refresh', { headers: {
-      "Authorization": "Bearer " + localStorage.refreshToken
+      "Authorization": "Bearer " + localStorage.accessToken
    }})
       .then((res) => {
          localStorage.accessToken = res.data.accessToken;
