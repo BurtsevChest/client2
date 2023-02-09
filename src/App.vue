@@ -60,12 +60,6 @@ export default {
   beforeMount() {
     // Определяем локаль и сохраняем в истории бразуера
     localStorage.setItem('locale', navigator.language)
-
-    // if(!localStorage.token) {
-    //   this.$router.push('/login')
-    //   localStorage.setItem('sidebar', false)
-    //   this.activeURL = localStorage.sidebar
-    // }
   }
 }
 </script>

@@ -1,31 +1,16 @@
-import axios from 'axios'
-
-const API_URL = 'http://localhost:5763/apiV0/'
+import AxiosRequest from '@/api/index';
 
 class Tasks {
    async getTasks(param) {
-      return await axios.get(`${API_URL}task/${param}`, { headers: { 
-         "Content-Type": "application/json",
-         "Authorization": "Bearer " + localStorage.token
-      } })
+      return await AxiosRequest.get(`task/${param}`)
    }
 
    async setTask(task) {
-      return await axios.post(`${API_URL}task`, JSON.stringify({task}), {
-         headers: {
-            "Content-Type": "application/json",
-            "Authorization": "Bearer " + localStorage.token 
-         }
-      })
+      return await AxiosRequest.post('task', JSON.stringify({task}))
    }
 
    async updateTask(task) {
-      return await axios.put(`${API_URL}task`, JSON.stringify({task}), {
-         headers: {
-            "Content-Type": "application/json",
-            "Authorization": "Bearer " + localStorage.token 
-         }
-      })
+      return await AxiosRequest.put('task', JSON.stringify({task}))
    }
 }
 

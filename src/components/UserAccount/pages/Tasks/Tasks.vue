@@ -28,22 +28,10 @@
       <div class="flex">
          <div class="flex-col flex-col-8 flex flex-noGutter flex-column Tasks-itemsWrapper">
             <div v-if="returnTasks" class="flex flex-noGutter flex-column">
-               <div v-for="item in returnTasks" v-bind:key="item.task_id" class="flex-col">
-                  <div @click="openTask(item)" class="Tasks-item pointer flex flex-space ph-10 pv-16 mb-8" :class="{'active' : activeTask === item}">
-                     <div class="flex">
-                        <div class="Tasks-item-image">
-                           <img src="@/components/UserAccount/pages/Home/resources/images/users/andrey.jpg" class="">
-                        </div>
-                        <div class="pl-16">
-                           <h2 class="Tasks-item-title">Andrey Churilov</h2>
-                           <p class="Tasks-item-desc pl-10">{{ item.title }}</p>
-                        </div>
-                     </div>
-                     <div class="">
-                        {{ item.date_of_creation }}
-                     </div>
-                  </div>
-               </div>
+               <TaskItems
+                  :Tasks = "returnTasks"
+                  @onClickTask = openTask
+               />
             </div>
             <p v-else class="user_account-h2">Задач нет</p>
          </div>
@@ -74,10 +62,14 @@ import { getTasks } from '@/websync/tasks';
 import { openDialog } from '@/components/Common/modalView';
 import { openRightAside } from '@/components/UserAccount/RightAside/index';
 import { dateToNumbers } from '@/components/Common/helpers/dateToNumbers';
+import TaskItems from '@/components/UserAccount/Common/TaskItems/TaskItems.vue';
 
 export default {
    // eslint-disable-next-line
    name: "",
+   components: {
+      TaskItems
+   },
    data() {
       return {
          filterString: '',
@@ -142,6 +134,7 @@ export default {
    &-itemsWrapper {
       overflow: hidden;
       overflow-y: scroll;
+      height: 90vh;
    }
 
    &-item {

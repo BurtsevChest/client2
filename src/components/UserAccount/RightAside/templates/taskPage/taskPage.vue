@@ -22,6 +22,11 @@
          </div>
       </div>
    </div>
+   <TaskItems
+      :Tasks = "tasks"
+      @onClickTask = openTask
+   />
+
 </div>
 
 <!-- Окно для добавления файлов -->
@@ -54,11 +59,15 @@
 <script>
 import { mapGetters } from "vuex";
 import { openDialog } from '@/components/Common/modalView';
+import TaskItems from '@/components/UserAccount/Common/TaskItems/TaskItems.vue';
 
 export default {
    // eslint-disable-next-line
    name: "",
-   computed: mapGetters(["getConfig"]), // лучше сразу использовать геттер, чтобы компонент рендерил с новым конфигом
+   computed: mapGetters(["getConfig"]),
+   components: {
+      TaskItems
+   },
    methods: {
       openAddTaskView(task_id) {
          openDialog({
@@ -78,7 +87,29 @@ export default {
    data() {
       return {
          showAddFile: false,
-         configAddFile: {}
+         configAddFile: {},
+         tasks: [
+            {
+               task_id: 1,
+               title: 'Подтаск 1',
+               date_of_creation: '2023-01-24T02:07:21.000Z'
+            },
+            {
+               task_id: 2,
+               title: 'Подтаск 2',
+               date_of_creation: '2023-01-24T02:07:21.000Z'
+            },
+            {
+               task_id: 3,
+               title: 'Подтаск 3',
+               date_of_creation: '2023-01-24T02:07:21.000Z'
+            },
+            {
+               task_id: 4,
+               title: 'Подтаск 4',
+               date_of_creation: '2023-01-24T02:07:21.000Z'
+            }
+         ]
       }
    }
 }

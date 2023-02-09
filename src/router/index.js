@@ -30,7 +30,7 @@ let routes = [
       path: '/user_account',
       component: () => import('@/components/UserAccount/UserAccount.vue'),
       beforeEnter(to, from, next) {
-         if(!localStorage.token  && !localStorage.user) {
+         if(!localStorage.accessToken && !localStorage.refreshToken && !localStorage.user) {
             next(false)
          }else{
             next()

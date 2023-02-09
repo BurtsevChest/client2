@@ -33,8 +33,6 @@
 
 <script>
 import User from '@/api/user';
-import { mapMutations } from 'vuex';
-import store from '@/store';
 
 export default {
    // eslint-disable-next-line
@@ -56,14 +54,13 @@ export default {
       signUp() {
          this.error.api_err = '';
          if(this.validation()) {
-            User.signUp(this.params).then((res) => {
-               localStorage.setItem('token', res.data.token);
-               localStorage.setItem('user', JSON.stringify(res.data));
-               store.commit('setUser', res.data);
-               this.$router.push('/user_account/home');
-            }).catch(err => {
-               this.error.api_err = err.response.data.message
-            })
+            User.signUp(this.params)
+               .then((res) => {
+                  this.registerUser(res)
+               })
+               .catch(err => {
+                  this.error.api_err = err.response.data.message
+               })
          }
       },
       validation() {
@@ -85,7 +82,12 @@ export default {
             return false
          }
       },
-      ...mapMutations(['setUser'])
+      registerUser(res) {
+         localStorage.setItem('accessToken', res.data.accessToken);
+         localStorage.setItem('refreshToken', res.data.refreshToken);
+         localStorage.setItem('user', JSON.stringify(res.data.user));
+         this.$router.push('/user_account/home');
+      }
    }
 }
 </script>
