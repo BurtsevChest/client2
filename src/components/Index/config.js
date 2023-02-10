@@ -5,16 +5,18 @@ export default [
       id: 'main',
       path: '/main',
       component: () => import('@/components/Index/pages/Main/Main.vue'),
-      title: 'Project Manager',
-      hideHeader: false,
-      hideFooter: false
+      title: 'Project Manager'
    },
    {
       id: 'register',
       path: '/register',
       component: () => import('@/components/Index/pages/Register/Register.vue'),
-      title: 'Регистрация',
-      hideHeader: false,
-      hideFooter: false
+      title: 'Регистрация'
+   },
+   {
+      id: 'landing',
+      path: '/landing',
+      component: () => import('@/components/Index/pages/Landing/Landing.vue'),
+      title: 'LangingPage'
    }
 ]

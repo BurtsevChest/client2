@@ -14,6 +14,7 @@
 import Header from '@/components/Index/Header/Header.vue';
 import Footer from '@/components/Index/Footer/Footer.vue';
 import config from './config';
+import { closeHeaderMenu } from '@/websync/header';
 
 export default {
    // eslint-disable-next-line
@@ -21,7 +22,8 @@ export default {
    components: {Header, Footer},
    watch: {
     '$route.path'() {
-      this.hideHeaderOrFooter(this.$route.path)
+      this.hideHeaderOrFooter(this.$route.path);
+      closeHeaderMenu();
     }
   },
   data() {

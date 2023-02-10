@@ -69,6 +69,11 @@
    list-style-image: url('./green_mark.svg');
    padding-left: 4px;
    font-size: 18px;
+   z-index: -2;
+
+   @media (max-width: 400px) {
+      font-size: 16px;
+   }
 }
 
 .li-circle::marker {

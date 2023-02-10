@@ -1,4 +1,5 @@
 .greyBlock {
+   display: block;
    cursor: pointer;
    background: rgba(30, 41, 59, 0.1);
    border-radius: 10px;

@@ -18,7 +18,7 @@
          <section class="section-padding">
             <div class="container">
                <h2 class="h2 pb-32">Используйте доски Канбана</h2>
-               <div class="box-shadow radius-block ovefflow-hidden p-40">
+               <div class="box-shadow radius-block ovefflow-hidden p-40 p-xm-20">
                   <div class="flex">
                      <div class="flex-col flex-col-6 flex-col-xm-12">
                         <img src="@/components/Index/pages/Main/resources/images/canban_boards.jpg" alt="">
