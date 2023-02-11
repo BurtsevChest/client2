@@ -1,13 +1,7 @@
 <template>
    <div class="IndexMain">
-         <section class="section-padding">
-            <div class="container">
-               <Banner
-                  :title = "'Ведите проекты не выходя из дома'"
-                  :desc = "'Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum dicta voluptatibus enim aspernatur deserunt quis, tenetur ipsam, vero odio veniam rerum eius corrupti voluptatem molestias itaque deleniti amet facilis minus!'"
-                  :img="'components/Index/pages/Main/resources/images/banner_img.png'"
-               />
-            </div>
+         <section class="section-padding IndexMain-banner">
+            <div class="IndexMain-banner-grey"></div>
          </section>
          <section class="section-padding">
             <div class="container">
@@ -41,19 +35,29 @@
 </template>
 
 <script>
-import Banner from '../../CommonIndex/Banner.vue';
 
 export default {
    // eslint-disable-next-line
    name: "IndexMain",
-   components: {Banner}
+   components: {}
 }
 </script>
 
 <style lang="less" scoped>
-@offset-top: 100px;
-
 .IndexMain {
-   padding-top: extract(@offset-top, 1);
+   &-banner {
+      background: url('./resources/main_banner.jpg') no-repeat;
+      background-size: cover;
+      background-position: center;
+      height: 100vh;
+
+      &-grey {
+         position: absolute;
+         width: 100%;
+         height: 100%;
+         background: rgb(128, 128, 128, 0.5);
+         opacity: 0.3;
+      }
+   }
 }
 </style>

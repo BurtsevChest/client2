@@ -72,7 +72,9 @@ export default {
       openAddTaskView(task_id) {
          openDialog({
             template: 'components/Common/modalView/templates/AddTaskView.vue',
-            options: task_id
+            options: {
+               task_id
+            }
          })
       },
       openAddFile(e) {

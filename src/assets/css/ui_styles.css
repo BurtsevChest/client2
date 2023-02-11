@@ -84,3 +84,7 @@
 .empty_flex {
    flex: 1 1 0%;
 }
+
+.relative {
+   position: relative;
+}

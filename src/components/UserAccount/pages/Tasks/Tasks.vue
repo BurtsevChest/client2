@@ -27,9 +27,9 @@
       </div>
       <div class="flex">
          <div class="flex-col flex-col-8 flex flex-noGutter flex-column Tasks-itemsWrapper">
-            <div v-if="returnTasks" class="flex flex-noGutter flex-column">
+            <div v-if="tasks" class="flex flex-noGutter flex-column">
                <TaskItems
-                  :Tasks = "returnTasks"
+                  :Tasks = "tasks"
                   @onClickTask = openTask
                />
             </div>
@@ -58,11 +58,17 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import { getTasks } from '@/websync/tasks';
+// import { getTasks } from '@/websync/tasks';
 import { openDialog } from '@/components/Common/modalView';
 import { openRightAside } from '@/components/UserAccount/RightAside/index';
 import { dateToNumbers } from '@/components/Common/helpers/dateToNumbers';
 import TaskItems from '@/components/UserAccount/Common/TaskItems/TaskItems.vue';
+import Tasks from '@/api/task/index.js';
+
+let USER;
+if(localStorage.user) {
+   USER = JSON.parse(localStorage.user);
+}
 
 export default {
    // eslint-disable-next-line
@@ -84,7 +90,6 @@ export default {
          this.activeTask = task
          openRightAside({
             template: 'components/UserAccount/RightAside/templates/taskPage/taskPage.vue',
-            options: task
          })
       },
       openAddTaskView() {
@@ -104,7 +109,10 @@ export default {
    },
    computed: mapGetters(["returnTasks"]),
    beforeMount() {
-      getTasks()
+      Tasks.getTasks(USER.user_id).then((res) => {
+         this.tasks = res.data
+      })
+      // getTasks()
    },
    mounted() {
       this.tasks = this.returnTasks

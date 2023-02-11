@@ -33,7 +33,7 @@
 
 <script>
 import User from '@/api/user';
-import AxiosRequest from '@/api/index';
+import API from '@/api/index';
 
 export default {
    // eslint-disable-next-line
@@ -86,7 +86,7 @@ export default {
       registerUser(res) {
          localStorage.setItem('accessToken', res.data.accessToken);
          localStorage.setItem('refreshToken', res.data.refreshToken);
-         AxiosRequest.defaults.headers = {
+         API.defaults.headers = {
             "Authorization": "Bearer " + localStorage.accessToken,
          }
          localStorage.setItem('user', JSON.stringify(res.data.user));
@@ -99,8 +99,10 @@ export default {
 <style lang="less" scoped>
 .Login {
    &-view {
+      padding: 15px;
+      border-radius: 15px;
       width: 500px;
-      max-width: 100%;
+      background: white;
       &-nameSite {
          font-size: 30px;
          text-shadow: 0 0 15px rgba(128, 128, 128, 0.3);

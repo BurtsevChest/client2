@@ -1,7 +1,7 @@
 <template>
    <div v-if="getModalViewStatus" class="ModalView" @click.stop="closeModalView">
       <div @click.stop class="ModalView-body">
-         <component :is="getModalViewTemplate" />
+         <component :is="getModalViewTemplate" v-bind:options="getModalViewConfig"/>
       </div>
    </div>
 </template>
@@ -12,7 +12,7 @@ import {mapGetters, mapMutations} from 'vuex'
 export default {
    // eslint-disable-next-line
    name: "",
-   computed: mapGetters(['getModalViewStatus', 'getModalViewTemplate']),
+   computed: mapGetters(['getModalViewStatus', 'getModalViewTemplate', 'getModalViewConfig']),
    methods: {
       ...mapMutations(['closeModalView'])
    }
@@ -34,10 +34,10 @@ export default {
 
    &-body {
       margin: auto;
-      background-color: white;
-      border-radius: 12px;
-      padding: 20px;
+      max-width: 100%;
+      max-height: 100%;
       cursor: default;
+      padding: 0 12px;
    }
 }
 

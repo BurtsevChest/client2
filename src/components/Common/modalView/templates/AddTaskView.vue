@@ -74,6 +74,11 @@ export default {
    // eslint-disable-next-line
    name: "",
    computed: mapGetters(["getModalViewConfig"]),
+   props: {
+      options: {
+         type: Object
+      }
+   },
    data() {
       return {
          taskParams: {
@@ -119,8 +124,8 @@ export default {
       },
       createParams() {
          this.taskParams.date_of_completion = this.date1;
-         if(this.getModalViewConfig) {
-            this.taskParams.parent_id = this.getModalViewConfig;
+         if(this.options.task_id) {
+            this.taskParams.parent_id = this.task.task_id;
          }
       }
    }

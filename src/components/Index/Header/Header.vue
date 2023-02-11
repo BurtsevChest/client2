@@ -1,6 +1,6 @@
 <template>
    <div class="Header">
-      <div class="Header-body ph-30">
+      <div class="Header-body  ph-30" :class="{ 'Header-body scroll' : scrollPage }">
          <div class="container">
             <div class="flex flex-space flex-noGutter">
                <div class="flex-col flex a-items-center">
@@ -24,17 +24,17 @@
       <div class="Header-dropMenu" :class="{ 'Header-dropMenu-active' : HeaderStatus }">
          <div class="container">
             <div class="flex pt-20">
-               <div class="flex-col flex-col-4 flex-col-sm-12">
+               <div class="flex-col flex-col-4 flex-col-xm-6 flex-col-sm-12">
                   <router-link class="greyBlock ph-12 pv-16" to="/landing">
                      LandingPage
                   </router-link>
                </div>
-               <div class="flex-col flex-col-4 flex-col-sm-12">
+               <div class="flex-col flex-col-4 flex-col-xm-6 flex-col-sm-12">
                   <div class="greyBlock ph-12 pv-16">
                      sdsd
                   </div>
                </div>
-               <div class="flex-col flex-col-4 flex-col-sm-12">
+               <div class="flex-col flex-col-4 flex-col-xm-6 flex-col-sm-12">
                   <div class="greyBlock ph-12 pv-16">
                      sdsd
                   </div>
@@ -55,7 +55,8 @@ export default {
    name: "Header",
    data() {
       return {
-         stasusMenu: false
+         stasusMenu: false,
+         scrollPage: false
       }
    },
    methods: {
@@ -64,7 +65,10 @@ export default {
             this.$router.push('/user_account/home')
          }else {
             openDialog({
-               template: 'components/Index/Header/templates/Login/Login.vue'
+               template: 'components/Index/Header/templates/Login/Login.vue',
+               options: {
+                  test: 'Hello'
+               }
             })
          }
       },
@@ -76,7 +80,16 @@ export default {
          }
       }
    },
-   computed: mapGetters(['HeaderStatus'])
+   computed: mapGetters(['HeaderStatus']),
+   beforeCreate() {
+      window.addEventListener("scroll", () => {
+         if(window.scrollY > 0) {
+            this.scrollPage = true
+         }else {
+            this.scrollPage = false
+         }
+      });
+   }
 }
 </script>
 
@@ -86,11 +99,15 @@ export default {
    position: fixed;
    top: 0;
    width: 100%;
+   z-index: 100;
 
    &-body {
-      background: rgb(255 255 255 / 80%);
-      -webkit-backdrop-filter: blur(8px);
-      backdrop-filter: blur(8px);
+      transition: 0.3s;
+      &.scroll {
+         background: rgb(255 255 255 / 80%);
+         -webkit-backdrop-filter: blur(8px);
+         backdrop-filter: blur(8px);
+      }
    }
 
    &-dropMenu {
