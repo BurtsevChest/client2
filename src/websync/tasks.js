@@ -24,3 +24,13 @@ export function updateTask(task) {
       })
    }
 }
+
+export function getSubTasks(task_id) {
+   if(USER.user_id) {
+      store.dispatch('getSubTasks', task_id)
+   }
+}
+
+export function clearSubTasks() {
+   store.commit('clearSubTasks')
+}

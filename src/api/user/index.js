@@ -1,12 +1,12 @@
-import API from '@/api/index';
+import AxiosRequest from '@/api/index';
 
 class User {
    async signUp(param) {
-      return await API.post('login', JSON.stringify(param));
+      return await AxiosRequest.post('login', JSON.stringify(param));
    }
 
    async getCommandUsers() {
-      return await API.get('userOnTeam/1');
+      return await AxiosRequest.get('userOnTeam/1');
    }
 }
 

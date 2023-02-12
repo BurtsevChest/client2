@@ -4,7 +4,7 @@
       <span class="material-icons flex flex-center a-items-center">close</span>
       </button>
       <!-- достаем из стора открываемый компонент -->
-      <component :is="getOpenedTemplate" />
+      <component :is="getOpenedTemplate" v-bind:options="getConfig"/>
    </div>
 </template>
 
@@ -14,7 +14,7 @@ import { mapGetters, mapMutations } from "vuex";
 export default {
    // eslint-disable-next-line
    name: "RightAside",
-   computed: mapGetters(["getStatus", "getOpenedTemplate"]),
+   computed: mapGetters(["getStatus", "getOpenedTemplate", "getConfig"]),
    methods: {
     ...mapMutations(['close']),
    }

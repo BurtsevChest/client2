@@ -1,6 +1,6 @@
 <template>
    <div class="Login flex flex-center a-items-center">
-      <div class="Login-view">
+      <div class="Login-view radius-block">
          <div class="flex flex-column">
             <div class="flex-col flex flex-center">
                <div class="Login-view-nameSite">
@@ -100,7 +100,6 @@ export default {
 .Login {
    &-view {
       padding: 15px;
-      border-radius: 15px;
       width: 500px;
       background: white;
       &-nameSite {

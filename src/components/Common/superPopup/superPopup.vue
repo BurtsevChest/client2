@@ -1,5 +1,5 @@
 <template>
-   <div v-if="show" class="SuperPopup p-8" :style="{left: cfg.clientX + 'px', top: cfg.clientY + 'px'}">
+   <div v-if="show" class="SuperPopup radius-block p-10" :style="{left: cfg.clientX + 'px', top: cfg.clientY + 'px'}">
       <div class="SuperPopup-wrapper">
          <div class="flex flex-end pb-4">
             <span @click="close" class="material-icons pointer" :style="{ color : colorBtn }"> {{ btn ? btn : 'close' }}</span>
@@ -56,7 +56,6 @@ export default {
    min-width: 200px;
    background: white;
    box-shadow: 0 0 15px rgba(128, 128, 128, 0.4);
-   border-radius: 12px;
    z-index: 11111;
    transform: translateX(-50%);
    overflow: hidden;

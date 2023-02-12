@@ -1,14 +1,15 @@
 <template>
 <div class="Task">
    <h2 class="user_account-h2 pb-16">
-      {{ getConfig.title }}
+      {{ options.task.title }}
+      {{ options.task.task_id }}
    </h2>
    <p class="pb-32">
-      {{ getConfig.description }}
+      {{ options.task.description }}
    </p>
    <div class="flex">
       <div class="flex-col">
-         <div @click="openAddTaskView(getConfig.task_id)" class="flex a-items-center Task-subTask">
+         <div @click="openAddTaskView(options.task.task_id)" class="flex a-items-center Task-subTask">
             <span class="material-icons">
                task
             </span>
@@ -23,8 +24,8 @@
       </div>
    </div>
    <TaskItems
-      :Tasks = "tasks"
-      @onClickTask = openTask
+      :Tasks = "returnSubTasks"
+      @onClickTask="openTask"
    />
 
 </div>
@@ -57,14 +58,20 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
 import { openDialog } from '@/components/Common/modalView';
 import TaskItems from '@/components/UserAccount/Common/TaskItems/TaskItems.vue';
+import { getSubTasks } from '@/websync/tasks.js';
+import { mapGetters } from 'vuex';
+import { openRightAside } from '@/components/UserAccount/RightAside/index';
 
 export default {
    // eslint-disable-next-line
    name: "",
-   computed: mapGetters(["getConfig"]),
+   props: {
+      options: {
+         type: Object
+      }
+   },
    components: {
       TaskItems
    },
@@ -77,6 +84,14 @@ export default {
             }
          })
       },
+      openTask(task) {
+         openRightAside({
+            template: 'components/UserAccount/RightAside/templates/taskPage/taskPage.vue',
+            options: {
+               task
+            }
+         })
+      },
       openAddFile(e) {
          console.log(e);
          this.showAddFile = true
@@ -86,6 +101,7 @@ export default {
          console.log(navigator.clipboard.read);
       }
    },
+   computed: mapGetters(['returnSubTasks']),
    data() {
       return {
          showAddFile: false,
@@ -113,6 +129,12 @@ export default {
             }
          ]
       }
+   },
+   beforeMount() {
+      getSubTasks(this.options.task.task_id)
+   },
+   beforeUpdate() {
+      getSubTasks(this.options.task.task_id)
    }
 }
 </script>

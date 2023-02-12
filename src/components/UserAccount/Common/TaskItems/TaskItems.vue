@@ -1,7 +1,7 @@
 <template>
    <div class="flex flex-noGutter flex-column">
       <div v-for="item in Tasks" v-bind:key="item.task_id" class="flex-col">
-         <div @click="openTask(item)" class="TaskItem pointer flex flex-space ph-10 pv-16 mb-8" :class="{'active' : activeTask === item}">
+         <div @click="openTask(item)" :class="[itemClass, { activeItemClass : activeTask === item}] " class="TaskItem pointer flex flex-space ph-10 pv-16 mb-8">
             <div class="flex">
                <div class="TaskItem-image">
                   <img src="@/components/UserAccount/pages/Home/resources/images/users/andrey.jpg" class="">
@@ -26,6 +26,12 @@ export default {
    props: {
       Tasks: {
          type: Array
+      },
+      itemClass: {
+         type: String
+      },
+      activeItemClass: {
+         type: String
       }
    },
    data() {
@@ -35,24 +41,17 @@ export default {
    },
    methods: {
       openTask(task) {
+         this.activeTask = task
          this.$emit('onClickTask', task)
       }
    }
 }
 </script>
 
-<style lang="less" scoped>
+<style lang="less">
 .TaskItem {
    border-radius: 10px;
    transition: 0.2s;
-
-   &:hover, &:focus {
-      background: #f1f5f9;
-   }
-
-   &.active {
-      background: #f1f5f9;
-   }
 
    &-title {
       font-size: 18px;

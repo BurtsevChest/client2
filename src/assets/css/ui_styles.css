@@ -71,8 +71,9 @@
 
 .radius-block {
    border-radius: 20px;
-
-   @media (max-width: 800px) {
+}
+@media (max-width: 800px) {
+   .radius-block {
       border-radius: 16px;
    }
 }
@@ -87,4 +88,8 @@
 
 .relative {
    position: relative;
+}
+
+.error {
+   color: red;
 }

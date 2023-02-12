@@ -1,8 +1,8 @@
 <template>
-   <div class="AddTaskView">
+   <div class="AddTaskView radius-block p-20 p-sm-10">
       <h2 class="user_account-h2 text-center pb-8">Добавить задачу</h2>
-      <div class="flex">
-         <div class="flex-col flex-col-6">
+      <div class="flex pb-10">
+         <div class="flex-col flex-col-6 flex-col-sm-12 relative">
             <div class="flex a-items-center">
                <h3 class="user_account-h3">Исполнитель</h3>
                <span @click="openPersonView" class="material-icons pl-4 AddTaskView-pointer">person</span>
@@ -10,29 +10,33 @@
                   {{ user.name }} {{ user.last_name }}
                </div>
             </div>
+            <p class="error AddTaskView-error_position" v-if="errorParams.responsible_id">Исполнитель не выбран</p>
          </div>
-         <div class="flex-col flex-col-6">
-            <div class="flex">
+         <div class="flex-col flex-col-6 flex-col-sm-12 relative">
+            <div class="flex flex-noGutter">
                <div class="flex-col">
                   <h3 class="user_account-h3">Срок</h3>
                </div>
                <div class="flex-col flex a-items-center">
-                  <div class="">
+                  <div class="pl-8">
                      {{ date }}
                   </div>
                </div>
-               <div class="flex-col flex a-items-center">
-                  <span @click="openDate" class="material-icons pl-4 AddTaskView-pointer">calendar_month</span>
+               <div class="flex-col flex a-items-center ">
+                  <span @click="openDate" class="material-icons pl-8 AddTaskView-pointer">calendar_month</span>
                </div>
             </div>
+            <p class="error AddTaskView-error_position" v-if="errorParams.date_of_completion">Дата не может быть меньше текущей даты</p>
          </div>
-         <div class="flex-col flex-col-12">
+         <div class="flex-col flex-col-12 relative">
             <h3 class="user_account-h3 pb-8">Задача</h3>
-            <input type="text" class="input mb-8" v-model.trim="taskParams.title">
+            <input type="text" class="input" v-model.trim="taskParams.title">
+            <p class="error AddTaskView-error_position" v-if="errorParams.title">Задача не написана</p>
          </div>
-         <div class="flex-col flex-col-12">
+         <div class="flex-col flex-col-12 relative">
             <h3 class="user_account-h3 pb-8">Описание</h3>
             <textarea class="textarea" v-model.trim="taskParams.description" style="resize: none; " name="" id="" cols="30" rows="10"></textarea>
+            <p class="error AddTaskView-error_position" v-if="errorParams.description">Нет описания к задаче</p>
          </div>
       </div>
       <button @click="setTask" class="button">Добавить</button>
@@ -91,6 +95,12 @@ export default {
             parent_id: null,
             status_task_id: null
          },
+         errorParams: {
+            title: '',
+            description: '',
+            responsible_id: '',
+            date_of_completion: '',
+         },
          showDate: false,
          configDate: {},
          showPersonView: false,
@@ -102,6 +112,7 @@ export default {
    },
    methods: {
       setTask() {
+         this.checkParams()
          this.createParams();
          setTask(this.taskParams);
          closeDialog()
@@ -122,10 +133,32 @@ export default {
          this.showPersonView = false
          this.taskParams.responsible_id = user.user_id
       },
+      checkParams() {
+         if(!this.taskParams.title) {
+            this.errorParams.title = true
+         } else {
+            this.errorParams.title = false
+         }
+         if(!this.taskParams.description) {
+            this.errorParams.description = true
+         } else {
+            this.errorParams.description = false
+         }
+         if(!this.taskParams.responsible_id) {
+            this.errorParams.responsible_id = true
+         } else {
+            this.errorParams.responsible_id = false
+         }
+         if(this.taskParams.date_of_completion < this.taskParams.date_of_creation) {
+            this.errorParams.date_of_completion = true
+         } else {
+            this.errorParams.date_of_completion = false
+         }
+      },
       createParams() {
          this.taskParams.date_of_completion = this.date1;
          if(this.options.task_id) {
-            this.taskParams.parent_id = this.task.task_id;
+            this.taskParams.parent_id = this.options.task_id;
          }
       }
    }
@@ -135,11 +168,21 @@ export default {
 
 
 <style lang="less" scoped>
+@wrapper-width: 1000px;
 .AddTaskView {
-   width: 1000px;
+   background: white;
+   width: extract(@wrapper-width, 1);
 
+   @media (max-width: 1000px) {
+      width: 100%;
+   }
    &-pointer {
       cursor: pointer;
+   }
+
+   &-error_position {
+      position: absolute;
+      bottom: -5px;
    }
 }
 

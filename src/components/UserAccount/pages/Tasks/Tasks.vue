@@ -29,8 +29,10 @@
          <div class="flex-col flex-col-8 flex flex-noGutter flex-column Tasks-itemsWrapper">
             <div v-if="tasks" class="flex flex-noGutter flex-column">
                <TaskItems
-                  :Tasks = "tasks"
+                  :Tasks = "returnTasks"
                   @onClickTask = openTask
+                  :itemClass="'Tasks-item'"
+                  :activeItemClass = "'active'"
                />
             </div>
             <p v-else class="user_account-h2">Задач нет</p>
@@ -58,17 +60,11 @@
 
 <script>
 import { mapGetters } from 'vuex';
-// import { getTasks } from '@/websync/tasks';
+import { getTasks, clearSubTasks } from '@/websync/tasks';
 import { openDialog } from '@/components/Common/modalView';
 import { openRightAside } from '@/components/UserAccount/RightAside/index';
 import { dateToNumbers } from '@/components/Common/helpers/dateToNumbers';
 import TaskItems from '@/components/UserAccount/Common/TaskItems/TaskItems.vue';
-import Tasks from '@/api/task/index.js';
-
-let USER;
-if(localStorage.user) {
-   USER = JSON.parse(localStorage.user);
-}
 
 export default {
    // eslint-disable-next-line
@@ -88,8 +84,12 @@ export default {
    methods: {
       openTask(task) {
          this.activeTask = task
+         clearSubTasks()
          openRightAside({
             template: 'components/UserAccount/RightAside/templates/taskPage/taskPage.vue',
+            options: {
+               task
+            }
          })
       },
       openAddTaskView() {
@@ -109,10 +109,7 @@ export default {
    },
    computed: mapGetters(["returnTasks"]),
    beforeMount() {
-      Tasks.getTasks(USER.user_id).then((res) => {
-         this.tasks = res.data
-      })
-      // getTasks()
+      getTasks()
    },
    mounted() {
       this.tasks = this.returnTasks
@@ -121,7 +118,7 @@ export default {
 }
 </script>
 
-<style lang="less" scoped>
+<style lang="less">
 .Tasks {
    height: 100%;
    flex-wrap: unset;

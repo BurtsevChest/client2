@@ -20,6 +20,11 @@ export default {
                state.commit('setOneTask', res.data)
             }
          })
+      },
+      getSubTasks(state, task_id) {
+         Tasks.getSubTasks(task_id).then((res) => {
+            state.commit('setSubTasks', res.data)
+         })
       }
    },
    mutations: {
@@ -28,14 +33,25 @@ export default {
       },
       setOneTask(state, Task) {
          state.tasks.push(Task) 
+      },
+      setSubTasks(state, subTasks) {
+         state.subTask = subTasks
+      },
+      clearSubTasks(state) {
+         state.setSubTasks = []
       }
    },
    state: {
-      tasks: []
+      tasks: [],
+      subTask: []
    },
    getters: {
       returnTasks(state) {
          return state.tasks
+      },
+
+      returnSubTasks(state) {
+         return state.subTask
       }
    }
 }

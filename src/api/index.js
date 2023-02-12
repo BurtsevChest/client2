@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API = axios.create({
+const AxiosRequest = axios.create({
    baseURL: 'http://localhost:5763/apiV0/',
    withCredentials: true,
    headers: {
@@ -9,41 +9,29 @@ const API = axios.create({
    }
 });
 
-
-API.interceptors.response.use((response) => {
-   return response;
-}, async (error) => {
-   const originalRequest = error.config;
-   if (error.response.status === 401 && !originalRequest._retry) {
-      originalRequest._retry = true;
-      const accessToken = await API.get('refresh', { withCredentials: true }).then((res) => res.data.accessToken);
-      console.log(accessToken);
-      API.defaults.headers = {
-         "Authorization": "Bearer " + accessToken,
-      }
-      return API(originalRequest);
-   }
-   return Promise.reject(error);
+AxiosRequest.interceptors.request.use((config) => {
+   config.headers.Authorization = `Bearer ${localStorage.getItem('accessToken')}`
+   return config;
 })
 
+AxiosRequest.interceptors.response.use((response) => {
+   return response;
+}, async (error) => {
+   const originalRequest = error?.config;
+   try {
+      if(error.response.status === 401 && error?.config && !error?.config?._isRetry) {
+         originalRequest._isRetry = true;
 
+         const response = await axios.get('http://localhost:5763/apiV0/refresh', { withCredentials: true })
+         
+         localStorage.setItem('accessToken',  response.data.accessToken);
+         originalRequest.headers = { ...originalRequest.headers };
+         originalRequest.headers["Authorization"] = `Bearer ${response.data.access_token}`;
+         return AxiosRequest.request(originalRequest);
+      }
+   } catch (e) {
+      console.log('Fuck ass yourself');
+   }
+})
 
-// AxiosRequest.interceptors.response.use((response) => {
-//    return response;
-// }, async (error) => {
-//    const originalRequest = error.config;
-//    if(error.response.status === 401 && !originalRequest._retry) {
-//       originalRequest._retry = true;
-
-//       await axios.get('http://localhost:5763/apiV0/refresh', { withCredentials: true }).then((res) => {
-//          AxiosRequest.defaults.headers.common['Authorization'] = 'Bearer ' + res.data.accessToken;
-//          localStorage.setItem('accessToken', res.data.accessToken);
-//       }).finally(() => {
-
-//          return AxiosRequest(originalRequest);
-//       })
-//    }
-//    return Promise.reject(error);
-// })
-
-export default API;
+export default AxiosRequest;

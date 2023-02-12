@@ -1,6 +1,6 @@
 <template>
    <div class="IndexMain">
-         <section class="section-padding IndexMain-banner">
+         <section class="section-padding IndexMain-banner mb-40">
             <div class="IndexMain-banner-grey"></div>
          </section>
          <section class="section-padding">

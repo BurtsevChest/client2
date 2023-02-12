@@ -9,7 +9,7 @@
 import ModalView from '@/components/Common/modalView/modalView.vue';
 import store from './store';
 import { setPageName } from '@/components/Common/helpers/setPageName';
-import seoData from '@/components/Index/CommonIndex/seoData.json';
+import seoData from '@/components/Index/Common/seoData.json';
 
 const SEO_PAGE_TITLE = document.querySelector('meta[name="title"]');
 const SEO_PAGE_DESCRIPTION = document.querySelector('meta[name="description"]');
@@ -26,7 +26,7 @@ export default {
       this.setSeoData(this.$route.path)
 
       // Закрываем модальное окно
-        store.commit('closeModalView')
+      store.commit('closeModalView')
     }
   },
   components: {ModalView},
