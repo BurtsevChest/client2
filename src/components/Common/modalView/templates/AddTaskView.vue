@@ -3,12 +3,22 @@
       <h2 class="user_account-h2 text-center pb-8">Добавить задачу</h2>
       <div class="flex pb-10">
          <div class="flex-col flex-col-6 flex-col-sm-12 relative">
-            <div class="flex a-items-center">
+            <div class="flex a-items-center relative">
                <h3 class="user_account-h3">Исполнитель</h3>
                <span @click="openPersonView" class="material-icons pl-4 AddTaskView-pointer">person</span>
                <div class="flex a-items-center pl-4">
                   {{ user.name }} {{ user.last_name }}
                </div>
+               <SuperPopup
+                  v-model:show="showPersonView"
+                  :config="configPersonView"
+                  :positionStyle="'AddTaskView-personView'"
+               >
+                  <SelectUsers
+                     @onClickUser = "setUser"
+                     :userList="getUsersCommandList"
+                  />
+               </SuperPopup>
             </div>
             <p class="error AddTaskView-error_position" v-if="errorParams.responsible_id">Исполнитель не выбран</p>
          </div>
@@ -22,8 +32,17 @@
                      {{ date }}
                   </div>
                </div>
-               <div class="flex-col flex a-items-center ">
+               <div class="flex-col flex a-items-center relative">
                   <span @click="openDate" class="material-icons pl-8 AddTaskView-pointer">calendar_month</span>
+                  <SuperPopup
+                     v-model:show="showDate"
+                     :config="configDate"
+                     :btn="'check_circle'"
+                     :colorBtn = "'green'"
+                     :positionStyle="'AddTaskView-dateView'"
+                     >
+                        <v-date-picker mode="date" v-model="date1"  @dayclick="setDate"/>
+                  </SuperPopup>
                </div>
             </div>
             <p class="error AddTaskView-error_position" v-if="errorParams.date_of_completion">Дата не может быть меньше текущей даты</p>
@@ -43,24 +62,10 @@
    </div>
 
    <!-- Для календаря -->
-   <SuperPopup
-      v-model:show="showDate"
-      :config="configDate"
-      :btn="'check_circle'"
-      :colorBtn = "'green'"
-   >
-   <v-date-picker mode="date" v-model="date1"  @dayclick="setDate"/>
-   </SuperPopup>
+   
 
    <!-- Для выбора исполнителя -->
-   <SuperPopup
-      v-model:show="showPersonView"
-      :config="configPersonView"
-   >
-      <SelectUsers
-         @onClickUser = "setUser"
-      />
-   </SuperPopup>
+   
 </template>
 
 <script>
@@ -68,6 +73,7 @@ import { mapGetters } from "vuex";
 import { dateToNumbers } from '@/components/Common/helpers/dateToNumbers';
 import { setTask } from "@/websync/tasks";
 import { closeDialog } from '@/components/Common/modalView/index';
+import { getUsersList } from '@/websync/user';
 
 let USER;
 if(localStorage.user) {
@@ -77,7 +83,7 @@ if(localStorage.user) {
 export default {
    // eslint-disable-next-line
    name: "",
-   computed: mapGetters(["getModalViewConfig"]),
+   computed: mapGetters(["getModalViewConfig", 'getUsersCommandList']),
    props: {
       options: {
          type: Object
@@ -157,17 +163,20 @@ export default {
       },
       createParams() {
          this.taskParams.date_of_completion = this.date1;
-         if(this.options.task_id) {
+         if(this.options?.task_id) {
             this.taskParams.parent_id = this.options.task_id;
          }
       }
+   }, 
+   beforeMount() {
+      getUsersList()
    }
 
 }
 </script>
 
 
-<style lang="less" scoped>
+<style lang="less">
 @wrapper-width: 1000px;
 .AddTaskView {
    background: white;
@@ -183,6 +192,17 @@ export default {
    &-error_position {
       position: absolute;
       bottom: -5px;
+   }
+
+   &-dateView {
+      position: absolute;
+      top: 30px;
+   }
+
+   &-personView {
+      position: absolute;
+      top: 30px;
+      right: 0;
    }
 }
 

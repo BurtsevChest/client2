@@ -1,5 +1,5 @@
 <template>
-   <div v-if="show" class="SuperPopup radius-block p-10" :style="{left: cfg.clientX + 'px', top: cfg.clientY + 'px'}">
+   <div v-if="show" class="SuperPopup radius-block p-10" :class="[positionStyle]">
       <div class="SuperPopup-wrapper">
          <div class="flex flex-end pb-4">
             <span @click="close" class="material-icons pointer" :style="{ color : colorBtn }"> {{ btn ? btn : 'close' }}</span>
@@ -17,8 +17,8 @@ export default {
          type: Boolean,
          required: true
       },
-      config: {
-         type: Object,
+      positionStyle: {
+         type: String,
          required: true
       },
       btn: {
@@ -26,11 +26,6 @@ export default {
       },
       colorBtn: {
          type: String
-      }
-   },
-   watch: {
-      config() {
-         this.cfg = this.config
       }
    },
    // eslint-disable-next-line
@@ -42,15 +37,13 @@ export default {
    },
    date() {
       return {
-         cfg: this.config,
          button: this.btn
       }
    }
 }
 </script>
 
-
-<style lang="less" scoped>
+<style lang="less">
 .SuperPopup {
    position: fixed;
    min-width: 200px;

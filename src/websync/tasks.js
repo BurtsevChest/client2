@@ -34,3 +34,7 @@ export function getSubTasks(task_id) {
 export function clearSubTasks() {
    store.commit('clearSubTasks')
 }
+
+export function filterResponsibleTask(param) {
+   store.commit('filterResponsibleTask', param)
+}

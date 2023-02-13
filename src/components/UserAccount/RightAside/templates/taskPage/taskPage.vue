@@ -16,11 +16,36 @@
             <p class="pl-4 Task-subTask-text">Подзадача</p>
          </div>
       </div>
-      <div class="flex-col">
+      <div class="flex-col relative">
          <div class="flex a-items-center Task-subTask" @click="openAddFile">
             <span class="material-icons">attach_file</span>
             <p class="pl-4 Task-subTask-text">Прикрепить</p>
          </div>
+         <SuperPopup
+               v-model:show="showAddFile"
+               :config="configAddFile"
+               :positionStyle="'Task-addFileView'"
+            >
+               <div v-if="showAddFile" class="flex Task-addFiles-wrapper">
+                  <div class="flex-col flex-col-12">
+                     <label for="addFiles" class="flex a-items-center">
+                        <span class="material-icons">desktop_windows</span>
+                        <p class="pl-4">
+                           С устройства
+                        </p>
+                     </label>
+                     <input type="file" class="image" name="" id="addFiles" multiple style="display: none;">
+                  </div>
+                  <div class="flex-col flex-col-12">
+                     <label @click="loadBuffer" class="flex a-items-center">
+                        <span class="material-icons">upload_file</span>
+                        <p class="pl-4">
+                           Из буфера обмена
+                        </p>
+                     </label>
+                  </div>
+               </div>
+            </SuperPopup>
       </div>
    </div>
    <TaskItems
@@ -31,30 +56,7 @@
 </div>
 
 <!-- Окно для добавления файлов -->
-<SuperPopup
-   v-model:show="showAddFile"
-   :config="configAddFile"
->
-   <div class="flex Task-addFiles-wrapper">
-      <div class="flex-col flex-col-12">
-         <label for="addFiles" class="flex a-items-center">
-            <span class="material-icons">desktop_windows</span>
-            <p class="pl-4">
-               С устройства
-            </p>
-         </label>
-         <input type="file" class="image" name="" id="addFiles" multiple style="display: none;">
-      </div>
-      <div class="flex-col flex-col-12">
-         <label @click="loadBuffer" class="flex a-items-center">
-            <span class="material-icons">upload_file</span>
-            <p class="pl-4">
-               Из буфера обмена
-            </p>
-         </label>
-      </div>
-   </div>
-</SuperPopup>
+
 </template>
 
 <script>
@@ -139,7 +141,7 @@ export default {
 }
 </script>
 
-<style lang="less" scoped>
+<style lang="less">
 .Task {
    &-subTask {
       cursor: pointer;
@@ -153,6 +155,12 @@ export default {
 
    &-addFiles-wrapper {
       width: 200px;
+   }
+
+   &-addFileView {
+      position: absolute;
+      top: 30px;
+      right: -130%;
    }
 }
 </style>

@@ -60,7 +60,7 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import { getTasks, clearSubTasks } from '@/websync/tasks';
+import { getTasks, clearSubTasks, filterResponsibleTask } from '@/websync/tasks';
 import { openDialog } from '@/components/Common/modalView';
 import { openRightAside } from '@/components/UserAccount/RightAside/index';
 import { dateToNumbers } from '@/components/Common/helpers/dateToNumbers';
@@ -99,20 +99,24 @@ export default {
       },
       setTab(name) {
          this.activeTab = name
+         this.filterTask(name)
       },
       convertDates() {
-         this.tasks.forEach((item) => {
+         this.returnTasks.forEach((item) => {
             item.date_of_creation = new Date(item.date_of_creation)
             item.date_of_creation = dateToNumbers(item.date_of_creation)
          })
+      },
+      filterTask(tab) {
+         filterResponsibleTask(tab)
       }
    },
    computed: mapGetters(["returnTasks"]),
    beforeMount() {
       getTasks()
+      
    },
    mounted() {
-      this.tasks = this.returnTasks
       this.convertDates()
    }
 }

@@ -39,6 +39,18 @@ export default {
       },
       clearSubTasks(state) {
          state.setSubTasks = []
+      },
+      filterResponsibleTask(state, param) {
+         state.tasks.filter((item) => {
+            if(param === 'my' && item.responsible_id === USER.user_id) {
+               return true;
+            }
+
+            if(param === 'from' && item.creator_id === USER.user_id) {
+               return true;
+            }
+            return false;
+         })
       }
    },
    state: {

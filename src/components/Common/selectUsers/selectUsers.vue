@@ -4,7 +4,7 @@
          <div class="flex-col flex-col-12">
             <input type="text" class="input pv-8 ph-4" placeholder="Найти...">
          </div>
-         <div v-for="user in getUsersCommandList" v-bind:key="user.user_id" class="flex-col flex-col-12">
+         <div v-for="user in userList" v-bind:key="user.user_id" class="flex-col flex-col-12">
             <div class="SelectUsers-user flex flex-noGutter a-items-center p-10 radius-block" @click="setUser(user)">
                <div class="flex-col flex a-items-center flex-col-1">
                   <span class="material-icons">person</span>
@@ -21,8 +21,6 @@
 </template>
 
 <script>
-import { getUsersList } from '@/websync/user';
-import { mapGetters } from 'vuex';
 
 /**
  * @purpose Компонент для отображения юзеров.
@@ -31,19 +29,21 @@ import { mapGetters } from 'vuex';
 export default {
    // eslint-disable-next-line
    name: "SelectUsers",
+   props: {
+      userList: {
+         type: Array,
+         required: true
+      }
+   },
    date() {
       return {
          users: []
       }
    },
-   computed: mapGetters(['getUsersCommandList']),
    methods: {
       setUser(user) {
          this.$emit('onClickUser', user)
       }
-   },
-   beforeMount() {
-      getUsersList()
    }
 }
 </script>

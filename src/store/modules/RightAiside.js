@@ -3,14 +3,17 @@ export default {
    mutations: {
       close(state) {
          state.status = false
-         state.openedTemplate = ''
-         state.config = ''
+         setTimeout(() => {
+            state.openedTemplate = ''
+            state.config = ''
+         }, 300);
       },
       openRightAside(state, options) {
          import('@/' + options.template).then((res)=>{
             state.openedTemplate = res.default
-            state.status = true
             state.config = options.options
+         }).finally(() => {
+            state.status = true
          })
       }
    },
