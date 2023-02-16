@@ -91,16 +91,6 @@ export default {
    },
    data() {
       return {
-         taskParams: {
-            title: "",
-            description: "",
-            creator_id: USER.user_id,
-            responsible_id: '',
-            date_of_creation: new Date(),
-            date_of_completion: this.date1,
-            parent_id: null,
-            status_task_id: null
-         },
          errorParams: {
             title: '',
             description: '',
@@ -113,15 +103,26 @@ export default {
          configPersonView: {},
          date1: new Date(),
          date: dateToNumbers(new Date()),
-         user: []
+         user: [],
+         taskParams: {
+            title: "",
+            description: "",
+            creator_id: USER.user_id,
+            responsible_id: '',
+            date_of_creation: new Date(),
+            date_of_completion: this.date1,
+            parent_id: null,
+            status_task_id: null
+         },
       }
    },
    methods: {
       setTask() {
-         this.checkParams()
          this.createParams();
-         setTask(this.taskParams);
-         closeDialog()
+         if(this.checkParams()) {
+            setTask(this.taskParams);
+            closeDialog()
+         }
       },
       openDate(e) {
          this.showDate = true
@@ -160,6 +161,12 @@ export default {
          } else {
             this.errorParams.date_of_completion = false
          }
+
+         if((this.errorParams.responsible_id === true) || (this.errorParams.description === true) || (this.errorParams.title === true) || (this.errorParams.date_of_completion === true)) {
+            return false
+         }else {
+            return true
+         }
       },
       createParams() {
          this.taskParams.date_of_completion = this.date1;
@@ -171,7 +178,6 @@ export default {
    beforeMount() {
       getUsersList()
    }
-
 }
 </script>
 

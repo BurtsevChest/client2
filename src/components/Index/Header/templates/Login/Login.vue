@@ -57,10 +57,11 @@ export default {
          if(this.validation()) {
             User.signUp(this.params)
                .then((res) => {
-                  this.registerUser(res)
-               })
-               .catch(err => {
-                  this.error.api_err = err.response.data.message
+                  if(res.status === 400) {
+                     this.error.api_err = res.response.data.message;
+                  }else {
+                     this.registerUser(res);
+                  }
                })
          }
       },
