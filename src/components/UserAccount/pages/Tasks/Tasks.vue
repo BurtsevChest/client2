@@ -60,7 +60,7 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import { getTasks, clearSubTasks, filterResponsibleTask } from '@/websync/tasks';
+import { getTasks, filterResponsibleTask } from '@/websync/tasks';
 import { openDialog } from '@/components/Common/modalView';
 import { openRightAside } from '@/components/UserAccount/RightAside/index';
 import { dateToNumbers } from '@/components/Common/helpers/dateToNumbers';
@@ -84,7 +84,6 @@ export default {
    methods: {
       openTask(task) {
          this.activeTask = task
-         clearSubTasks()
          openRightAside({
             template: 'components/UserAccount/RightAside/templates/taskPage/taskPage.vue',
             options: {

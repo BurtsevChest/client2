@@ -144,7 +144,7 @@ export default {
    },
    beforeUpdate() {
       this.subTaskList()
-   }
+   },
 }
 </script>
 

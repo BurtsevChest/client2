@@ -6,7 +6,7 @@
          <section class="section-padding">
             <div class="container">
                <h2 class="h2 pb-32">Назначайте свои задачи</h2>
-               <img src="@/components/Index/pages/Main/resources/images/tasks.jpg" alt="">
+               <img src="@/components/Index/pages/Main/resources/images/tasks.jpg" class="radius-block box-shadow">
             </div>
          </section>
          <section class="section-padding">
