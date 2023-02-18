@@ -22,8 +22,15 @@ export default {
          })
       },
       getSubTasks(state, task_id) {
-         Tasks.getSubTasks(task_id).then((res) => {
-            state.commit('setSubTasks', res.data)
+         return new Promise(function(resolve, reject) {
+            Tasks.getSubTasks(task_id).then((res) => {
+               if(res.data) {
+                  state.commit('setSubTasks', res.data)
+                  resolve(res.data)
+               }
+            }).catch((err) => {
+               reject(err)
+            })
          })
       }
    },

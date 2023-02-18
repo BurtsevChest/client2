@@ -12,8 +12,7 @@
                <SuperPopup
                   v-model:show="showPersonView"
                   :config="configPersonView"
-                  :positionStyle="'AddTaskView-personView'"
-               >
+                  :positionStyle="'AddTaskView-personView'">
                   <SelectUsers
                      @onClickUser = "setUser"
                      :userList="getUsersCommandList"
@@ -39,8 +38,7 @@
                      :config="configDate"
                      :btn="'check_circle'"
                      :colorBtn = "'green'"
-                     :positionStyle="'AddTaskView-dateView'"
-                     >
+                     :positionStyle="'AddTaskView-dateView'">
                         <v-date-picker mode="date" v-model="date1"  @dayclick="setDate"/>
                   </SuperPopup>
                </div>
@@ -180,7 +178,6 @@ export default {
    }
 }
 </script>
-
 
 <style lang="less">
 @wrapper-width: 1000px;

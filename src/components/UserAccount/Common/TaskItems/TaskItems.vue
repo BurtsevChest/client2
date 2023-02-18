@@ -1,6 +1,6 @@
 <template>
    <div class="flex flex-noGutter flex-column">
-      <div v-for="item in Tasks" v-bind:key="item.task_id" class="flex-col">
+      <div v-for="item in tasks" v-bind:key="item.task_id" class="flex-col">
          <div @click="openTask(item)" :class="[itemClass, { activeItemClass : activeTask === item}] " class="TaskItem pointer flex flex-space ph-10 pv-16 mb-8">
             <div class="flex">
                <div class="TaskItem-image">
@@ -34,9 +34,15 @@ export default {
          type: String
       }
    },
+   watch: {
+      Tasks() {
+         this.tasks = this.Tasks
+      }
+   },
    data() {
       return {
          activeTask: '',
+         tasks: this.Tasks
       }
    },
    methods: {

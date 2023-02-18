@@ -58,10 +58,14 @@ export default {
             User.signUp(this.params)
                .then((res) => {
                   if(res.status === 400) {
-                     this.error.api_err = res.response.data.message;
-                  }else {
-                     this.registerUser(res);
+                     this.error.api_err = res.data.message
                   }
+                  else {
+                     this.registerUser(res)
+                  }
+               })
+               .catch(err => {
+                  console.log(err);
                })
          }
       },

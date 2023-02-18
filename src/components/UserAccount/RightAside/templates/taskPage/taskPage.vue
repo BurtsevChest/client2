@@ -48,11 +48,12 @@
             </SuperPopup>
       </div>
    </div>
-   <TaskItems
-      :Tasks = "returnSubTasks"
-      @onClickTask="openTask"
-   />
-
+   <div v-if="subTasks">
+      <TaskItems
+         :Tasks = "subTasks"
+         @onClickTask="openTask"
+      />
+   </div>
 </div>
 
 <!-- Окно для добавления файлов -->
@@ -62,8 +63,8 @@
 <script>
 import { openDialog } from '@/components/Common/modalView';
 import TaskItems from '@/components/UserAccount/Common/TaskItems/TaskItems.vue';
-import { getSubTasks } from '@/websync/tasks.js';
-import { mapGetters } from 'vuex';
+// import { getSubTasks } from '@/websync/tasks.js';
+import { mapGetters, mapActions } from 'vuex';
 import { openRightAside } from '@/components/UserAccount/RightAside/index';
 
 export default {
@@ -95,12 +96,17 @@ export default {
          })
       },
       openAddFile(e) {
-         console.log(e);
          this.showAddFile = true
          this.configAddFile = e
       },
       loadBuffer() {
          console.log(navigator.clipboard.read);
+      },
+      ...mapActions(['getSubTasks']),
+      subTaskList() {
+         this.getSubTasks(this.options.task.task_id).then((resolve) => {
+            this.subTasks = resolve
+         })
       }
    },
    computed: mapGetters(['returnSubTasks']),
@@ -129,14 +135,15 @@ export default {
                title: 'Подтаск 4',
                date_of_creation: '2023-01-24T02:07:21.000Z'
             }
-         ]
+         ],
+         subTasks: []
       }
    },
    beforeMount() {
-      getSubTasks(this.options.task.task_id)
+      this.subTaskList()
    },
    beforeUpdate() {
-      getSubTasks(this.options.task.task_id)
+      this.subTaskList()
    }
 }
 </script>
