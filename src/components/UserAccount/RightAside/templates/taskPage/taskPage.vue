@@ -65,8 +65,8 @@
 <script>
 import { openDialog } from '@/components/Common/modalView';
 import { openRightAside } from '@/components/UserAccount/RightAside/index';
-import DefaultTask from '@/components/UserAccount/Common/TaskItems/templates/defaultTask.vue';
-import TaskChat from '@/components/UserAccount/Common/TaskItems/templates/taskChat.vue';
+import DefaultTask from '@/components/UserAccount/RightAside/templates/taskPage/templates/defaultTask.vue';
+import TaskChat from '@/components/UserAccount/RightAside/templates/taskPage/templates/taskChat.vue';
 
 export default {
    // eslint-disable-next-line
