@@ -4,12 +4,12 @@
       <h3 class="user_account-h3 pb-8">Тема оформления</h3>
       <div class="Settings-themesWrapper">
          <div class="flex">
-            <div class="flex-col flex-col-2">
+            <div class="flex-col">
                <div class="Settings-themesWrapper-item p-6" :class="{ 'Settings-themesWrapper-item-active' : activeTheme == 'dark'}">
                   <img class="image" src="@/components/UserAccount/pages/Settings/resources/images/dark_theme.jpg" alt="Темная тема" @click="setTheme('dark')">
                </div>
             </div>
-            <div class="flex-col flex-col-2">
+            <div class="flex-col">
                <div class="Settings-themesWrapper-item p-6" :class="{ 'Settings-themesWrapper-item-active' : activeTheme == 'light'}">
                   <img class="image" src="@/components/UserAccount/pages/Settings/resources/images/light_theme.jpg" alt="Светлая тема" @click="setTheme('light')">
                </div>

@@ -8,9 +8,9 @@ export default {
             state.config = ''
          }, 300);
       },
-      async openRightAside(state, options) {
+      openRightAside(state, options) {
          state.openedTemplate = '';
-         await import('@/' + options.template).then((res)=>{
+         import('@/' + options.template).then((res)=>{
             state.openedTemplate = res.default
             state.config = options.options
          }).finally(() => {

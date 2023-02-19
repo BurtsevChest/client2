@@ -39,17 +39,17 @@
          </div>
          <div class="flex-col flex flex-column">
             <div class="flex-col">
-               <div class="greyBlock ph-10 pv-16">
+               <div class="greyBlock radius-block ph-10 pv-16">
                   По Дате
                </div>
             </div>
             <div class="flex-col">
-               <div class="greyBlock ph-10 pv-16">
+               <div class="greyBlock radius-block ph-10 pv-16">
                   По Создателю
                </div>
             </div>
             <div class="flex-col">
-               <div class="greyBlock ph-10 pv-16">
+               <div class="greyBlock radius-block ph-10 pv-16">
                   По Команде
                </div>
             </div>

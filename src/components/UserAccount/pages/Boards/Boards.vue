@@ -1,6 +1,8 @@
 <template>
    <div class="Boards">
-      Доски
+      <p class="user_account-h2">
+         Доски
+      </p>
    </div>
 </template>
 
@@ -9,12 +11,9 @@
 export default {
    // eslint-disable-next-line
    name: "Boards",
-
 }
 </script>
 
-
-<style scoped>
-
+<style lang="less">
 
 </style>

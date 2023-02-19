@@ -1,8 +1,8 @@
 <template>
    <aside class="sidebar flex flex-column">
-      <div class="light logo">
-         ProjectManager
-      </div>
+      <router-link class="light logo" to="/main">
+            ProjectManager      
+      </router-link>
       <h3 class="menu_title">Menu</h3>
       <div class="menu">
          <router-link  v-for="item in menuList" v-bind:key="item.id" :to="item.href" class="light pl-8 sidebar_button radius-block flex a-items-center">
@@ -11,10 +11,6 @@
          </router-link>
       </div>
       <div class="empty_flex"></div>
-      <router-link @click="clearLocalStorage" class="light pl-8 sidebar_button radius-block flex a-items-center mb-12" to="/">
-         <span class="material-icons">wash</span>
-         <span class="sidebar_link">Очистить Storage</span>
-      </router-link>
       <router-link class="light pl-8 sidebar_button radius-block flex a-items-center mb-12" to="/settings">
          <span class="material-icons">settings</span>
          <span class="sidebar_link">Настройки</span>
@@ -30,16 +26,7 @@ export default {
    name: "",
    data() {
       return {
-         menuList: config,
-         theme: document.documentElement
-      }
-   },
-   methods: {
-      clearLocalStorage() {
-         this.theme.setAttribute('data-theme', 'light');
-         localStorage.clear()
-         // Фиксим выход из приложения. Какого-то хуя если уйти на главную через router-link, при следующем заходе сервер шлёт 500 ошибку
-         window.location.href = '/'
+         menuList: config
       }
    }
 

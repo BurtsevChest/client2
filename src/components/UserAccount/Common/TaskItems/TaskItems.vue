@@ -90,6 +90,10 @@ export default {
       text-overflow: ellipsis;
       overflow: hidden;
       white-space: nowrap;
+
+      @media (max-width: 800px) {
+         width: 150px;
+      }
    }
 
    &-image {

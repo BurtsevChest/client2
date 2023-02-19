@@ -14,9 +14,9 @@
                      {{ user.email }}
                   </a>
                </p>
-               <router-link to="/main">
-                  Выйти      
-               </router-link>
+               <div @click="clearLocalStorage" class="pointer">
+                  Выйти
+               </div>
             </div>
          </div>
       </div>
@@ -52,7 +52,16 @@ export default {
    name: "Home",
    data() {
       return {
-         user: JSON.parse(localStorage.user)
+         user: JSON.parse(localStorage.user),
+         theme: document.documentElement
+      }
+   },
+   methods: {
+      clearLocalStorage() {
+         this.theme.setAttribute('data-theme', 'light');
+         localStorage.clear()
+         // Фиксим выход из приложения. Какого-то хуя если уйти на главную через router-link, при следующем заходе сервер шлёт 500 ошибку
+         window.location.href = '/'
       }
    },
    computed: mapGetters(['getUser']),
