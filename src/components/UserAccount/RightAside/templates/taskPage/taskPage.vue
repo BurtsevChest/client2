@@ -1,5 +1,5 @@
 <template>
-<div class="Task">
+<div class="Task flex flex-column empty_flex">
    <h2 class="user_account-h2 pb-16">
       {{ options.task.title }}
       {{ options.task.task_id }}
@@ -9,63 +9,64 @@
    </p>
    <div class="flex">
       <div class="flex-col">
-         <div @click="openAddTaskView(options.task.task_id)" class="flex a-items-center Task-subTask">
+         <div @click="openAddTaskView(options.task.task_id)" class="flex a-items-center pointer">
             <span class="material-icons">
                task
             </span>
-            <p class="pl-4 Task-subTask-text">Подзадача</p>
+            <p class="pl-4 Task-tabs">Подзадача</p>
          </div>
       </div>
       <div class="flex-col relative">
-         <div class="flex a-items-center Task-subTask" @click="openAddFile">
+         <div class="flex a-items-center pointer" @click="openAddFile">
             <span class="material-icons">attach_file</span>
-            <p class="pl-4 Task-subTask-text">Прикрепить</p>
+            <p class="pl-4 Task-tabs">Прикрепить</p>
          </div>
          <SuperPopup
-               v-model:show="showAddFile"
-               :config="configAddFile"
-               :positionStyle="'Task-addFileView'"
-            >
-               <div v-if="showAddFile" class="flex Task-addFiles-wrapper">
-                  <div class="flex-col flex-col-12">
-                     <label for="addFiles" class="flex a-items-center">
-                        <span class="material-icons">desktop_windows</span>
-                        <p class="pl-4">
-                           С устройства
-                        </p>
-                     </label>
-                     <input type="file" class="image" name="" id="addFiles" multiple style="display: none;">
-                  </div>
-                  <div class="flex-col flex-col-12">
-                     <label @click="loadBuffer" class="flex a-items-center">
-                        <span class="material-icons">upload_file</span>
-                        <p class="pl-4">
-                           Из буфера обмена
-                        </p>
-                     </label>
-                  </div>
+            v-model:show="showAddFile"
+            :config="configAddFile"
+            :positionStyle="'Task-addFileView'">
+            <div v-if="showAddFile" class="flex Task-addFiles-wrapper">
+               <div class="flex-col flex-col-12">
+                  <label for="addFiles" class="flex a-items-center">
+                     <span class="material-icons">desktop_windows</span>
+                     <p class="pl-4">
+                        С устройства
+                     </p>
+                  </label>
+                  <input type="file" class="image" name="" id="addFiles" multiple style="display: none;">
                </div>
-            </SuperPopup>
+               <div class="flex-col flex-col-12">
+                  <label @click="loadBuffer" class="flex a-items-center">
+                     <span class="material-icons">upload_file</span>
+                     <p class="pl-4">
+                        Из буфера обмена
+                     </p>
+                  </label>
+               </div>
+            </div>
+         </SuperPopup>
+      </div>
+      <div class="flex-col">
+         <div @click="openChat" class="flex a-items-center pointer">
+            <span class="material-icons">chat</span>
+            <p class="pl-4 Task-tabs">{{ chatStatus.tabText }}</p>
+         </div>
       </div>
    </div>
-   <div v-if="subTasks">
-      <TaskItems
-         :Tasks = "subTasks"
-         @onClickTask="openTask"
-      />
-   </div>
+   <keep-alive>
+      <component 
+         :is="tabTamplate" 
+         :task_id = "this.options.task.task_id"
+         @openTask="openTask"/>
+   </keep-alive>
 </div>
-
-<!-- Окно для добавления файлов -->
-
 </template>
 
 <script>
 import { openDialog } from '@/components/Common/modalView';
-import TaskItems from '@/components/UserAccount/Common/TaskItems/TaskItems.vue';
-// import { getSubTasks } from '@/websync/tasks.js';
-import { mapGetters, mapActions } from 'vuex';
 import { openRightAside } from '@/components/UserAccount/RightAside/index';
+import DefaultTask from '@/components/UserAccount/Common/TaskItems/templates/defaultTask.vue';
+import TaskChat from '@/components/UserAccount/Common/TaskItems/templates/taskChat.vue';
 
 export default {
    // eslint-disable-next-line
@@ -75,8 +76,17 @@ export default {
          type: Object
       }
    },
-   components: {
-      TaskItems
+   data() {
+      return {
+         showAddFile: false,
+         configAddFile: {},
+         tabTamplate: DefaultTask,
+         tabChatText: 'Обсудить',
+         chatStatus: {
+            open: false,
+            tabText: 'Обсудить'
+         }
+      }
    },
    methods: {
       openAddTaskView(task_id) {
@@ -102,61 +112,26 @@ export default {
       loadBuffer() {
          console.log(navigator.clipboard.read);
       },
-      ...mapActions(['getSubTasks']),
-      subTaskList() {
-         this.getSubTasks(this.options.task.task_id).then((resolve) => {
-            this.subTasks = resolve
-         })
+      openChat() {
+         if(this.chatStatus.open) {
+            this.tabTamplate = DefaultTask
+            this.chatStatus.open = false;
+            this.chatStatus.tabText = 'Обсудить';
+         } else {
+            this.tabTamplate = TaskChat
+            this.chatStatus.open = true;
+            this.chatStatus.tabText = 'Закрыть';
+         }
       }
-   },
-   computed: mapGetters(['returnSubTasks']),
-   data() {
-      return {
-         showAddFile: false,
-         configAddFile: {},
-         tasks: [
-            {
-               task_id: 1,
-               title: 'Подтаск 1',
-               date_of_creation: '2023-01-24T02:07:21.000Z'
-            },
-            {
-               task_id: 2,
-               title: 'Подтаск 2',
-               date_of_creation: '2023-01-24T02:07:21.000Z'
-            },
-            {
-               task_id: 3,
-               title: 'Подтаск 3',
-               date_of_creation: '2023-01-24T02:07:21.000Z'
-            },
-            {
-               task_id: 4,
-               title: 'Подтаск 4',
-               date_of_creation: '2023-01-24T02:07:21.000Z'
-            }
-         ],
-         subTasks: []
-      }
-   },
-   beforeMount() {
-      this.subTaskList()
-   },
-   beforeUpdate() {
-      this.subTaskList()
-   },
+   }
 }
 </script>
 
 <style lang="less">
 .Task {
-   &-subTask {
-      cursor: pointer;
-      font-size: 15px;
-      &-text {
-         &:hover, :focus {
-            text-decoration: underline;
-         }
+   &-tabs {
+      &:hover {
+         text-decoration: underline;
       }
    }
 

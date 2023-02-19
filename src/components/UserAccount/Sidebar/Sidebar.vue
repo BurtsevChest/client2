@@ -30,12 +30,16 @@ export default {
    name: "",
    data() {
       return {
-         menuList: config
+         menuList: config,
+         theme: document.documentElement
       }
    },
    methods: {
       clearLocalStorage() {
+         this.theme.setAttribute('data-theme', 'light');
          localStorage.clear()
+         // Фиксим выход из приложения. Какого-то хуя если уйти на главную через router-link, при следующем заходе сервер шлёт 500 ошибку
+         window.location.href = '/'
       }
    }
 
