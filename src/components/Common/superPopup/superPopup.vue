@@ -1,7 +1,7 @@
 <template>
    <div v-if="show" class="SuperPopup radius-block p-10" :class="[positionStyle]">
       <div class="SuperPopup-wrapper">
-         <div class="flex flex-end pb-4">
+         <div v-if="!hideBtn" class="flex flex-end pb-4">
             <span @click="close" class="material-icons pointer" :style="{ color : colorBtn }"> {{ btn ? btn : 'close' }}</span>
          </div>
          <slot class="SuperPopup-content"></slot>
@@ -26,6 +26,9 @@ export default {
       },
       colorBtn: {
          type: String
+      },
+      hideBtn: {
+         type: Boolean
       }
    },
    // eslint-disable-next-line
@@ -45,12 +48,11 @@ export default {
 
 <style lang="less">
 .SuperPopup {
-   position: fixed;
+   position: absolute;
    min-width: 200px;
    background: white;
    box-shadow: 0 0 15px rgba(128, 128, 128, 0.4);
    z-index: 11111;
-   transform: translateX(-50%);
    overflow: hidden;
    color: black;
 

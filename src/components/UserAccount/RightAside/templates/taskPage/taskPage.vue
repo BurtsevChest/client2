@@ -16,35 +16,22 @@
             <p class="pl-4 Task-tabs">Подзадача</p>
          </div>
       </div>
-      <div class="flex-col relative">
-         <div class="flex a-items-center pointer" @click="openAddFile">
-            <span class="material-icons">attach_file</span>
-            <p class="pl-4 Task-tabs">Прикрепить</p>
-         </div>
-         <SuperPopup
-            v-model:show="showAddFile"
-            :config="configAddFile"
-            :positionStyle="'Task-addFileView'">
-            <div v-if="showAddFile" class="flex Task-addFiles-wrapper">
-               <div class="flex-col flex-col-12">
-                  <label for="addFiles" class="flex a-items-center">
-                     <span class="material-icons">desktop_windows</span>
-                     <p class="pl-4">
-                        С устройства
-                     </p>
-                  </label>
-                  <input type="file" class="image" name="" id="addFiles" multiple style="display: none;">
+      <div class="flex-col">
+         <PopupBtn :positionStyle="'Task-addFilePopup'" :hideBtn=true>
+            <template v-slot:popupBtn>
+               <div class="flex a-items-center">
+                  <span class="material-icons">attach_file</span>
+                  <div class="Task-addFileBtn Task-tabs">Прикрепить</div>
                </div>
-               <div class="flex-col flex-col-12">
-                  <label @click="loadBuffer" class="flex a-items-center">
-                     <span class="material-icons">upload_file</span>
-                     <p class="pl-4">
-                        Из буфера обмена
-                     </p>
-                  </label>
+            </template>
+            <template v-slot:popupTemplate>
+               <div class="">
+                  <div class="Task-addFilePopup-item ph-10 pv-16 pointer radius-block">
+                     С устройства
+                  </div>
                </div>
-            </div>
-         </SuperPopup>
+            </template>
+         </PopupBtn>
       </div>
       <div class="flex-col">
          <div @click="openChat" class="flex a-items-center pointer">
@@ -78,7 +65,6 @@ export default {
    },
    data() {
       return {
-         showAddFile: false,
          configAddFile: {},
          tabTamplate: DefaultTask,
          tabChatText: 'Обсудить',
@@ -104,10 +90,6 @@ export default {
                task
             }
          })
-      },
-      openAddFile(e) {
-         this.showAddFile = true
-         this.configAddFile = e
       },
       loadBuffer() {
          console.log(navigator.clipboard.read);
@@ -135,14 +117,15 @@ export default {
       }
    }
 
-   &-addFiles-wrapper {
-      width: 200px;
-   }
+   &-addFilePopup {
+      top: 0;
+      right: 0;
 
-   &-addFileView {
-      position: absolute;
-      top: 30px;
-      right: -130%;
+      &-item {
+         &:hover {
+            box-shadow: 0 0 12px rgba(128, 128, 128, 0.5);
+         }
+      }
    }
 }
 </style>

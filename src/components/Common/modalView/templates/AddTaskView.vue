@@ -3,22 +3,25 @@
       <h2 class="user_account-h2 text-center pb-8">Добавить задачу</h2>
       <div class="flex pb-10">
          <div class="flex-col flex-col-6 flex-col-sm-12 relative">
-            <div class="flex a-items-center relative">
-               <h3 class="user_account-h3">Исполнитель</h3>
-               <span @click="openPersonView" class="material-icons pl-4 AddTaskView-pointer">person</span>
-               <div class="flex a-items-center pl-4">
-                  {{ user.name }} {{ user.last_name }}
-               </div>
-               <SuperPopup
-                  v-model:show="showPersonView"
-                  :config="configPersonView"
-                  :positionStyle="'AddTaskView-personView'">
+            <PopupBtn :positionStyle="'AddTaskView-personView'" :hideBtn=true>
+               <template v-slot:popupBtn>
+                  <div class="flex a-items-center">
+                     <h3 class="user_account-h3">Исполнитель</h3>
+                     <div class="flex">
+                        <span class="material-icons pl-4">person</span>
+                        <div class="flex a-items-center pl-4">
+                           {{ user.name }} {{ user.last_name }}
+                        </div>
+                     </div>
+                  </div>
+               </template>
+               <template v-slot:popupTemplate>
                   <SelectUsers
                      @onClickUser = "setUser"
                      :userList="getUsersCommandList"
                   />
-               </SuperPopup>
-            </div>
+               </template>
+            </PopupBtn>
             <p class="error AddTaskView-error_position" v-if="errorParams.responsible_id">Исполнитель не выбран</p>
          </div>
          <div class="flex-col flex-col-6 flex-col-sm-12 relative">
@@ -32,15 +35,14 @@
                   </div>
                </div>
                <div class="flex-col flex a-items-center relative">
-                  <span @click="openDate" class="material-icons pl-8 AddTaskView-pointer">calendar_month</span>
-                  <SuperPopup
-                     v-model:show="showDate"
-                     :config="configDate"
-                     :btn="'check_circle'"
-                     :colorBtn = "'green'"
-                     :positionStyle="'AddTaskView-dateView'">
+                  <PopupBtn :positionStyle="'AddTaskView-dateView'" :hideBtn=true>
+                     <template v-slot:popupBtn>
+                        <span class="material-icons pl-8">calendar_month</span>
+                     </template>
+                     <template v-slot:popupTemplate>
                         <v-date-picker mode="date" v-model="date1"  @dayclick="setDate"/>
-                  </SuperPopup>
+                     </template>
+                  </PopupBtn>
                </div>
             </div>
             <p class="error AddTaskView-error_position" v-if="errorParams.date_of_completion">Дата не может быть меньше текущей даты</p>
@@ -58,12 +60,6 @@
       </div>
       <button @click="setTask" class="button">Добавить</button>
    </div>
-
-   <!-- Для календаря -->
-   
-
-   <!-- Для выбора исполнителя -->
-   
 </template>
 
 <script>
@@ -95,10 +91,6 @@ export default {
             responsible_id: '',
             date_of_completion: '',
          },
-         showDate: false,
-         configDate: {},
-         showPersonView: false,
-         configPersonView: {},
          date1: new Date(),
          date: dateToNumbers(new Date()),
          user: [],
@@ -122,10 +114,6 @@ export default {
             closeDialog()
          }
       },
-      openDate(e) {
-         this.showDate = true
-         this.configDate = e
-      },
       openPersonView(e) {
          this.showPersonView = true
          this.configPersonView = e
@@ -135,7 +123,6 @@ export default {
       },
       setUser(user) {
          this.user = user,
-         this.showPersonView = false
          this.taskParams.responsible_id = user.user_id
       },
       checkParams() {
@@ -198,15 +185,14 @@ export default {
    }
 
    &-dateView {
-      position: absolute;
-      top: 30px;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
    }
 
    &-personView {
-      position: absolute;
-      top: 30px;
-      right: 0;
+      top: 100%;
+      left: 0;
    }
 }
-
 </style>

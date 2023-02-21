@@ -11,7 +11,24 @@
                   </router-link>
                </div>
                <div class="flex a-items-center flex-col">
-                  <a class="pointer Header-signUp" @click="signUp">Войти</a>
+                  <PopupBtn :positionStyle="'Header-popup'" :hideBtn=true>
+                     <template v-slot:popupBtn>
+                        <div class="Header-signUp">Popup</div>
+                     </template>
+                     <template v-slot:popupTemplate>
+                        <div class="pb-8">
+                           <div class="Header-popup-item ph-10 pv-16 pointer radius-block">
+                              PopupItem-1
+                           </div>
+                        </div>
+                        <div>
+                           <div class="Header-popup-item ph-10 pv-16 pointer radius-block">
+                              PopupItem-2
+                           </div>
+                        </div>
+                     </template>
+                  </PopupBtn>
+                  <a class="pointer Header-signUp pl-10" @click="signUp">Войти</a>
                   <div class="flex a-items-center pl-40">
                      <div class="Header-burger pointer" @click="openMenu" :class="{ 'Header-burger-active' : HeaderStatus }">
                         <span></span>
@@ -56,7 +73,8 @@ export default {
    data() {
       return {
          stasusMenu: false,
-         scrollPage: false
+         scrollPage: false,
+         showPopup: false
       }
    },
    methods: {
@@ -78,6 +96,9 @@ export default {
          }else {
             openHeaderMenu()
          }
+      },
+      openPopup() {
+         this.showPopup = true
       }
    },
    computed: mapGetters(['HeaderStatus']),
@@ -93,7 +114,7 @@ export default {
 }
 </script>
 
-<style lang="less" scoped>
+<style lang="less">
 .Header {
    position: fixed;
    top: 0;
@@ -203,6 +224,17 @@ export default {
          &::before {
             bottom: 50%;
             transform: rotate(45deg) translateY(50%);
+         }
+      }
+   }
+
+   &-popup {
+      top: 0;
+      right: 0;
+
+      &-item {
+         &:hover {
+            box-shadow: 0 0 12px rgba(128, 128, 128, 0.5);
          }
       }
    }
