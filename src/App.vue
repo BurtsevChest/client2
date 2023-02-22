@@ -51,6 +51,7 @@ export default {
 @import '@/assets/css/themes.css';
 @import '@/assets/css/ui_styles.css';
 @import '@/assets/css/grid.less';
+@import '@/assets/css/flag-icon.min.css';
 
 main {
   padding: 24px;

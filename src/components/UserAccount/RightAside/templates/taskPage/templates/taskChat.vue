@@ -4,16 +4,16 @@
          <div class="TaskChat-content flex-column">
             <div class="TaskChat-messages" id="messageList">
                <div v-for="item in Messages" v-bind:key="item.id">
-                  <div v-if="userId === item.user_id" class="TaskChat-msg TaskChat-msg-my radius-block mt-16 pv-16 ph-10 box-shadow">
+                  <div v-if="userId === item.user_id" class="TaskChat-msg TaskChat-msg-my radius-block mt-16 pv-16 ph-10">
                      {{ item.text }}
                   </div>
-                  <div v-else class="TaskChat-msg radius-block mt-16 pv-16 ph-10 box-shadow">
+                  <div v-else class="TaskChat-msg radius-block mt-16 pv-16 ph-10">
                      {{ item.text }}
                   </div>
                   
                </div>
             </div>
-            <div class="TaskChat-menu mt-20 radius-block ph-10 pv-10 flex flex-space box-shadow">
+            <div class="TaskChat-menu mt-20 radius-block ph-10 pv-10 flex flex-space">
                <span class="material-icons pointer">person</span>
                <span class="material-icons pointer pl-4">attach_file</span>
                <input type="text" v-model.trim="inputText" placeholder="Сообщение..." class="empty_flex pl-6">
@@ -110,6 +110,7 @@ export default {
 
    &-menu {
       background-color: var(--text-block-hover);
+      box-shadow: var(--block-box-shadow);
       width: 100%;
    }
 
@@ -127,6 +128,8 @@ export default {
       max-width: 60%;
       margin-right: auto;
       background-color: var(--text-block-hover);
+      box-shadow: var(--block-box-shadow);
+
       &-my {
          margin-left: auto;
          margin-right: 0;

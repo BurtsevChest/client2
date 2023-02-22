@@ -13,22 +13,24 @@
                <div class="flex a-items-center flex-col">
                   <PopupBtn :positionStyle="'Header-popup'" v-model:show="showPopup" :hideBtn=true >
                      <template v-slot:popupBtn>
-                        <div class="Header-signUp">Popup</div>
+                        <span class="flag-icon" :class="locale"></span>
                      </template>
                      <template v-slot:popupTemplate>
                         <div class="pb-8">
-                           <div class="Header-popup-item ph-10 pv-16 pointer radius-block" @click="closePopup('PopupItem-1')">
-                              PopupItem-1
+                           <div class="Header-popup-item ph-10 pv-16 pointer radius-block flex a-items-center" @click="closePopup('flag-icon-ru')">
+                              <span class="flag-icon flag-icon-ru"></span>
+                              <div class="pl-8">Россия</div>
                            </div>
                         </div>
                         <div>
-                           <div class="Header-popup-item ph-10 pv-16 pointer radius-block">
-                              PopupItem-2
+                           <div class="Header-popup-item ph-10 pv-16 pointer radius-block flex a-items-center" @click="closePopup('flag-icon-us')">
+                              <span class="flag-icon flag-icon-us"></span>
+                              <div class="pl-8">English</div>
                            </div>
                         </div>
                      </template>
                   </PopupBtn>
-                  <a class="pointer Header-signUp pl-10" @click="signUp">Войти</a>
+                  <a class="pointer Header-signUp ml-18" @click="signUp">Войти</a>
                   <div class="flex a-items-center pl-40">
                      <div class="Header-burger pointer" @click="openMenu" :class="{ 'Header-burger-active' : HeaderStatus }">
                         <span></span>
@@ -74,7 +76,8 @@ export default {
       return {
          stasusMenu: false,
          scrollPage: false,
-         showPopup: false
+         showPopup: false,
+         locale: 'flag-icon-ru',
       }
    },
    methods: {
@@ -100,8 +103,8 @@ export default {
       openPopup() {
          this.showPopup = true
       },
-      closePopup(item) {
-         console.log(item);
+      closePopup(locale) {
+         this.locale = locale
          this.showPopup = false
       }
    },
@@ -233,8 +236,8 @@ export default {
    }
 
    &-popup {
-      top: 0;
-      right: 0;
+      top: -5px;
+      right: -5px;
 
       &-item {
          &:hover {
