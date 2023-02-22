@@ -1,4 +1,6 @@
 import Tasks from '@/api/task/index.js';
+import { generateDate } from '@/components/Common/helpers/dateToNumbers';
+
 let USER;
 if(localStorage.user) {
    USER = JSON.parse(localStorage.user);
@@ -10,9 +12,13 @@ export default {
          Tasks.updateTask(task)
       },
       getTask(state, userId) {
-         Tasks.getTasks(userId).then((res)=>{
-            state.commit('setTasks', res.data)
-         })
+         if(state.getters.returnTasks.length === 0) {
+            setTimeout(() => {
+               Tasks.getTasks(userId).then((res)=>{
+                  state.commit('setTasks', generateDate(res.data));
+               });
+            }, 2000) 
+         }
       },
       setTask(state, task) {
          Tasks.setTask(task).then((res)=>{
@@ -22,15 +28,10 @@ export default {
          })
       },
       getSubTasks(state, task_id) {
-         return new Promise(function(resolve, reject) {
-            Tasks.getSubTasks(task_id).then((res) => {
-               if(res.data) {
-                  state.commit('setSubTasks', res.data)
-                  resolve(res.data)
-               }
-            }).catch((err) => {
-               reject(err)
-            })
+         Tasks.getSubTasks(task_id).then((res) => {
+            if(res.data) {
+               state.commit('setSubTasks', generateDate(res.data));
+            }
          })
       }
    },
@@ -58,7 +59,8 @@ export default {
             }
             return false;
          })
-      }
+      },
+      
    },
    state: {
       tasks: [],

@@ -14,3 +14,17 @@ export function dateToNumbers(date) {
 
    return day + '.' + month + '.' + year
 }
+
+/**
+ * 
+ * @param {*} date Принимает массив тасков. 
+ * @returns Добавляет поле date в виде dd.mm.yy
+ */
+
+export function generateDate(tasks) {
+   tasks.forEach((item) => {
+      var dat = new Date(item.date_of_completion);
+      item.date = dateToNumbers(dat);
+   });
+   return tasks;
+}

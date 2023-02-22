@@ -1,16 +1,16 @@
 <template>
-   <div class="SelectUsers">
+   <div class="SelectUsers pt-10">
       <div class="flex">
          <div class="flex-col flex-col-12">
-            <input type="text" class="input pv-8 ph-4" placeholder="Найти...">
+            <SearchField :placeholder="'Найти...'"/>
          </div>
-         <div v-for="user in userList" v-bind:key="user.user_id" class="flex-col flex-col-12">
+         <div v-for="user in userList" v-bind:key="user.user_id" class="SelectUsers-user-lastItem flex-col flex-col-12">
             <div class="SelectUsers-user flex flex-noGutter a-items-center p-10 radius-block" @click="setUser(user)">
                <div class="flex-col flex a-items-center flex-col-1">
                   <span class="material-icons">person</span>
                </div>
                <div class="flex-col flex a-items-center flex-col-11">
-                  <div class="pl-8">
+                  <div class="pl-8 ">
                      {{ user.name }} {{ user.last_name }}
                   </div>
                </div>
@@ -60,6 +60,10 @@ export default {
       transition: 0.3s;
       &:hover, :focus {
          background: rgba(30, 41, 59, 0.1);
+      }
+
+      &-lastItem:last-child {
+         padding-bottom: 0;
       }
    }
 }

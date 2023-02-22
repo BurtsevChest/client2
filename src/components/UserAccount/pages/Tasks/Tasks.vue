@@ -1,14 +1,14 @@
 <template>
    <div class="Tasks flex flex-column">
-      <div class="flex">
+      <div class="flex mb-20">
          <div class="flex flex-col-8">
-            <div class="flex-col">
-            <button @click="openAddTaskView" class="Tasks-addTask-btn flex flex-center a-items-center mb-16">
+            <div class="flex-col flex a-items-center">
+            <button @click="openAddTaskView" class="Tasks-addTask-btn flex flex-center a-items-center">
                <span class="material-icons Tasks-addTask-btn-icon">add</span>
             </button>
             </div>
-            <div class="flex-col">
-               <input type="text" class="input" @input="filterList" v-model.trim="filterString" placeholder="Найти по тексту">
+            <div class="flex-col flex a-items-center">
+               <SearchField :placeholder="'Найти...'" @clickSearch="filterToString"/>
             </div>
             <div class="empty_flex"></div>
             <div class="flex a-self-end">
@@ -32,7 +32,7 @@
                   :Tasks = "returnTasks"
                   @onClickTask = openTask
                   :itemClass="'Tasks-item'"
-                  :activeItemClass = "'active'"
+                  :activeItemClass = "'Tasks-item-active'"
                />
             </div>
             <p v-else class="user_account-h2">Задач нет</p>
@@ -63,7 +63,6 @@ import { mapGetters } from 'vuex';
 import { getTasks, filterResponsibleTask } from '@/websync/tasks';
 import { openDialog } from '@/components/Common/modalView';
 import { openRightAside } from '@/components/UserAccount/RightAside/index';
-import { dateToNumbers } from '@/components/Common/helpers/dateToNumbers';
 import TaskItems from '@/components/UserAccount/Common/TaskItems/TaskItems.vue';
 
 export default {
@@ -77,13 +76,12 @@ export default {
          filterString: '',
          filteredArr: [],
          activeTab: 'my',
-         activeTask: '',
+         activeTask: 'Tasks-item',
          tasks: []
       }
    },
    methods: {
       openTask(task) {
-         this.activeTask = task
          openRightAside({
             template: 'components/UserAccount/RightAside/templates/taskPage/taskPage.vue',
             options: {
@@ -100,24 +98,17 @@ export default {
          this.activeTab = name
          this.filterTask(name)
       },
-      convertDates() {
-         this.returnTasks.forEach((item) => {
-            item.date_of_creation = new Date(item.date_of_creation)
-            item.date_of_creation = dateToNumbers(item.date_of_creation)
-         })
-      },
       filterTask(tab) {
          filterResponsibleTask(tab)
+      },
+      filterToString(text) {
+         console.log(text);
       }
    },
    computed: mapGetters(["returnTasks"]),
    beforeMount() {
       getTasks()
-      
    },
-   mounted() {
-      this.convertDates()
-   }
 }
 </script>
 
@@ -125,6 +116,10 @@ export default {
 .Tasks {
    height: 100%;
    flex-wrap: unset;
+
+   &-search-field {
+      width: auto;
+   }
 
    &-addTask-btn {
       color: black;
@@ -146,13 +141,13 @@ export default {
    }
 
    &-item {
-      border-radius: 10px;
+      border-radius: 20px;
       transition: 0.2s;
       &:hover, &:focus {
          background: #f1f5f9;
       }
 
-      &.active {
+      &-active {
          background: #f1f5f9;
       }
 

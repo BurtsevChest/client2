@@ -30,6 +30,16 @@ export default {
       },
       hideBtn: {
          type: Boolean
+      },
+      show: {
+         type: Boolean
+      }
+   },
+   watch: {
+      show() {
+         if(this.show === false) {
+            this.close()
+         }
       }
    },
    data() {
@@ -39,10 +49,12 @@ export default {
    },
    methods: {
       openPopup() {
+         this.$emit('update:show', true);
          this.showPopup = true
       },
       close() {
-         this.showPopup = false
+         this.showPopup = false;
+         this.$emit('update:show', false);
       },
       closePopupInsideBody(event) {
          const target = event.target;

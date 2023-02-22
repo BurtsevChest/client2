@@ -3,7 +3,7 @@
       <h2 class="user_account-h2 text-center pb-8">Добавить задачу</h2>
       <div class="flex pb-10">
          <div class="flex-col flex-col-6 flex-col-sm-12 relative">
-            <PopupBtn :positionStyle="'AddTaskView-personView'" :hideBtn=true>
+            <PopupBtn :positionStyle="'AddTaskView-personView'" v-model:show="showUserView" :hideBtn=true>
                <template v-slot:popupBtn>
                   <div class="flex a-items-center">
                      <h3 class="user_account-h3">Исполнитель</h3>
@@ -104,6 +104,7 @@ export default {
             parent_id: null,
             status_task_id: null
          },
+         showUserView: false
       }
    },
    methods: {
@@ -114,14 +115,11 @@ export default {
             closeDialog()
          }
       },
-      openPersonView(e) {
-         this.showPersonView = true
-         this.configPersonView = e
-      },
       setDate(date) {
          this.date = dateToNumbers(date.date)
       },
       setUser(user) {
+         this.showUserView = false
          this.user = user,
          this.taskParams.responsible_id = user.user_id
       },

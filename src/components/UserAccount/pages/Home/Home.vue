@@ -14,7 +14,7 @@
                      {{ user.email }}
                   </a>
                </p>
-               <div @click="clearLocalStorage">
+               <div class="pointer" @click="clearLocalStorage">
                   Выйти
                </div>
             </div>

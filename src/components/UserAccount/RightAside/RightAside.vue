@@ -31,7 +31,7 @@ export default {
    box-shadow: 0 0 15px rgb(128 128 128 / 50%);
    background-color: var(--background-right-aside-color);
    color: var(--text-color);
-   transition: 0.3s ease;
+   transition: 0.3s;
 
    @media (max-width: 1600px) {
       width: 400px;

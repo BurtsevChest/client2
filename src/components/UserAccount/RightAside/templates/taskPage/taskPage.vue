@@ -17,21 +17,10 @@
          </div>
       </div>
       <div class="flex-col">
-         <PopupBtn :positionStyle="'Task-addFilePopup'" :hideBtn=true>
-            <template v-slot:popupBtn>
-               <div class="flex a-items-center">
-                  <span class="material-icons">attach_file</span>
-                  <div class="Task-addFileBtn Task-tabs">Прикрепить</div>
-               </div>
-            </template>
-            <template v-slot:popupTemplate>
-               <div class="">
-                  <div class="Task-addFilePopup-item ph-10 pv-16 pointer radius-block">
-                     С устройства
-                  </div>
-               </div>
-            </template>
-         </PopupBtn>
+         <div class="flex a-items-center pointer">
+            <span class="material-icons">attach_file</span>
+            <div class="Task-addFileBtn Task-tabs">Прикрепить</div>
+         </div>
       </div>
       <div class="flex-col">
          <div @click="openChat" class="flex a-items-center pointer">
@@ -114,17 +103,6 @@ export default {
    &-tabs {
       &:hover {
          text-decoration: underline;
-      }
-   }
-
-   &-addFilePopup {
-      top: 0;
-      right: 0;
-
-      &-item {
-         &:hover {
-            box-shadow: 0 0 12px rgba(128, 128, 128, 0.5);
-         }
       }
    }
 }

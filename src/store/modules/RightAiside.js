@@ -1,3 +1,7 @@
+// придумать защиту от дурака при повторном открытии RightAside с теми же параметрами (мешает Proxy)
+
+const ANIMATION_TIMEOUT = 300;
+
 export default {
    actions: {},
    mutations: {
@@ -6,9 +10,10 @@ export default {
          setTimeout(() => {
             state.openedTemplate = ''
             state.config = ''
-         }, 300);
+         }, ANIMATION_TIMEOUT);
       },
       openRightAside(state, options) {
+         state.templateSRC = options.template;
          state.openedTemplate = '';
          import('@/' + options.template).then((res)=>{
             state.openedTemplate = res.default
@@ -21,6 +26,7 @@ export default {
    state: {
       status: false,
       openedTemplate: '',
+      templateSRC: '',
       config: []
    },
    getters: {

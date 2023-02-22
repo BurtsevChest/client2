@@ -11,6 +11,9 @@
 <script>
 import TaskItems from '@/components/UserAccount/Common/TaskItems/TaskItems.vue';
 import Tasks from '@/api/task/index.js';
+import { mapGetters } from 'vuex';
+import { generateDate } from '@/components/Common/helpers/dateToNumbers';
+// import { getSubTasks } from '@/websync/tasks';
 
 export default {
    // eslint-disable-next-line
@@ -28,13 +31,14 @@ export default {
          subTasks: [],
       }
    },
+   computed: mapGetters(['returnSubTasks']),
    methods: {
       openTask(task) {
          this.$emit('openTask', task)
       },
       getSubTaskList() {
          Tasks.getSubTasks(this.task_id).then((res) => {
-            this.subTasks = res.data
+            this.subTasks = generateDate(res.data)
          })
       }
    },

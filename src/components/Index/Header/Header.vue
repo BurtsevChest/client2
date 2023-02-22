@@ -11,13 +11,13 @@
                   </router-link>
                </div>
                <div class="flex a-items-center flex-col">
-                  <PopupBtn :positionStyle="'Header-popup'" :hideBtn=true>
+                  <PopupBtn :positionStyle="'Header-popup'" v-model:show="showPopup" :hideBtn=true >
                      <template v-slot:popupBtn>
                         <div class="Header-signUp">Popup</div>
                      </template>
                      <template v-slot:popupTemplate>
                         <div class="pb-8">
-                           <div class="Header-popup-item ph-10 pv-16 pointer radius-block">
+                           <div class="Header-popup-item ph-10 pv-16 pointer radius-block" @click="closePopup('PopupItem-1')">
                               PopupItem-1
                            </div>
                         </div>
@@ -99,6 +99,10 @@ export default {
       },
       openPopup() {
          this.showPopup = true
+      },
+      closePopup(item) {
+         console.log(item);
+         this.showPopup = false
       }
    },
    computed: mapGetters(['HeaderStatus']),
