@@ -13,14 +13,18 @@ export default {
       },
       getTask(state, userId) {
          if(state.getters.returnTasks.length === 0) {
-            setTimeout(() => {
-               Tasks.getTasks(userId).then((res)=>{
-                  state.commit('setTasks', generateDate(res.data));
-               });
-            }, 2000) 
+            Tasks.getTasks(userId).then((res)=>{
+               state.commit('setTasks', generateDate(res.data));
+            });
          }
       },
+      SOCKET_SETTASK(state, task) {
+         state.commit('setOneTask', generateDate(task));
+      },
       setTask(state, task) {
+         Tasks.setTask(task);
+      },
+      setTask_old(state, task) {
          Tasks.setTask(task).then((res)=>{
             if(res.data.responsible_id === USER.user_id) {
                state.commit('setOneTask', res.data)
