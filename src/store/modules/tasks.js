@@ -47,7 +47,8 @@ export default {
                }
             })
          }
-      }
+      },
+      
    },
    mutations: {
       setTasks(state, Tasks) {
@@ -64,6 +65,9 @@ export default {
       },
       setopenedTaskId(state, id) {
          state.openedTaskId = id
+      },
+      closeTask(state) {
+         state.openedTaskId = '';
       }
    },
    state: {

@@ -42,3 +42,8 @@ export function filterResponsibleTask(param) {
 export function openTask(task) {
    store.dispatch('openTask', task)
 }
+
+export function closeTask(task) {
+   store.commit('close');
+   store.commit('closeTask', task);
+}

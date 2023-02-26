@@ -1,5 +1,8 @@
 <template>
 <div class="Task flex flex-column empty_flex">
+   <button class="Task-closeBtn a-self-end" @click="close">
+      <span class="material-icons flex flex-center a-items-center">close</span>
+   </button>
    <h2 class="user_account-h2 pb-16">
       {{ options.task.title }}
       {{ options.task.task_id }}
@@ -42,7 +45,7 @@
 import { openDialog } from '@/components/Common/modalView';
 import DefaultTask from '@/components/UserAccount/RightAside/templates/taskPage/templates/defaultTask.vue';
 import TaskChat from '@/components/UserAccount/RightAside/templates/taskPage/templates/taskChat.vue';
-import { openTask } from '@/websync/tasks';
+import { openTask, closeTask } from '@/websync/tasks';
 
 export default {
    // eslint-disable-next-line
@@ -75,6 +78,9 @@ export default {
       OpenTask(task) {
          openTask(task)
       },
+      close() {
+         closeTask()
+      },
       loadBuffer() {
          console.log(navigator.clipboard.read);
       },
@@ -88,7 +94,7 @@ export default {
             this.chatStatus.open = true;
             this.chatStatus.tabText = 'Закрыть';
          }
-      }
+      },
    }
 }
 </script>
@@ -99,6 +105,14 @@ export default {
       &:hover {
          text-decoration: underline;
       }
+   }
+
+   &-closeBtn {
+      display: block;
+      width: 40px;
+      height: 40px;
+      background: rgba(128, 128, 128, 0.2);
+      border-radius: 50%;
    }
 }
 </style>
