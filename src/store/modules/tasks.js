@@ -3,10 +3,6 @@ import { generateDate } from '@/components/Common/helpers/dateToNumbers';
 import { openRightAside } from '@/components/UserAccount/RightAside';
 
 const TASK_TEMPLATE = 'components/UserAccount/RightAside/templates/taskPage/taskPage.vue';
-let USER;
-if(localStorage.user) {
-   USER = JSON.parse(localStorage.user);
-}
 
 export default {
    actions: {
@@ -25,13 +21,6 @@ export default {
       },
       setTask(state, task) {
          Tasks.setTask(task);
-      },
-      setTask_old(state, task) {
-         Tasks.setTask(task).then((res)=>{
-            if(res.data.responsible_id === USER.user_id) {
-               state.commit('setOneTask', res.data)
-            }
-         })
       },
       getSubTasks(state, task_id) {
          return new Promise(function(resolve, reject) {
@@ -73,18 +62,6 @@ export default {
       clearSubTasks(state) {
          state.setSubTasks = []
       },
-      filterResponsibleTask(state, param) {
-         state.tasks.filter((item) => {
-            if(param === 'my' && item.responsible_id === USER.user_id) {
-               return true;
-            }
-
-            if(param === 'from' && item.creator_id === USER.user_id) {
-               return true;
-            }
-            return false;
-         })
-      },
       setopenedTaskId(state, id) {
          state.openedTaskId = id
       }
@@ -98,7 +75,6 @@ export default {
       returnTasks(state) {
          return state.tasks
       },
-
       returnSubTasks(state) {
          return state.subTask
       },

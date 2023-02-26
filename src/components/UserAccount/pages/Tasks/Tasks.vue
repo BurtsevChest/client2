@@ -60,9 +60,8 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import { getTasks, filterResponsibleTask, openTask } from '@/websync/tasks';
+import { getTasks, openTask } from '@/websync/tasks';
 import { openDialog } from '@/components/Common/modalView';
-// import { openRightAside } from '@/components/UserAccount/RightAside/index';
 import TaskItems from '@/components/UserAccount/Common/TaskItems/TaskItems.vue';
 
 export default {
@@ -85,16 +84,10 @@ export default {
          openTask(task)
       },
       openAddTaskView() {
-         openDialog({
-            template: 'components/Common/modalView/templates/AddTaskView.vue'
-         })
+         openDialog({template: 'components/Common/modalView/templates/AddTaskView.vue'});
       },
       setTab(name) {
          this.activeTab = name
-         this.filterTask(name)
-      },
-      filterTask(tab) {
-         filterResponsibleTask(tab)
       },
       filterToString(text) {
          console.log(text);
@@ -103,7 +96,7 @@ export default {
    computed: mapGetters(["returnTasks"]),
    beforeMount() {
       getTasks()
-   },
+   }
 }
 </script>
 

@@ -85,12 +85,7 @@ export default {
          if(localStorage.accessToken) {
             this.$router.push('/user_account/home')
          }else {
-            openDialog({
-               template: 'components/Index/Header/templates/Login/Login.vue',
-               options: {
-                  test: 'Hello'
-               }
-            })
+            openDialog({template: 'components/Index/Header/templates/Login/Login.vue'});
          }
       },
       openMenu() {

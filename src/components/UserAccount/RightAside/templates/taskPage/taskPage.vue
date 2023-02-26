@@ -40,7 +40,6 @@
 
 <script>
 import { openDialog } from '@/components/Common/modalView';
-// import { openRightAside } from '@/components/UserAccount/RightAside/index';
 import DefaultTask from '@/components/UserAccount/RightAside/templates/taskPage/templates/defaultTask.vue';
 import TaskChat from '@/components/UserAccount/RightAside/templates/taskPage/templates/taskChat.vue';
 import { openTask } from '@/websync/tasks';
