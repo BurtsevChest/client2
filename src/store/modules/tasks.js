@@ -19,7 +19,7 @@ export default {
          }
       },
       SOCKET_SETTASK(state, task) {
-         state.commit('setOneTask', generateDate(task));
+         state.commit('setOneTask', task);
       },
       setTask(state, task) {
          Tasks.setTask(task);
@@ -44,7 +44,7 @@ export default {
          state.tasks = Tasks
       },
       setOneTask(state, Task) {
-         state.tasks.push(Task) 
+         state.tasks.unshift(Task) 
       },
       setSubTasks(state, subTasks) {
          state.subTask = subTasks

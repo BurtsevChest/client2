@@ -26,6 +26,7 @@
    </div>
 </template>
 <script>
+const SCELETON_TIMEOUT = 1000;
 
 export default {
    // eslint-disable-next-line
@@ -58,10 +59,18 @@ export default {
       openTask(task) {
          this.activeTask = task,
          this.$emit('onClickTask', task)
+      },
+      clearSceleton() {
+         setTimeout(() => {
+            this.sceletonTasks.length = 0
+         }, SCELETON_TIMEOUT)
       }
    },
    beforeMount() {
       this.tasks = this.Tasks
+   },
+   mounted() {
+      this.clearSceleton()
    }
 }
 </script>

@@ -5,9 +5,13 @@
  */
 
 export function dateToNumbers(date) {
-   let day = date.getDate();
-   let month = date.getMonth() + 1;
-   let year = date.getFullYear();
+   var newDate = date;
+   if(!(date instanceof Date)) {
+      newDate = new Date(date)
+   }
+   let day = newDate.getDate();
+   let month = newDate.getMonth() + 1;
+   let year = newDate.getFullYear();
 
    if(day < 10) day = '0'+day
    if(month < 10) month = '0'+month
