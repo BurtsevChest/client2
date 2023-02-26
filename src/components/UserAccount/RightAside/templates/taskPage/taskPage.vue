@@ -33,16 +33,17 @@
       <component 
          :is="tabTamplate" 
          :task_id = "this.options.task.task_id"
-         @openTask="openTask"/>
+         @openTask="OpenTask"/>
    </keep-alive>
 </div>
 </template>
 
 <script>
 import { openDialog } from '@/components/Common/modalView';
-import { openRightAside } from '@/components/UserAccount/RightAside/index';
+// import { openRightAside } from '@/components/UserAccount/RightAside/index';
 import DefaultTask from '@/components/UserAccount/RightAside/templates/taskPage/templates/defaultTask.vue';
 import TaskChat from '@/components/UserAccount/RightAside/templates/taskPage/templates/taskChat.vue';
+import { openTask } from '@/websync/tasks';
 
 export default {
    // eslint-disable-next-line
@@ -72,13 +73,8 @@ export default {
             }
          })
       },
-      openTask(task) {
-         openRightAside({
-            template: 'components/UserAccount/RightAside/templates/taskPage/taskPage.vue',
-            options: {
-               task
-            }
-         })
+      OpenTask(task) {
+         openTask(task)
       },
       loadBuffer() {
          console.log(navigator.clipboard.read);

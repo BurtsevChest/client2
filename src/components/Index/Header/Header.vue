@@ -44,17 +44,17 @@
          <div class="container">
             <div class="flex pt-20">
                <div class="flex-col flex-col-4 flex-col-xm-6 flex-col-sm-12">
-                  <router-link class="greyBlock ph-12 pv-16" to="/landing">
+                  <router-link class="greyBlock radius-block ph-12 pv-16" to="/landing">
                      LandingPage
                   </router-link>
                </div>
                <div class="flex-col flex-col-4 flex-col-xm-6 flex-col-sm-12">
-                  <div class="greyBlock ph-12 pv-16">
+                  <div class="greyBlock radius-block ph-12 pv-16">
                      sdsd
                   </div>
                </div>
                <div class="flex-col flex-col-4 flex-col-xm-6 flex-col-sm-12">
-                  <div class="greyBlock ph-12 pv-16">
+                  <div class="greyBlock radius-block ph-12 pv-16">
                      sdsd
                   </div>
                </div>

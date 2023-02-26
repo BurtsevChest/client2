@@ -30,7 +30,7 @@
             <div v-if="tasks" class="flex flex-noGutter flex-column">
                <TaskItems
                   :Tasks = "returnTasks"
-                  @onClickTask = openTask
+                  @onClickTask = OpenTask
                   :itemClass="'Tasks-item'"
                   :activeItemClass = "'Tasks-item-active'"
                />
@@ -60,9 +60,9 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import { getTasks, filterResponsibleTask } from '@/websync/tasks';
+import { getTasks, filterResponsibleTask, openTask } from '@/websync/tasks';
 import { openDialog } from '@/components/Common/modalView';
-import { openRightAside } from '@/components/UserAccount/RightAside/index';
+// import { openRightAside } from '@/components/UserAccount/RightAside/index';
 import TaskItems from '@/components/UserAccount/Common/TaskItems/TaskItems.vue';
 
 export default {
@@ -81,13 +81,8 @@ export default {
       }
    },
    methods: {
-      openTask(task) {
-         openRightAside({
-            template: 'components/UserAccount/RightAside/templates/taskPage/taskPage.vue',
-            options: {
-               task
-            }
-         })
+      OpenTask(task) {
+         openTask(task)
       },
       openAddTaskView() {
          openDialog({

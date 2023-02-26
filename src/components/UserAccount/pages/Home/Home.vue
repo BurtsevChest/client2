@@ -66,6 +66,9 @@ export default {
    },
    computed: mapGetters(['getUser']),
    beforeMount() {
+      if(!this.user.avatar) {
+         this.user.avatar = 'empty_avatar.png'
+      }
       // Lang.getTranslate('Home').then((res) => {
       //    this.lang = res.default
       // })
@@ -82,7 +85,7 @@ export default {
       border-radius: 50%;
 
       &>img{
-         width: 150%;
+         width: 100%;
          max-width: none;
       }
    }

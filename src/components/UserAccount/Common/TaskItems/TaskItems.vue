@@ -1,6 +1,5 @@
 <template>
-   <div v-if="tasks.length != 0">
-      <div class="flex flex-noGutter flex-column">
+   <div class="flex flex-noGutter flex-column">
          <div v-for="item in tasks" v-bind:key="item.task_id" class="flex-col">
             <div @click="openTask(item)" :class="[itemClass] " class="TaskItem pointer flex flex-space ph-10 pv-16 mb-8">
                <div class="flex">
@@ -11,6 +10,10 @@
                      <h2 class="TaskItem-title">Andrey Churilov</h2>
                      <p class="TaskItem-desc pl-10">{{ item.title }}</p>
                   </div>
+                  <div class="">
+                     {{ item.creator_id }}
+                     {{ item.responsible_id }}
+                  </div>
                </div>
                <div>
                   {{ item.date }}
@@ -18,15 +21,8 @@
             </div>
          </div>
       </div>
-   </div>
-   <div v-else>
-      <div class="flex flex-noGutter flex-column">
-         <div v-for="item in sceletonTasks" v-bind:key="item" class="greyBlock mb-20 radius-block ph-30 pv-10"></div>
-      </div>
-   </div>
 </template>
 <script>
-const SCELETON_TIMEOUT = 1000;
 
 export default {
    // eslint-disable-next-line
@@ -52,25 +48,16 @@ export default {
          taskStyle: this.itemClass,
          activeTask: '',
          tasks: [],
-         sceletonTasks: new Array(6),
       }
    },
    methods: {
       openTask(task) {
          this.activeTask = task,
          this.$emit('onClickTask', task)
-      },
-      clearSceleton() {
-         setTimeout(() => {
-            this.sceletonTasks.length = 0
-         }, SCELETON_TIMEOUT)
       }
    },
    beforeMount() {
       this.tasks = this.Tasks
-   },
-   mounted() {
-      this.clearSceleton()
    }
 }
 </script>

@@ -1,6 +1,8 @@
 import Tasks from '@/api/task/index.js';
 import { generateDate } from '@/components/Common/helpers/dateToNumbers';
+import { openRightAside } from '@/components/UserAccount/RightAside';
 
+const TASK_TEMPLATE = 'components/UserAccount/RightAside/templates/taskPage/taskPage.vue';
 let USER;
 if(localStorage.user) {
    USER = JSON.parse(localStorage.user);
@@ -32,11 +34,30 @@ export default {
          })
       },
       getSubTasks(state, task_id) {
-         Tasks.getSubTasks(task_id).then((res) => {
-            if(res.data) {
-               state.commit('setSubTasks', generateDate(res.data));
-            }
+         return new Promise(function(resolve, reject) {
+            Tasks.getSubTasks(task_id).then((res) => {
+               if(res.data) {
+                  state.commit('setSubTasks', generateDate(res.data));
+                  resolve(true);
+               } else {
+                  state.commit('setSubTasks', []);
+                  reject(false);
+               }
+            })
          })
+      },
+      openTask(state, task) {
+         if(state.getters.returnOpenedTaskId != task.task_id) {
+            state.dispatch('getSubTasks', task.task_id).then(res => {
+               if(res) {
+                  state.commit('setopenedTaskId', task.task_id);
+                  openRightAside({
+                     template: TASK_TEMPLATE,
+                     options: { task }
+                  })
+               }
+            })
+         }
       }
    },
    mutations: {
@@ -64,11 +85,14 @@ export default {
             return false;
          })
       },
-      
+      setopenedTaskId(state, id) {
+         state.openedTaskId = id
+      }
    },
    state: {
       tasks: [],
-      subTask: []
+      subTask: [],
+      openedTaskId: ''
    },
    getters: {
       returnTasks(state) {
@@ -77,6 +101,9 @@ export default {
 
       returnSubTasks(state) {
          return state.subTask
+      },
+      returnOpenedTaskId(state) {
+         return state.openedTaskId
       }
    }
 }

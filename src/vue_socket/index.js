@@ -1,4 +1,5 @@
 import VueSocketIO from 'vue-3-socket.io';
+import app from '@/main';
 import store from '@/store';
 import SocketIO from 'socket.io-client';
 
@@ -17,4 +18,6 @@ const VueSocket = new VueSocketIO({
    }
 });
 
-export default VueSocket;
+export function ConnectSocket() {
+   app.use(VueSocket)
+}

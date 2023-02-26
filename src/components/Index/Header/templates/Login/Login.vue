@@ -33,7 +33,7 @@
 
 <script>
 import User from '@/api/user';
-import API from '@/api/index';
+import AxiosRequest from '@/api/index';
 
 export default {
    // eslint-disable-next-line
@@ -57,16 +57,13 @@ export default {
          if(this.validation()) {
             User.signUp(this.params)
                .then((res) => {
-                  if(res.status === 400) {
-                     this.error.api_err = res.data.message
+                  if(res) {
+                     this.registerUser(res);
                   }
                   else {
-                     this.registerUser(res)
+                     this.error.api_err = 'Неверный логин или пароль';
                   }
-               })
-               .catch(err => {
-                  console.log(err);
-               })
+               });
          }
       },
       validation() {
@@ -90,8 +87,7 @@ export default {
       },
       registerUser(res) {
          localStorage.setItem('accessToken', res.data.accessToken);
-         localStorage.setItem('refreshToken', res.data.refreshToken);
-         API.defaults.headers = {
+         AxiosRequest.defaults.headers = {
             "Authorization": "Bearer " + localStorage.accessToken,
          }
          localStorage.setItem('user', JSON.stringify(res.data.user));

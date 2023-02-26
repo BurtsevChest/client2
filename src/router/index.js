@@ -1,8 +1,7 @@
-import { createRouter, createWebHistory } from 'vue-router'
-import config from '@/components/UserAccount/Sidebar/config'
-import indexConfig from '@/components/Index/config'
+import { createRouter, createWebHistory } from 'vue-router';
+import config from '@/components/UserAccount/Sidebar/config';
+import indexConfig from '@/components/Index/config';
 
-// Тянем страницы Indexа
 const indexPages = indexConfig.map(function(item) {
    return {
       path: item.path,
@@ -10,7 +9,6 @@ const indexPages = indexConfig.map(function(item) {
    }
 })
 
-// Тянем страницы сайдбара
 const sidebarRoutes = config.map(function(item) {
    return {
       path: item.href,
@@ -18,7 +16,14 @@ const sidebarRoutes = config.map(function(item) {
    }
 })
 
-// Основной роутер, делящий приложение на две части. Index и UserAccount
+const ifAuthenticated = (to, from, next) => {
+   if (localStorage.accessToken && localStorage.user) {
+     next()
+   } else {
+     next('/main')
+   }
+ }
+
 let routes = [
    {
       path: '/',
@@ -29,13 +34,7 @@ let routes = [
    {
       path: '/user_account',
       component: () => import('@/components/UserAccount/UserAccount.vue'),
-      beforeEnter(to, from, next) {
-         if(!localStorage.accessToken && !localStorage.refreshToken && !localStorage.user) {
-            next(false)
-         }else{
-            next()
-         }
-      },
+      beforeEnter: ifAuthenticated,
       children: sidebarRoutes.concat(
          {
             path: '/settings',
@@ -45,12 +44,9 @@ let routes = [
    }
 ]
 
-
-
-
 const router = createRouter( {
    routes: routes,
    history: createWebHistory(process.env.BASE_URL)
 })
 
-export default router
+export default router;

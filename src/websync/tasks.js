@@ -38,3 +38,7 @@ export function clearSubTasks() {
 export function filterResponsibleTask(param) {
    store.commit('filterResponsibleTask', param)
 }
+
+export function openTask(task) {
+   store.dispatch('openTask', task)
+}
