@@ -7,7 +7,11 @@ if(localStorage.user) {
 
 export function getTasks() {
    if(USER.user_id) {
-      store.dispatch('getTask', USER.user_id)
+      store.dispatch('getTask', USER.user_id).then((res) => {
+         if(res) {
+            store.commit('filterTaskOnResponsible', {user_id: USER.user_id, filterRule: 'my'});
+         }
+      });
    }
 }
 
@@ -17,28 +21,6 @@ export function setTask(task) {
    }
 }
 
-export function updateTask(task) {
-   if(task && USER.user_id) {
-      store.dispatch('updateTask', task).then(() => {
-         store.dispatch('getTask', USER.user_id);
-      })
-   }
-}
-
-export function getSubTasks(task_id) {
-   if(USER.user_id) {
-      store.dispatch('getSubTasks', task_id)
-   }
-}
-
-export function clearSubTasks() {
-   store.commit('clearSubTasks')
-}
-
-export function filterResponsibleTask(param) {
-   store.commit('filterResponsibleTask', param)
-}
-
 export function openTask(task) {
    store.dispatch('openTask', task)
 }
@@ -46,4 +28,12 @@ export function openTask(task) {
 export function closeTask(task) {
    store.commit('close');
    store.commit('closeTask', task);
+}
+
+export function filterTaskOnDate(date) {
+   store.commit('filterTaskOnDate', date);
+}
+
+export function filterTaskOnResponsible(param) {
+   store.commit('filterTaskOnResponsible', {user_id: USER.user_id, filterRule: param} );
 }

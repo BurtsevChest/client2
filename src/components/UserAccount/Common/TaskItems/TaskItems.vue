@@ -10,10 +10,6 @@
                      <h2 class="TaskItem-title">Andrey Churilov</h2>
                      <p class="TaskItem-desc pl-10">{{ item.title }}</p>
                   </div>
-                  <div class="">
-                     {{ item.creator_id }}
-                     {{ item.responsible_id }}
-                  </div>
                </div>
                <div>
                   {{ item.date }}

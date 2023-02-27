@@ -39,9 +39,17 @@
          </div>
          <div class="flex-col flex flex-column">
             <div class="flex-col">
-               <div class="greyBlock radius-block ph-10 pv-16">
-                  По Дате
-               </div>
+               <PopupBtn :positionStyle="'Tasks-filter-popupDate'" :hideBtn=true>
+                  <template v-slot:popupBtn>
+                     <div class="flex box-shadow ph-10 pv-10 radius-block pointer a-items-center">
+                        <span class="flex a-items-center material-icons">calendar_month</span>
+                        <span class="flex a-items-center pl-10">По дате</span>
+                     </div>
+                  </template>
+                  <template v-slot:popupTemplate>
+                     <v-date-picker mode="date" v-model="dateToFilter" @dayclick="setDate"/>
+                  </template>
+               </PopupBtn>
             </div>
             <div class="flex-col">
                <div class="greyBlock radius-block ph-10 pv-16">
@@ -60,7 +68,7 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import { getTasks, openTask } from '@/websync/tasks';
+import { getTasks, openTask, filterTaskOnDate, filterTaskOnResponsible } from '@/websync/tasks';
 import { openDialog } from '@/components/Common/modalView';
 import TaskItems from '@/components/UserAccount/Common/TaskItems/TaskItems.vue';
 
@@ -76,7 +84,9 @@ export default {
          filteredArr: [],
          activeTab: 'my',
          activeTask: 'Tasks-item',
-         tasks: []
+         tasks: [],
+         date: new Date(),
+         dateToFilter: ''
       }
    },
    methods: {
@@ -87,10 +97,15 @@ export default {
          openDialog({template: 'components/Common/modalView/templates/AddTaskView.vue'});
       },
       setTab(name) {
-         this.activeTab = name
+         this.activeTab = name;
+         filterTaskOnResponsible(name);
       },
       filterToString(text) {
          console.log(text);
+      },
+      setDate(date) {
+         this.dateToFilter = date;
+         filterTaskOnDate(date.date);
       }
    },
    computed: mapGetters(["returnTasks"]),
@@ -162,6 +177,12 @@ export default {
             max-width: none;
             height: auto;
          }
+      }
+   }
+
+   &-filter {
+      &-popupDate {
+         left: 0;
       }
    }
 }

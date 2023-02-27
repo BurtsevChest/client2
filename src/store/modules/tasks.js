@@ -6,15 +6,19 @@ const TASK_TEMPLATE = 'components/UserAccount/RightAside/templates/taskPage/task
 
 export default {
    actions: {
-      updateTask(task) {
-         Tasks.updateTask(task)
-      },
       getTask(state, userId) {
-         if(state.getters.returnTasks.length === 0) {
-            Tasks.getTasks(userId).then((res)=>{
-               state.commit('setTasks', generateDate(res.data));
-            });
-         }
+         return new Promise((resolve, reject) => {
+            if(state.getters.returnTasks.length === 0) {
+               Tasks.getTasks(userId).then((res)=>{
+                  state.commit('setTasks', generateDate(res.data));
+                  if(res.data) {
+                     resolve(true)
+                  } else {
+                     reject(false)
+                  }
+               });
+            }
+         })
       },
       SOCKET_SETTASK(state, task) {
          state.commit('setOneTask', task);
@@ -52,32 +56,66 @@ export default {
    },
    mutations: {
       setTasks(state, Tasks) {
-         state.tasks = Tasks
+         state.tasks = Tasks,
+         state.filteredTasks = Tasks
       },
       setOneTask(state, Task) {
-         state.tasks.unshift(Task) 
+         state.tasks.unshift(Task),
+         state.filteredTasks.unshift(Task)
       },
       setSubTasks(state, subTasks) {
          state.subTask = subTasks
-      },
-      clearSubTasks(state) {
-         state.setSubTasks = []
       },
       setopenedTaskId(state, id) {
          state.openedTaskId = id
       },
       closeTask(state) {
          state.openedTaskId = '';
+      },
+      filterTaskOnDate(state, date) {
+         state.filteredTasks = state.filteredTasks.filter((item) => {
+            var taskDate = new Date(item.date_of_completion);
+            if(taskDate <= date) {
+               return true;
+            } else {
+               return false;
+            }
+         })
+      },
+      filterTaskOnResponsible(state, params) {
+         state.filteredTasks = state.tasks.filter((item) => {
+            if(params.filterRule === 'my') {
+               if(params.user_id === item.responsible_id) {
+                  return true;
+               } else {
+                  return false;
+               }
+            }
+            if(params.filterRule === 'from') {
+               if(params.user_id === item.creator_id) {
+                  return true;
+               } else {
+                  return false;
+               }
+            }
+         })
       }
    },
    state: {
       tasks: [],
+      filteredTasks: [],
       subTask: [],
-      openedTaskId: ''
+      openedTaskId: '',
+      filterRules: {
+         onDate: false,
+         onCommand: false,
+         onCreator: false,
+         onResponsible: true
+      }
    },
    getters: {
       returnTasks(state) {
-         return state.tasks
+         return state.filteredTasks
       },
       returnSubTasks(state) {
          return state.subTask
