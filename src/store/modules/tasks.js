@@ -107,10 +107,8 @@ export default {
       subTask: [],
       openedTaskId: '',
       filterRules: {
-         onDate: false,
-         onCommand: false,
-         onCreator: false,
-         onResponsible: true
+         date_of_completion: '',
+         responsible_id: ''
       }
    },
    getters: {

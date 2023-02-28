@@ -30,7 +30,8 @@ AxiosRequest.interceptors.response.use((response) => {
          return AxiosRequest.request(originalRequest);
       }
    } catch (e) {
-      console.log('Fuck ass yourself');
+      window.location.href = '/';
+      localStorage.clear();
    }
 })
 

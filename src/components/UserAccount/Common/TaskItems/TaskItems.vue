@@ -4,7 +4,7 @@
             <div @click="openTask(item)" :class="[itemClass] " class="TaskItem pointer flex flex-space ph-10 pv-16 mb-8">
                <div class="flex">
                   <div class="TaskItem-image">
-                     <img src="@/components/UserAccount/pages/Home/resources/images/users/andrey.jpg" class="">
+                     <img src="@/components/UserAccount/pages/Home/resources/images/users/dominic.jpg" class="">
                   </div>
                   <div class="pl-16">
                      <h2 class="TaskItem-title">Andrey Churilov</h2>
@@ -44,13 +44,14 @@ export default {
          taskStyle: this.itemClass,
          activeTask: '',
          tasks: [],
+         user_avatar: 'empty_avatar.png'
       }
    },
    methods: {
       openTask(task) {
          this.activeTask = task,
          this.$emit('onClickTask', task)
-      }
+      },
    },
    beforeMount() {
       this.tasks = this.Tasks
