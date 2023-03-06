@@ -1,6 +1,6 @@
 <template>
    <div class="Tasks flex flex-column">
-      <div class="flex mb-20">
+      <div class="flex box-shadow pt-12 pv-10">
          <div class="flex flex-col-8">
             <div class="flex-col flex a-items-center">
             <button @click="openAddTaskView" class="Tasks-addTask-btn flex flex-center a-items-center">
@@ -26,7 +26,7 @@
          </div>
       </div>
       <div class="flex">
-         <div class="flex-col flex-col-8 flex flex-noGutter flex-column Tasks-itemsWrapper">
+         <div class="flex-col pt-16 flex-col-8 flex flex-noGutter flex-column Tasks-itemsWrapper">
             <div v-if="tasks" class="flex flex-noGutter flex-column">
                <TaskItems
                   :Tasks = "returnTasks"
@@ -37,28 +37,32 @@
             </div>
             <p v-else class="user_account-h2">Задач нет</p>
          </div>
-         <div class="flex-col flex flex-column">
-            <div class="flex-col">
+         <div class="flex-col pt-16 flex flex-column">
+            <div class="flex-col pb-16">
+               Фильтры
+            </div>
+            <div class="flex-col flex">
                <PopupBtn :positionStyle="'Tasks-filter-popupDate'" :hideBtn=true>
                   <template v-slot:popupBtn>
-                     <div class="flex box-shadow ph-10 pv-10 radius-block pointer a-items-center">
+                     <div class="flex pointer a-items-center">
                         <span class="flex a-items-center material-icons">calendar_month</span>
-                        <span class="flex a-items-center pl-10">По дате</span>
+                        <span class="pl-10">{{ dateFilterToShow }}</span>
                      </div>
                   </template>
                   <template v-slot:popupTemplate>
                      <v-date-picker mode="date" v-model="dateToFilter" @dayclick="setDate"/>
                   </template>
                </PopupBtn>
+               <span v-if="dateFilterToShow" @click="deleteDate" class="material-icons pl-10 pointer">close</span>
             </div>
             <div class="flex-col">
-               <div class="greyBlock radius-block ph-10 pv-16">
-                  По Создателю
+               <div class="flex pointer  a-items-center">
+                  <span class="flex a-items-center material-icons">person</span>
                </div>
             </div>
             <div class="flex-col">
-               <div class="greyBlock radius-block ph-10 pv-16">
-                  По Команде
+               <div class="flex pointer a-items-center">
+                  <span class="flex a-items-center material-icons">group</span>
                </div>
             </div>
          </div>
@@ -68,9 +72,10 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import { getTasks, openTask, filterTaskOnDate, filterTaskOnResponsible } from '@/websync/tasks';
+import { getTasks, openTask, filterOnDate, filterOnTab, clearDateFilter } from '@/websync/tasks';
 import { openDialog } from '@/components/Common/modalView';
 import TaskItems from '@/components/UserAccount/Common/TaskItems/TaskItems.vue';
+import { dateToNumbers } from '@/components/Common/helpers/dateToNumbers';
 
 export default {
    // eslint-disable-next-line
@@ -86,7 +91,8 @@ export default {
          activeTask: 'Tasks-item',
          tasks: [],
          date: new Date(),
-         dateToFilter: ''
+         dateToFilter: '',
+         dateFilterToShow: ''
       }
    },
    methods: {
@@ -98,14 +104,20 @@ export default {
       },
       setTab(name) {
          this.activeTab = name;
-         filterTaskOnResponsible(name);
+         filterOnTab(name);
       },
       filterToString(text) {
          console.log(text);
       },
       setDate(date) {
          this.dateToFilter = date;
-         filterTaskOnDate(date.date);
+         this.dateFilterToShow = dateToNumbers(date.date); 
+         filterOnDate(date.date);
+      },
+      deleteDate() {
+         this.dateToFilter = '';
+         this.dateFilterToShow = '';
+         clearDateFilter()
       }
    },
    computed: mapGetters(["returnTasks"]),

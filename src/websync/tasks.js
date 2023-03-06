@@ -9,7 +9,7 @@ export function getTasks() {
    if(USER.user_id) {
       store.dispatch('getTask', USER.user_id).then((res) => {
          if(res) {
-            store.commit('filterTaskOnResponsible', {user_id: USER.user_id, filterRule: 'my'});
+            filterTasks();
          }
       });
    }
@@ -36,4 +36,23 @@ export function filterTaskOnDate(date) {
 
 export function filterTaskOnResponsible(param) {
    store.commit('filterTaskOnResponsible', {user_id: USER.user_id, filterRule: param} );
+}
+
+function filterTasks() {
+   store.commit('filterTasks', USER.user_id)
+}
+
+export function filterOnDate(date) {
+   store.commit('setFilterDate', date);
+   filterTasks();
+}
+
+export function filterOnTab(tab) {
+   store.commit('setFilterTab', tab);
+   filterTasks();
+}
+
+export function clearDateFilter() {
+   store.commit('clearDateFilter');
+   filterTasks();
 }

@@ -99,6 +99,41 @@ export default {
                }
             }
          })
+      },
+      filterTasks(state, user_id) {
+         state.filteredTasks = state.tasks.filter((item) => {
+            for(var key in state.filterRules) {
+               // if Date
+               if(state.filterRules.date_of_completion != undefined && key != undefined) {
+                  var date = new Date(item.date_of_completion);
+                  if(state.filterRules.date_of_completion < date) {
+                     return false;
+                  }
+               }
+               // if i responsible
+               if(state.filterRules.tabFilter === 'my') {
+                  if(item.responsible_id != user_id) {
+                     return false;
+                  }
+               }
+               // if i creator
+               if(state.filterRules.tabFilter === 'from') {
+                  if(item.creator_id != user_id) {
+                     return false;
+                  }
+               }
+            }
+            return true;
+         })
+      },
+      setFilterDate(state, date) {
+         state.filterRules.date_of_completion = date;
+      },
+      setFilterTab(state, tab) {
+         state.filterRules.tabFilter = tab;
+      },
+      clearDateFilter(state) {
+         state.filterRules.date_of_completion = undefined;
       }
    },
    state: {
@@ -107,8 +142,8 @@ export default {
       subTask: [],
       openedTaskId: '',
       filterRules: {
-         date_of_completion: '',
-         responsible_id: ''
+         date_of_completion: undefined,
+         tabFilter: 'my'
       }
    },
    getters: {

@@ -54,7 +54,6 @@ export default {
 @import '@/assets/css/flag-icon.min.css';
 
 main {
-  padding: 24px;
   width: 100%;
 }
 

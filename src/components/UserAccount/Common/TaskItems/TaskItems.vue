@@ -7,11 +7,11 @@
                      <img src="@/components/UserAccount/pages/Home/resources/images/users/dominic.jpg" class="">
                   </div>
                   <div class="pl-16">
-                     <h2 class="TaskItem-title">Andrey Churilov</h2>
-                     <p class="TaskItem-desc pl-10">{{ item.title }}</p>
+                     <span class="TaskItem-title secondary-text-color">Andrey Churilov</span>
+                     <p class="TaskItem-desc pl-10 standart-text-grey">{{ item.title }}</p>
                   </div>
                </div>
-               <div>
+               <div class="secondary-text-color">
                   {{ item.date }}
                </div>
             </div>
@@ -66,7 +66,6 @@ export default {
 
    &-title {
       font-size: 18px;
-      font-weight: bold;
    }
 
    &-desc {
