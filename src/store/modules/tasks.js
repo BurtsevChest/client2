@@ -52,7 +52,22 @@ export default {
             })
          }
       },
-      
+      SOCKET_SENDMESSAGE(state, message) {
+         state.commit('setNewMessage', message)
+      },
+      getTaskMessages(state, task_id) {
+         return new Promise((resolve, reject) => {
+            Tasks.getTaskMessages(task_id).then((res) => {
+               if(res.data) {
+                  resolve(res.data);
+               } else { 
+                  reject(new Array());
+               }
+            }).catch(() => {
+               reject(new Array()); 
+            })
+         })
+      }
    },
    mutations: {
       setTasks(state, Tasks) {
@@ -71,34 +86,6 @@ export default {
       },
       closeTask(state) {
          state.openedTaskId = '';
-      },
-      filterTaskOnDate(state, date) {
-         state.filteredTasks = state.filteredTasks.filter((item) => {
-            var taskDate = new Date(item.date_of_completion);
-            if(taskDate <= date) {
-               return true;
-            } else {
-               return false;
-            }
-         })
-      },
-      filterTaskOnResponsible(state, params) {
-         state.filteredTasks = state.tasks.filter((item) => {
-            if(params.filterRule === 'my') {
-               if(params.user_id === item.responsible_id) {
-                  return true;
-               } else {
-                  return false;
-               }
-            }
-            if(params.filterRule === 'from') {
-               if(params.user_id === item.creator_id) {
-                  return true;
-               } else {
-                  return false;
-               }
-            }
-         })
       },
       filterTasks(state, user_id) {
          state.filteredTasks = state.tasks.filter((item) => {
@@ -134,6 +121,12 @@ export default {
       },
       clearDateFilter(state) {
          state.filterRules.date_of_completion = undefined;
+      },
+      setNewMessage(state, message) {
+         state.taskMessages.push(message)
+      },
+      setTaskMessages(state, messageList) {
+         state.taskMessages = messageList
       }
    },
    state: {
@@ -144,7 +137,8 @@ export default {
       filterRules: {
          date_of_completion: undefined,
          tabFilter: 'my'
-      }
+      },
+      taskMessages: []
    },
    getters: {
       returnTasks(state) {
@@ -155,6 +149,9 @@ export default {
       },
       returnOpenedTaskId(state) {
          return state.openedTaskId
+      },
+      taskMessages(state) {
+         return state.taskMessages
       }
    }
 }

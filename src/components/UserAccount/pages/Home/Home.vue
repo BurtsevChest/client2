@@ -1,5 +1,5 @@
 <template>
-   <div class="Home">
+   <div class="Home p-20">
       <div class="flex pb-32">
          <div class="flex-col">
             <div class="Home-avatar flex">

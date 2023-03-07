@@ -1,18 +1,50 @@
-// Достаем локаль из истории бразуера
-const LOCALE = localStorage.locale
-// нужно будет сделать обработки, достающие локаль из бд, когда юзер уже выбрал себе локализацию
-// Сначала сохранить локаль в историю бразуера. Если там пусто, обратиться к бд
-// При регистрации нового юзера нужно опрделить локаль по настройке бразуера (navigator.language)
+// import Vue from 'vue';
+// import VueI18n from 'vue-i18n';
+// import messages from '@/components/lang/translate/ru.json';
 
-/**
- * @class Класс для управлением локализацией
- * @getTranslate Функция, возвращающая импорт json-а с переводом
- * @params Имя компонента, которому нужен первод
- */
-class Lang {
-   getTranslate(componentName) {
-      return import('@/components/lang/'+componentName+'/'+LOCALE+'.json')
-   }
-}
+// Vue.use(VueI18n);
 
-export default new Lang()
+// export const i18n = new VueI18n({
+//   locale: 'ru',
+//   fallbackLocale: 'en',
+//   messages
+// })
+
+// const loadedLanguages = ['ru'];
+
+// function getLocale() {
+//    if(localStorage.locale) {
+//       return localStorage.locale;
+//    } else {
+//       return navigator.language;
+//    }
+// }
+
+// export function startLocale() {
+//    loadLanguageAsync(getLocale());
+// }
+
+// function setI18nLanguage(lang) {
+//   i18n.locale = lang;
+//   document.querySelector('html').setAttribute('lang', lang);
+//   localStorage.setItem('locale', lang);
+//   return lang;
+// }
+
+// export function loadLanguageAsync(lang) {
+//   if (i18n.locale === lang) {
+//     return Promise.resolve(setI18nLanguage(lang));
+//   }
+
+//   if (loadedLanguages.includes(lang)) {
+//     return Promise.resolve(setI18nLanguage(lang));
+//   }
+
+//   return import(`@/components/lang/translate/${lang}.json`).then(messages => {
+//     i18n.setLocaleMessage(lang, messages.default);
+//     loadedLanguages.push(lang);
+//     return setI18nLanguage(lang);
+//   })
+// }
+
+// export const translatedlanguages = ['ru', 'en'];

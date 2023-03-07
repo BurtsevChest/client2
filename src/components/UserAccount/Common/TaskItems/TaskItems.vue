@@ -72,6 +72,7 @@ export default {
       text-overflow: ellipsis;
       overflow: hidden;
       white-space: nowrap;
+      max-width: 200px;
 
       @media (max-width: 800px) {
          width: 150px;

@@ -6,6 +6,7 @@ html[data-theme='dark'] {
    --text-block-hover: #334155;
    --text-hover: #f1f5f9;
    --block-box-shadow: none;
+   --task-title-color: #f1f5f9;
 }
 
 /* Светлая тема */
@@ -16,4 +17,5 @@ html[data-theme='light'] {
    --text-block-hover: #ffffff;
    --text-hover: #1e293b;
    --block-box-shadow: 0 0 12px rgba(128, 128, 128, 0.2);
+   --task-title-color: #313e78;
 }

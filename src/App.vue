@@ -59,12 +59,14 @@ main {
 
 body {
   min-width: 375px;
-  
 }
 .vc-container {
   border: none !important;
 }
 
+aside {
+  z-index: 1;
+}
 .app {
   position: relative;
   width: 100%;

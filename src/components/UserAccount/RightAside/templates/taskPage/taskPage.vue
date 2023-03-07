@@ -5,7 +5,6 @@
    </button>
    <h2 class="user_account-h2 pb-16">
       {{ options.task.title }}
-      {{ options.task.task_id }}
    </h2>
    <p class="pb-32">
       {{ options.task.description }}

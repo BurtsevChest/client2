@@ -16,6 +16,10 @@ class Tasks {
    async getSubTasks(task_id) {
       return await AxiosRequest.get(`subtask/${task_id}`)
    }
+
+   async getTaskMessages(task_id) {
+      return await AxiosRequest.get(`task_msg/${task_id}`)
+   }
 }
 
 export default new Tasks()

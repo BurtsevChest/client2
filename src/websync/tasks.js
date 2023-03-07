@@ -8,7 +8,7 @@ if(localStorage.user) {
 export function getTasks() {
    if(USER.user_id) {
       store.dispatch('getTask', USER.user_id).then((res) => {
-         if(res) {
+         if(res.data) {
             filterTasks();
          }
       });
@@ -30,14 +30,6 @@ export function closeTask(task) {
    store.commit('closeTask', task);
 }
 
-export function filterTaskOnDate(date) {
-   store.commit('filterTaskOnDate', date);
-}
-
-export function filterTaskOnResponsible(param) {
-   store.commit('filterTaskOnResponsible', {user_id: USER.user_id, filterRule: param} );
-}
-
 function filterTasks() {
    store.commit('filterTasks', USER.user_id)
 }
@@ -55,4 +47,21 @@ export function filterOnTab(tab) {
 export function clearDateFilter() {
    store.commit('clearDateFilter');
    filterTasks();
+}
+
+export function setNewMessage(message) {
+   // хардкод, ибо опять же я хз в каком виде msg передавать будем
+   var msg = {
+      user_id: USER.user_id,
+      text: message
+   }
+   store.commit('setNewMessage', msg)
+}
+
+export function getTaskMessages(task_id) {
+   if(task_id) {
+      store.dispatch('getTaskMessages', task_id).then((res) => {
+         store.commit('setTaskMessages', res);
+      })
+   }
 }

@@ -1,5 +1,5 @@
 <template>
-   <div class="Settings">
+   <div class="Settings p-20">
       <h2 class="user_account-h2 pb-16">Настройки интерфейса</h2>
       <h3 class="user_account-h3 pb-8">Тема оформления</h3>
       <div class="Settings-themesWrapper">
