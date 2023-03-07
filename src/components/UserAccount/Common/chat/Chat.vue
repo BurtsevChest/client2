@@ -85,7 +85,7 @@ export default {
       margin-top: auto;
       width: 100%;
       overflow: hidden;
-      height: 680px;
+      max-height: 680px;
       overflow-y: scroll;
    }
 

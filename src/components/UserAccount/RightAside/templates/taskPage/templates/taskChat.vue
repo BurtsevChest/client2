@@ -16,6 +16,9 @@ export default {
    // eslint-disable-next-line
    name: "TaskChat",
    components: {Chat},
+   sockets: {
+      
+   },
    props: {
       task_id: {
          type: Number

@@ -3,6 +3,10 @@ import { generateDate } from '@/components/Common/helpers/dateToNumbers';
 import { openRightAside } from '@/components/UserAccount/RightAside';
 
 const TASK_TEMPLATE = 'components/UserAccount/RightAside/templates/taskPage/taskPage.vue';
+let USER;
+if(localStorage.user) {
+   USER = JSON.parse(localStorage.user);
+}
 
 export default {
    actions: {
@@ -13,15 +17,16 @@ export default {
                   state.commit('setTasks', generateDate(res.data));
                   if(res.data) {
                      resolve(true)
-                  } else {
-                     reject(false)
                   }
                });
+            } else {
+               reject(false)
             }
          })
       },
       SOCKET_SETTASK(state, task) {
          state.commit('setOneTask', task);
+         state.commit('filterTasks', USER.user_id)
       },
       setTask(state, task) {
          Tasks.setTask(task);
@@ -75,8 +80,7 @@ export default {
          state.filteredTasks = Tasks
       },
       setOneTask(state, Task) {
-         state.tasks.unshift(Task),
-         state.filteredTasks.unshift(Task)
+         state.tasks.unshift(Task)
       },
       setSubTasks(state, subTasks) {
          state.subTask = subTasks
@@ -109,19 +113,34 @@ export default {
                      return false;
                   }
                }
+               // if filter on text
+               if(state.filterRules.filterText != '') {
+                  if(!(item.title.includes(state.filterRules.filterText) || item.description.includes(state.filterRules.filterText))) {
+                     return false;
+                  }
+               }
             }
             return true;
          })
       },
+      // setFilterRules
       setFilterDate(state, date) {
          state.filterRules.date_of_completion = date;
       },
       setFilterTab(state, tab) {
          state.filterRules.tabFilter = tab;
       },
+      setFilterText(state, text) {
+         state.filterRules.filterText = text;
+      },
+      // clear FilterRules
+      clearFilterText(state) {
+         state.filterRules.filterText = '';
+      },
       clearDateFilter(state) {
          state.filterRules.date_of_completion = undefined;
       },
+      // messages
       setNewMessage(state, message) {
          state.taskMessages.push(message)
       },
@@ -136,7 +155,8 @@ export default {
       openedTaskId: '',
       filterRules: {
          date_of_completion: undefined,
-         tabFilter: 'my'
+         tabFilter: 'my',
+         filterText: ''
       },
       taskMessages: []
    },

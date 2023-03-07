@@ -50,7 +50,6 @@ export default {
 
 <style lang="less" scoped>
 .SelectUsers {
-   width: 300px;
    max-height: 300px;
    overflow: hidden;
    overflow-y: scroll;

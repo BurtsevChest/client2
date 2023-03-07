@@ -26,11 +26,6 @@ export default {
    color: var(--text-color);
    transition: 0.3s;
 
-   @media (max-width: 1600px) {
-      width: 400px;
-      right: -400px;
-   }
-
    &-active {
       right: 0;
    }

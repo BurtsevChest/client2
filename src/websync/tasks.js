@@ -10,6 +10,8 @@ export function getTasks() {
       store.dispatch('getTask', USER.user_id).then((res) => {
          if(res.data) {
             filterTasks();
+         } else {
+            filterTasks();
          }
       });
    }
@@ -30,6 +32,7 @@ export function closeTask(task) {
    store.commit('closeTask', task);
 }
 
+// set filters
 function filterTasks() {
    store.commit('filterTasks', USER.user_id)
 }
@@ -44,8 +47,19 @@ export function filterOnTab(tab) {
    filterTasks();
 }
 
+export function filterOnText(text) {
+   store.commit('setFilterText', text);
+   filterTasks();
+}
+
+// clear filters
 export function clearDateFilter() {
    store.commit('clearDateFilter');
+   filterTasks();
+}
+
+export function clearTextFilter() {
+   store.commit('clearFilterText');
    filterTasks();
 }
 

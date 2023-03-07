@@ -7,8 +7,8 @@
                <span class="material-icons Tasks-addTask-btn-icon">add</span>
             </button>
             </div>
-            <div class="flex-col flex a-items-center">
-               <SearchField :placeholder="'Найти...'" @clickSearch="filterToString"/>
+            <div class="flex-col flex flex-nowrap a-items-center">
+               <SearchField :placeholder="'Найти...'" @clickSearch="filterToString" @clearSearch="clearFilterText"/>
             </div>
             <div class="empty_flex"></div>
             <div class="flex a-self-end">
@@ -72,7 +72,7 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import { getTasks, openTask, filterOnDate, filterOnTab, clearDateFilter } from '@/websync/tasks';
+import { getTasks, openTask, filterOnDate, filterOnTab, clearDateFilter, filterOnText } from '@/websync/tasks';
 import { openDialog } from '@/components/Common/modalView';
 import TaskItems from '@/components/UserAccount/Common/TaskItems/TaskItems.vue';
 import { dateToNumbers } from '@/components/Common/helpers/dateToNumbers';
@@ -92,7 +92,7 @@ export default {
          tasks: [],
          date: new Date(),
          dateToFilter: '',
-         dateFilterToShow: ''
+         dateFilterToShow: '',
       }
    },
    methods: {
@@ -107,7 +107,10 @@ export default {
          filterOnTab(name);
       },
       filterToString(text) {
-         console.log(text);
+         filterOnText(text);
+      },
+      clearFilterText() {
+         filterOnText('');
       },
       setDate(date) {
          this.dateToFilter = date;
