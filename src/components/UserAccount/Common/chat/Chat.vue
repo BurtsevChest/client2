@@ -15,7 +15,7 @@
          <div class="Chat-menu mt-20 radius-block ph-10 pv-10 flex flex-space">
             <span class="material-icons pointer">person</span>
             <span class="material-icons pointer pl-4">attach_file</span>
-            <input type="text" v-model.trim="inputText" placeholder="Сообщение..." class="empty_flex pl-6">
+            <input type="text" v-model.trim="inputText" :placeholder="placeholder" class="empty_flex pl-6">
             <span @click="addMsg" class="material-icons pointer">send</span>
          </div>
       </div>
@@ -24,6 +24,8 @@
 </template>
 
 <script>
+import { tr } from '@/lang/lang';
+
 let USER;
 if(localStorage.user) {
    USER = JSON.parse(localStorage.user);
@@ -42,6 +44,7 @@ export default {
       return {
          inputText: '',
          userId: USER.user_id,
+         placeholder: tr('user_account_common_ui_chat_placeholder')
       }
    },
    methods: {

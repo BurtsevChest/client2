@@ -8,22 +8,22 @@
                </div>
             </div>
             <div class="flex-col">
-               <p class="pb-8">Введите email</p>
+               <p class="pb-8">{{ $t('index_header_login_email') }}</p>
                <input type="email" class="input" v-model.trim="params.email">
-               <p v-if="error.email" class="Login-view-error">Введите email</p>
+               <p v-if="error.email" class="Login-view-error">{{ $t('index_header_login_email') }}</p>
             </div>
             <div class="flex-col">
-               <p class="pb-8">Введите пароль</p>
+               <p class="pb-8">{{ $t('index_header_login_password') }}</p>
                <input type="password" class="input" v-model.trim="params.password">
-               <p v-if="error.password" class="Login-view-error">Введите пароль</p>
+               <p v-if="error.password" class="Login-view-error">{{ $t('index_header_login_password') }}</p>
             </div>
             <p v-if="error.api_err" class="Login-view-error text-center ph-8">{{error.api_err}}</p>
             <div class="flex-col flex flex-center">
-               <button @click="signUp" class="button">Войти</button>
+               <button @click="signUp" class="button">{{ $t('index_header_enter_btn') }}</button>
             </div>
             <div class="flex-col flex flex-center">
                <router-link to="/register">
-                  Зарегистрироваться
+                  {{ $t('index_header_login_register') }}
                </router-link>
             </div>
          </div>

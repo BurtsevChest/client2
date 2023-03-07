@@ -15,13 +15,13 @@
             <span class="material-icons">
                task
             </span>
-            <p class="pl-4 Task-tabs">Подзадача</p>
+            <p class="pl-4 Task-tabs">{{ $t('user_account_tasks_opentask_subtask') }}</p>
          </div>
       </div>
       <div class="flex-col">
          <div class="flex a-items-center pointer">
             <span class="material-icons">attach_file</span>
-            <div class="Task-addFileBtn Task-tabs">Прикрепить</div>
+            <div class="Task-addFileBtn Task-tabs">{{ $t('user_account_tasks_opentask_attach') }}</div>
          </div>
       </div>
       <div class="flex-col">
@@ -45,6 +45,7 @@ import { openDialog } from '@/components/Common/modalView';
 import DefaultTask from '@/components/UserAccount/RightAside/templates/taskPage/templates/defaultTask.vue';
 import TaskChat from '@/components/UserAccount/RightAside/templates/taskPage/templates/taskChat.vue';
 import { openTask, closeTask } from '@/websync/tasks';
+import { tr } from '@/lang/lang';
 
 export default {
    // eslint-disable-next-line
@@ -58,10 +59,9 @@ export default {
       return {
          configAddFile: {},
          tabTamplate: DefaultTask,
-         tabChatText: 'Обсудить',
          chatStatus: {
             open: false,
-            tabText: 'Обсудить'
+            tabText: tr('user_account_tasks_opentask_discuss')
          }
       }
    },
@@ -87,11 +87,11 @@ export default {
          if(this.chatStatus.open) {
             this.tabTamplate = DefaultTask
             this.chatStatus.open = false;
-            this.chatStatus.tabText = 'Обсудить';
+            this.chatStatus.tabText = tr('user_account_tasks_opentask_discuss');
          } else {
             this.tabTamplate = TaskChat
             this.chatStatus.open = true;
-            this.chatStatus.tabText = 'Закрыть';
+            this.chatStatus.tabText = tr('user_account_tasks_opentask_close');
          }
       },
    }

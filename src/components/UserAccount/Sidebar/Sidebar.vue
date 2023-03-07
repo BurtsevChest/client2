@@ -13,7 +13,7 @@
       <div class="empty_flex"></div>
       <router-link class="light pl-8 sidebar_button radius-block flex a-items-center mb-12" to="/settings">
          <span class="material-icons">settings</span>
-         <span class="sidebar_link">Настройки</span>
+         <span class="sidebar_link">{{ $t('user_account_sidebar_menu_settings') }}</span>
       </router-link>
    </aside>
 </template>

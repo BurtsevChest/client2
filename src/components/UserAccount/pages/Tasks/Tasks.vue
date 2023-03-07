@@ -8,18 +8,18 @@
             </button>
             </div>
             <div class="flex-col flex flex-nowrap a-items-center">
-               <SearchField :placeholder="'Найти...'" @clickSearch="filterToString" @clearSearch="clearFilterText"/>
+               <SearchField @clickSearch="filterToString" @clearSearch="clearFilterText"/>
             </div>
             <div class="empty_flex"></div>
             <div class="flex a-self-end">
                <div class="flex-col">
                   <div class="select_tab" :class="{'active' : activeTab === 'my'}" @click="setTab('my')">
-                     Мои
+                     {{ $t('user_account_tasks_filter_my') }}
                   </div>
                </div>
                <div class="flex-col">
                   <div class="select_tab" :class="{'active' : activeTab === 'from'}" @click="setTab('from')">
-                     От меня
+                     {{ $t('user_account_tasks_filter_from') }}
                   </div>
                </div>
             </div>
@@ -39,7 +39,7 @@
          </div>
          <div class="flex-col pt-16 flex flex-column">
             <div class="flex-col pb-16">
-               Фильтры
+               {{ $t('user_account_tasks_filtres_text') }}
             </div>
             <div class="flex-col flex">
                <PopupBtn :positionStyle="'Tasks-filter-popupDate'" :hideBtn=true>
@@ -50,7 +50,7 @@
                      </div>
                   </template>
                   <template v-slot:popupTemplate>
-                     <v-date-picker mode="date" v-model="dateToFilter" @dayclick="setDate"/>
+                     <v-date-picker :locale="locale" mode="date" v-model="dateToFilter" @dayclick="setDate"/>
                   </template>
                </PopupBtn>
                <span v-if="dateFilterToShow" @click="deleteDate" class="material-icons pl-10 pointer">close</span>
@@ -76,6 +76,7 @@ import { getTasks, openTask, filterOnDate, filterOnTab, clearDateFilter, filterO
 import { openDialog } from '@/components/Common/modalView';
 import TaskItems from '@/components/UserAccount/Common/TaskItems/TaskItems.vue';
 import { dateToNumbers } from '@/components/Common/helpers/dateToNumbers';
+import { getLocale } from "@/lang/lang";
 
 export default {
    // eslint-disable-next-line
@@ -93,6 +94,7 @@ export default {
          date: new Date(),
          dateToFilter: '',
          dateFilterToShow: '',
+         locale: getLocale()
       }
    },
    methods: {

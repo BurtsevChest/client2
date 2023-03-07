@@ -13,24 +13,18 @@
                <div class="flex a-items-center flex-col">
                   <PopupBtn :positionStyle="'Header-popup'" v-model:show="showPopup" :hideBtn=true >
                      <template v-slot:popupBtn>
-                        <span class="flag-icon" :class="locale"></span>
+                        <span class="flag-icon" :class="flag"></span>
                      </template>
                      <template v-slot:popupTemplate>
-                        <div class="pb-8">
-                           <div class="Header-popup-item ph-10 pv-16 pointer radius-block flex a-items-center" @click="closePopup('flag-icon-ru')">
-                              <span class="flag-icon flag-icon-ru"></span>
-                              <div class="pl-8">Россия</div>
-                           </div>
-                        </div>
-                        <div>
-                           <div class="Header-popup-item ph-10 pv-16 pointer radius-block flex a-items-center" @click="closePopup('flag-icon-us')">
-                              <span class="flag-icon flag-icon-us"></span>
-                              <div class="pl-8">English</div>
+                        <div v-for="item in langItems" v-bind:key="item.locale" class="pb-8">
+                           <div class="Header-popup-item ph-10 pv-16 pointer radius-block flex a-items-center" @click="closePopup(item.locale)">
+                              <span class="flag-icon" :class="item.flag"></span>
+                              <div class="pl-8">{{item.name}}</div>
                            </div>
                         </div>
                      </template>
                   </PopupBtn>
-                  <a class="pointer Header-signUp ml-18" @click="signUp">Войти</a>
+                  <a class="pointer Header-signUp ml-18" @click="signUp">{{ $t('index_header_enter_btn') }}</a>
                   <div class="flex a-items-center pl-40">
                      <div class="Header-burger pointer" @click="openMenu" :class="{ 'Header-burger-active' : HeaderStatus }">
                         <span></span>
@@ -68,6 +62,7 @@
 import { openDialog } from '@/components/Common/modalView';
 import { openHeaderMenu, closeHeaderMenu } from '@/websync/header';
 import { mapGetters } from 'vuex';
+import { loadLanguageAsync, getLocale, translatedlanguages } from '@/lang/lang';
 
 export default {
    // eslint-disable-next-line
@@ -77,7 +72,9 @@ export default {
          stasusMenu: false,
          scrollPage: false,
          showPopup: false,
-         locale: 'flag-icon-ru',
+         flag: 'flag-icon-',
+         locale: getLocale(),
+         langItems: translatedlanguages
       }
    },
    methods: {
@@ -99,8 +96,21 @@ export default {
          this.showPopup = true
       },
       closePopup(locale) {
-         this.locale = locale
-         this.showPopup = false
+         this.locale = locale;
+         this.showPopup = false;
+         loadLanguageAsync(locale);
+         if(locale === 'en') {
+            locale = 'us'
+         }
+         this.flag = 'flag-icon-' + locale;
+         window.location.href = '/main';
+      },
+      getFlag() {
+         var fl = getLocale();
+         if(fl === 'en') {
+            fl = 'us'
+         }
+         this.flag = 'flag-icon-' + fl;
       }
    },
    computed: mapGetters(['HeaderStatus']),
@@ -112,6 +122,9 @@ export default {
             this.scrollPage = false
          }
       });
+   },
+   beforeMount() {
+      this.getFlag()
    }
 }
 </script>

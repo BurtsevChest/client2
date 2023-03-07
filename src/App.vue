@@ -10,6 +10,7 @@ import ModalView from '@/components/Common/modalView/modalView.vue';
 import store from './store';
 import { setPageName } from '@/components/Common/helpers/setPageName';
 import { setSeo } from './components/Index/Common/helpers/seo';
+import { startLocale } from './lang/lang';
 
 export default {
   name: 'App',
@@ -37,6 +38,7 @@ export default {
     }else{
       document.documentElement.setAttribute('data-theme', 'light')
     }
+    startLocale();
   },
   beforeMount() {
     // Определяем локаль и сохраняем в истории бразуера

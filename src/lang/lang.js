@@ -1,18 +1,19 @@
-import Vue from 'vue';
-import VueI18n from 'vue-i18n';
-import messages from '@/components/lang/translate/ru.json';
+import { createI18n } from 'vue-i18n';
+import messages from '@/lang/translate/ru.json';
+import messagesEn from '@/lang/translate/en.json';
 
-Vue.use(VueI18n);
-
-export const i18n = new VueI18n({
-  locale: 'ru',
-  fallbackLocale: 'en',
-  messages
+export const i18n = createI18n({
+   locale: 'ru',
+   fallbackLocale: 'en',
+   messages: {
+      ru: messages,
+      en: messagesEn
+   }
 })
 
 const loadedLanguages = ['ru'];
 
-function getLocale() {
+export function getLocale() {
    if(localStorage.locale) {
       return localStorage.locale;
    } else {
@@ -21,18 +22,19 @@ function getLocale() {
 }
 
 export function startLocale() {
+   console.log(i18n.global);
    loadLanguageAsync(getLocale());
 }
 
 function setI18nLanguage(lang) {
-  i18n.locale = lang;
+  i18n.global.locale = lang;
   document.querySelector('html').setAttribute('lang', lang);
   localStorage.setItem('locale', lang);
   return lang;
 }
 
 export function loadLanguageAsync(lang) {
-  if (i18n.locale === lang) {
+  if (i18n.global.locale === lang) {
     return Promise.resolve(setI18nLanguage(lang));
   }
 
@@ -40,11 +42,26 @@ export function loadLanguageAsync(lang) {
     return Promise.resolve(setI18nLanguage(lang));
   }
 
-  return import(`@/components/lang/translate/${lang}.json`).then(messages => {
-    i18n.setLocaleMessage(lang, messages.default);
-    loadedLanguages.push(lang);
-    return setI18nLanguage(lang);
+  return import(`@/lang/translate/${lang}.json`).then(messages => {
+   i18n.global.setLocaleMessage(lang, messages.default);
+   loadedLanguages.push(lang);
+   return setI18nLanguage(lang);
   })
 }
 
-export const translatedlanguages = ['ru', 'en'];
+export function tr(key) {
+   return i18n.global.t(key, getLocale());
+}
+
+export const translatedlanguages = [
+   {
+      locale: 'ru',
+      flag: 'flag-icon-ru',
+      name: 'Русский'
+   },
+   {
+      locale: 'en',
+      flag: 'flag-icon-us',
+      name: 'English'
+   }
+];

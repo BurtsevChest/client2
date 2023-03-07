@@ -9,18 +9,15 @@
    </div>
 </template>
 <script>
+import { tr } from '@/lang/lang';
 
 export default {
    // eslint-disable-next-line
    name: "SearchField",
-   props: {
-      placeholder: {
-         type: String
-      }
-   },
    data() {
       return {
-         text: ''
+         text: '',
+         placeholder: tr('common_ui_searchfield_placeholder')
       }
    },
    methods: {
@@ -38,7 +35,7 @@ export default {
 <style lang="less">
 .SearchField {
    &-input {
-      width: auto;
+      width: inherit;
    }
 }
 </style>

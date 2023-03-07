@@ -115,7 +115,7 @@ export default {
                }
                // if filter on text
                if(state.filterRules.filterText != '') {
-                  if(!(item.title.includes(state.filterRules.filterText) || item.description.includes(state.filterRules.filterText))) {
+                  if(!(item.title.toLowerCase().includes(state.filterRules.filterText.toLowerCase()) || item.description.toLowerCase().includes(state.filterRules.filterText.toLowerCase()))) {
                      return false;
                   }
                }

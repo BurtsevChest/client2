@@ -1,12 +1,12 @@
 <template>
    <div class="AddTaskView radius-block p-20 p-sm-10">
-      <h2 class="user_account-h2 text-center pb-8">Добавить задачу</h2>
+      <h2 class="user_account-h2 text-center pb-8">{{ $t('user_account_tasks_add_task') }}</h2>
       <div class="flex pb-10">
          <div class="flex-col flex-col-6 flex-col-sm-12 relative">
             <PopupBtn :positionStyle="'AddTaskView-personView'" v-model:show="showUserView" :hideBtn=true>
                <template v-slot:popupBtn>
                   <div class="flex a-items-center">
-                     <h3 class="user_account-h3">Исполнитель</h3>
+                     <h3 class="user_account-h3">{{ $t('user_account_tasks_add_responsible') }}</h3>
                      <div class="flex">
                         <span class="material-icons pl-4">person</span>
                         <div class="flex a-items-center pl-4">
@@ -22,14 +22,14 @@
                   />
                </template>
             </PopupBtn>
-            <p class="error AddTaskView-error_position" v-if="errorParams.responsible_id">Исполнитель не выбран</p>
+            <p class="error AddTaskView-error_position" v-if="errorParams.responsible_id">{{ $t('user_account_tasks_add_responsible_error') }}</p>
          </div>
          <div class="flex-col flex-col-6 flex-col-sm-12 relative">
             <PopupBtn :positionStyle="'AddTaskView-dateView'" :hideBtn=true>
                <template v-slot:popupBtn>
                   <div class="flex flex-noGutter">
                      <div class="flex-col">
-                        <h3 class="user_account-h3">Срок</h3>
+                        <h3 class="user_account-h3">{{ $t('user_account_tasks_add_deadline') }}</h3>
                      </div>
                      <div class="flex-col flex a-items-center">
                         <div class="pl-8">
@@ -42,24 +42,24 @@
                   </div>
                </template>
                <template v-slot:popupTemplate>
-                  <v-date-picker mode="date" v-model="date1"  @dayclick="setDate"/>
+                  <v-date-picker :locale="locale" mode="date" v-model="date1"  @dayclick="setDate"/>
                </template>
             </PopupBtn>
             
-            <p class="error AddTaskView-error_position" v-if="errorParams.date_of_completion">Дата не может быть меньше текущей даты</p>
+            <p class="error AddTaskView-error_position" v-if="errorParams.date_of_completion">{{ $t('user_account_tasks_add_deadline_error') }}</p>
          </div>
          <div class="flex-col flex-col-12 relative">
-            <h3 class="user_account-h3 pb-8">Задача</h3>
+            <h3 class="user_account-h3 pb-8">{{ $t('user_account_tasks_add_task_title') }}</h3>
             <input type="text" class="input" v-model.trim="taskParams.title">
-            <p class="error AddTaskView-error_position" v-if="errorParams.title">Задача не написана</p>
+            <p class="error AddTaskView-error_position" v-if="errorParams.title">{{ $t('user_account_tasks_add_task_title_error') }}</p>
          </div>
          <div class="flex-col flex-col-12 relative">
-            <h3 class="user_account-h3 pb-8">Описание</h3>
+            <h3 class="user_account-h3 pb-8">{{ $t('user_account_tasks_add_desc') }}</h3>
             <textarea class="textarea" v-model.trim="taskParams.description" style="resize: none; " name="" id="" cols="30" rows="10"></textarea>
-            <p class="error AddTaskView-error_position" v-if="errorParams.description">Нет описания к задаче</p>
+            <p class="error AddTaskView-error_position" v-if="errorParams.description">{{ $t('user_account_tasks_add_desc_error') }}</p>
          </div>
       </div>
-      <button @click="setTask" class="button">Добавить</button>
+      <button @click="setTask" class="button">{{ $t('user_account_tasks_add_addBtn') }}</button>
    </div>
 </template>
 
@@ -69,6 +69,7 @@ import { dateToNumbers } from '@/components/Common/helpers/dateToNumbers';
 import { setTask } from "@/websync/tasks";
 import { closeDialog } from '@/components/Common/modalView/index';
 import { getUsersList } from '@/websync/user';
+import { getLocale } from "@/lang/lang";
 
 let USER;
 if(localStorage.user) {
@@ -105,7 +106,8 @@ export default {
             parent_id: null,
             status_task_id: null
          },
-         showUserView: false
+         showUserView: false,
+         locale: getLocale()
       }
    },
    methods: {

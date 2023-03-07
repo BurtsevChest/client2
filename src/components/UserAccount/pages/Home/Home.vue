@@ -21,14 +21,13 @@
                   </a>
                </p>
                <div class="Home-user-label pointer mb-16" @click="clearLocalStorage">
-                  Выйти
+                  {{ $t('user_account_home_signOut') }}
                </div>
-               
             </div>
          </div>
       </div>
       <div class="">
-         <h2 class="user_account-h2 pb-20">Обучение и навыки</h2>
+         <h2 class="user_account-h2 pb-20">{{ $t('user_account_home_skills') }}</h2>
          <div class="flex">
             <div class="flex-col">
                <div class="Home-user_skill">Node.js</div>
@@ -49,9 +48,7 @@
       </div>
    </div>
 </template>
-
 <script>
-// import Lang from '@/components/lang/lang.js'\
 import { mapGetters } from 'vuex';
 import { openDialog } from '@/components/Common/modalView';
 
@@ -67,9 +64,8 @@ export default {
    },
    methods: {
       clearLocalStorage() {
-         this.theme.setAttribute('data-theme', 'light');
-         localStorage.clear()
-         // Фиксим выход из приложения. Какого-то хуя если уйти на главную через router-link, при следующем заходе сервер шлёт 500 ошибку
+         localStorage.removeItem('accessToken');
+         localStorage.removeItem('user');
          window.location.href = '/'
       },
       loadImageUser() {
@@ -94,9 +90,6 @@ export default {
    computed: mapGetters(['getUser']),
    beforeMount() {
       this.loadImageUser();
-      // Lang.getTranslate('Home').then((res) => {
-      //    this.lang = res.default
-      // })
    }
 }
 </script>

@@ -5,26 +5,26 @@
          </section>
          <section class="section-padding">
             <div class="container">
-               <h2 class="h2 pb-32">Назначайте свои задачи</h2>
+               <h2 class="h2 pb-32">{{ $t('index_main_section_1-title') }}</h2>
                <img src="@/components/Index/pages/Main/resources/images/tasks.jpg" class="radius-block box-shadow">
             </div>
          </section>
          <section class="section-padding">
             <div class="container">
-               <h2 class="h2 pb-32">Используйте доски Канбана</h2>
+               <h2 class="h2 pb-32">{{ $t('index_main_section_2-title') }}</h2>
                <div class="box-shadow radius-block ovefflow-hidden p-40 p-xm-20">
                   <div class="flex">
                      <div class="flex-col flex-col-6 flex-col-xm-12">
                         <img src="@/components/Index/pages/Main/resources/images/canban_boards.jpg" alt="">
                      </div>
                      <div class="flex-col flex-col-6 flex-col-xm-12 pt-40">
-                        <h3 class="h3 pb-24">К достоинствам Канбан относят:</h3>
+                        <h3 class="h3 pb-24">{{ $t('index_main_section_2-advantages-title') }}</h3>
                         <ul class="pl-22">
-                           <li class="li-circle pb-8">гибкое планирование с возможностью изменения приоритетов — важно для проектов в IT-сфере;</li>
-                           <li class="li-circle pb-8">высокую степень вовлеченности сотрудников, благодаря совместным обсуждениям задач;</li>
-                           <li class="li-circle pb-8">быстрый поиск проблем из-за лимитов WIP;</li>
-                           <li class="li-circle pb-8">экономию пространства на складах из-за сбалансированного потока транспортировки товаров;</li>
-                           <li class="li-circle pb-8">прозрачность рабочих процессов.</li>
+                           <li class="li-circle pb-8">{{ $t('index_main_section_2-advantages-item1') }}</li>
+                           <li class="li-circle pb-8">{{ $t('index_main_section_2-advantages-item2') }}</li>
+                           <li class="li-circle pb-8">{{ $t('index_main_section_2-advantages-item3') }}</li>
+                           <li class="li-circle pb-8">{{ $t('index_main_section_2-advantages-item4') }}</li>
+                           <li class="li-circle pb-8">{{ $t('index_main_section_2-advantages-item5') }}</li>
                         </ul>
                      </div>
                   </div>
