@@ -2,7 +2,7 @@
 <div class="Chat">
    <div class="Chat-wrapper">
       <div class="Chat-content flex-column">
-         <div class="Chat-messages" id="messageList">
+         <div class="Chat-messages pb-20" id="messageList">
             <div v-for="item in Messages" v-bind:key="item.id">
                <div v-if="userId === item.user_id" class="Chat-msg Chat-msg-my radius-block mt-16 pv-16 ph-10">
                   {{ item.text }}
@@ -12,10 +12,10 @@
                </div>
             </div>
          </div>
-         <div class="Chat-menu mt-20 radius-block ph-10 pv-10 flex flex-space">
+         <div class="Chat-menu radius-block ph-10 pv-10 flex flex-space">
             <span class="material-icons pointer">person</span>
             <span class="material-icons pointer pl-4">attach_file</span>
-            <input type="text" v-model.trim="inputText" :placeholder="placeholder" class="empty_flex pl-6">
+            <input type="text" v-model.trim="inputText" v-on:keyup.enter="clickEnter" :placeholder="placeholder" class="empty_flex pl-6">
             <span @click="addMsg" class="material-icons pointer">send</span>
          </div>
       </div>
@@ -58,7 +58,16 @@ export default {
       scroolItem() {
          var objDiv = document.getElementById("messageList");
          objDiv.scrollTop = objDiv.scrollHeight;
+      },
+      clickEnter() {
+         this.addMsg()
       }
+   },
+   beforeMount() {
+      
+   },
+   mounted() {
+      this.scroolItem();
    }
 }
 </script>

@@ -1,6 +1,6 @@
 <template>
    <div class="SearchField flex flex-space a-items-center input radius-block ph-6 pv-10">
-      <input v-model.trim="text" type="text" class="SearchField-input empty_flex" :placeholder="placeholder">
+      <input v-on:keyup.enter="clickEnter" v-model.trim="text" type="text" class="SearchField-input empty_flex" :placeholder="placeholder">
       <div class="flex a-items-center">
          <span v-if="text" @click="clearSearch" class="material-icons pl-16 pointer">close</span>
          <span v-else style="width: 40px; height: 24px;"></span>
@@ -27,6 +27,9 @@ export default {
       clearSearch() {
          this.text='';
          this.$emit('clearSearch')
+      },
+      clickEnter() {
+         this.$emit('clickSearchEnter',this.text)
       }
    }
 }

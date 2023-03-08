@@ -11,12 +11,10 @@
          <span class="material-icons flex flex-center a-items-center">close</span>
       </button>
    </div>
-   <h2 class="user_account-h2 pb-16">
-      {{ options.task.title }}
-   </h2>
-   <p class="pb-32">
-      {{ options.task.description }}
-   </p>
+   <input v-model="updateTaskParams.title" v-on:keyup.enter="inputTaskTitle" v-if="isCreator" class="user_account-h2 pb-16" type="text">
+   <h2 v-else class="user_account-h2 pb-16">{{ options.task.title }}</h2>
+   <input v-if="isCreator" class="pb-32" type="text" :value="options.task.description">
+   <p v-else class="pb-32">{{ options.task.description }}</p>
    <div class="flex">
       <div class="flex-col">
          <div @click="openAddTaskView(options.task.task_id)" class="flex a-items-center pointer">
@@ -52,9 +50,10 @@
 import { openDialog } from '@/components/Common/modalView';
 import DefaultTask from '@/components/UserAccount/RightAside/templates/taskPage/templates/defaultTask.vue';
 import TaskChat from '@/components/UserAccount/RightAside/templates/taskPage/templates/taskChat.vue';
-import { openTask, closeTask } from '@/websync/tasks';
+import { openTask, closeTask, updateTask } from '@/websync/tasks';
 import { tr } from '@/lang/lang';
 import { mapGetters } from 'vuex';
+import { getUser } from '@/components/Common/helpers/user';
 
 export default {
    // eslint-disable-next-line
@@ -71,7 +70,13 @@ export default {
          chatStatus: {
             open: false,
             tabText: tr('user_account_tasks_opentask_discuss')
-         }
+         },
+         isCreator: false,
+         updateTaskParams: {
+            title: this.options.task.title,
+            description: ''
+         },
+         task: this.options.task
       }
    },
    methods: {
@@ -103,8 +108,23 @@ export default {
             this.chatStatus.tabText = tr('user_account_tasks_opentask_close');
          }
       },
+      inputTaskTitle() {
+         if(this.updateTaskParams.title != this.task.title) {
+            this.task.title = this.updateTaskParams.title;
+            delete this.task.date
+            updateTask(this.task)
+         }
+      }
    },
-   computed: mapGetters(['parentTask'])
+   computed: mapGetters(['parentTask']),
+   beforeMount() {
+      if(this.options.task.creator_id === getUser().user_id) {
+         this.isCreator = true
+      }
+   },
+   beforeUnmount() {
+      this.updateTaskParams = ''
+   }
 }
 </script>
 

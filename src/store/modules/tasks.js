@@ -9,8 +9,23 @@ if(localStorage.user) {
    USER = JSON.parse(localStorage.user);
 }
 
+// Сделать промисы по-нормальному
 export default {
    actions: {
+      updateTask(state, task) {
+         return new Promise((resolve, reject) => {
+            Tasks.updateTask(task).then((res) => {
+               if(res != undefined) {
+                  resolve(res.data)
+               }else {
+                  throw new Error('asdasd')
+               }
+            })
+            .catch((err)=>{
+               reject(err)
+            })
+         })
+      },
       getTask(state, userId) {
          return new Promise((resolve, reject) => {
             if(state.getters.returnTasks.length === 0) {
@@ -171,6 +186,13 @@ export default {
       },
       addChildrenTask(state, task) {
          state.subTask.push(task)
+      },
+      updateTask(state, task) {
+         state.filteredTasks.forEach((item)=>{
+            if(item.id == task.task_id) {
+               item = task
+            }
+         })
       }
    },
    state: {

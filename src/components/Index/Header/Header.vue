@@ -16,7 +16,7 @@
                         <span class="flag-icon" :class="flag"></span>
                      </template>
                      <template v-slot:popupTemplate>
-                        <div v-for="item in langItems" v-bind:key="item.locale" class="pb-8">
+                        <div v-for="item in langItems" v-bind:key="item.locale" class="Header-popup-item-pb-8">
                            <div class="Header-popup-item ph-10 pv-16 pointer radius-block flex a-items-center" @click="closePopup(item.locale)">
                               <span class="flag-icon" :class="item.flag"></span>
                               <div class="pl-8">{{item.name}}</div>
@@ -250,6 +250,13 @@ export default {
       &-item {
          &:hover {
             box-shadow: 0 0 12px rgba(128, 128, 128, 0.5);
+         }
+
+         &-pb-8 {
+            padding-bottom: 8px;
+            &:last-child {
+               padding-bottom: 0;
+            }
          }
       }
    }

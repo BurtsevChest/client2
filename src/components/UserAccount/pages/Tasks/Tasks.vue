@@ -8,7 +8,7 @@
             </button>
             </div>
             <div class="flex-col flex flex-nowrap a-items-center">
-               <SearchField @clickSearch="filterToString" @clearSearch="clearFilterText"/>
+               <SearchField @clickSearchEnter="filterToString" @clickSearch="filterToString" @clearSearch="clearFilterText"/>
             </div>
             <div class="empty_flex"></div>
             <div class="flex a-self-end">

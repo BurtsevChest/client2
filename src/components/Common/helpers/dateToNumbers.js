@@ -60,6 +60,18 @@ export function setOneTaskDate(task) {
    return task;
 }
 
+export function setOneTaskMonthDate(task) {
+   return new Promise((resolve, reject)=> {
+      if(!task) {
+         reject('Fuckyou')
+      }
+      var date = new Date(task.date_of_completion);
+      task.date = dateToMonthText(date);
+      console.log(task.date);
+      resolve(task);
+   })
+}
+
 export function dateToMonthText(date) {
    var newDate = date;
    if(!(date instanceof Date)) {
