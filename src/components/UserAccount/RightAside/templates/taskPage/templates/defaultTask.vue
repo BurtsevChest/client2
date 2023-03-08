@@ -4,6 +4,9 @@
          :Tasks = "returnSubTasks"
          @onClickTask="openTask"
          :itemClass="'DefaultTask-subTask'"
+         :descClass="'standart-text-grey'"
+         :titleClass="'DefaultTask-subTask-titleClass'"
+         :dateClass="'DefaultTask-subTask-titleClass'"
       />
    </div>
 </template>
@@ -37,6 +40,10 @@ export default {
    &-subTask {
       border-radius: 20px;
       background-color: var(--text-block-hover);
+
+      &-titleClass {
+         color: var(--task-title-color);
+      }
    }
 }
 </style>

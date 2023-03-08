@@ -32,3 +32,15 @@ export function generateDate(tasks) {
    });
    return tasks;
 }
+
+/**
+ * 
+ * @param {*} date Принимает таску. 
+ * @returns Добавляет поле date в виде dd.mm.yy
+ */
+
+export function setOneTaskDate(task) {
+   var date = new Date(task.date_of_completion);
+   task.date = dateToNumbers(date);
+   return task;
+}

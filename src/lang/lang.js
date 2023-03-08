@@ -22,7 +22,6 @@ export function getLocale() {
 }
 
 export function startLocale() {
-   console.log(i18n.global);
    loadLanguageAsync(getLocale());
 }
 

@@ -7,11 +7,11 @@
                      <img src="@/components/UserAccount/pages/Home/resources/images/users/dominic.jpg" class="">
                   </div>
                   <div class="pl-16">
-                     <span class="TaskItem-title secondary-text-color">Andrey Churilov</span>
-                     <p class="TaskItem-desc pl-10 standart-text-grey">{{ item.title }}</p>
+                     <span class="TaskItem-title" :class="[titleClass]">Andrey Churilov</span>
+                     <p class="TaskItem-desc pl-10" :class="[descClass]">{{ item.title }}</p>
                   </div>
                </div>
-               <div class="secondary-text-color">
+               <div class="" :class="dateClass">
                   {{ item.date }}
                </div>
             </div>
@@ -30,7 +30,13 @@ export default {
       itemClass: {
          type: String
       },
-      activeItemClass: {
+      titleClass: {
+         type: String
+      },
+      descClass: {
+         type: String
+      },
+      dateClass: {
          type: String
       }
    },
@@ -61,7 +67,6 @@ export default {
 
 <style lang="less">
 .TaskItem {
-   border-radius: 10px;
    transition: 0.2s;
 
    &-title {

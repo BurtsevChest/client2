@@ -1,8 +1,9 @@
 import Tasks from '@/api/task/index.js';
-import { generateDate } from '@/components/Common/helpers/dateToNumbers';
+import { generateDate, setOneTaskDate } from '@/components/Common/helpers/dateToNumbers';
 import { openRightAside } from '@/components/UserAccount/RightAside';
 
 const TASK_TEMPLATE = 'components/UserAccount/RightAside/templates/taskPage/taskPage.vue';
+const emptyArr = [];
 let USER;
 if(localStorage.user) {
    USER = JSON.parse(localStorage.user);
@@ -24,8 +25,22 @@ export default {
             }
          })
       },
-      SOCKET_SETTASK(state, task) {
-         state.commit('setOneTask', task);
+      getOneTask(state, task_id) {
+         return new Promise((resolve, reject) => {
+            Tasks.getOneTask(task_id).then((res) => {
+               if(res.data) {
+                  resolve(res.data)
+               }
+            }).catch(() => {
+               reject(emptyArr)
+            })
+         })
+      },
+      SOCKET_SET_TASK(state, task) {
+         state.commit('setOneTask', setOneTaskDate(task));
+         if(state.getters.openedTaskId === task.parent_id) {
+            state.commit('addChildrenTask', setOneTaskDate(task))
+         }
          state.commit('filterTasks', USER.user_id)
       },
       setTask(state, task) {
@@ -46,14 +61,18 @@ export default {
       },
       openTask(state, task) {
          if(state.getters.returnOpenedTaskId != task.task_id) {
-            state.dispatch('getSubTasks', task.task_id).then(res => {
-               if(res) {
-                  state.commit('setopenedTaskId', task.task_id);
-                  openRightAside({
-                     template: TASK_TEMPLATE,
-                     options: { task }
+            state.dispatch('getSubTasks', task.task_id).then(() => {
+               if(task.parent_id) {
+                  state.dispatch('getOneTask', task.parent_id).then((res)=> {
+                     state.commit('setParentTask', res);
+                  }).catch((res)=> {
+                     state.commit('setParentTask', res);
                   })
+               }else {
+                  state.commit('setParentTask', []);
                }
+               state.commit('setopenedTaskId', task.task_id);
+               openRightAside({template: TASK_TEMPLATE, options:{ task }});
             })
          }
       },
@@ -146,6 +165,12 @@ export default {
       },
       setTaskMessages(state, messageList) {
          state.taskMessages = messageList
+      },
+      setParentTask(state, task) {
+         state.parentTask = task
+      },
+      addChildrenTask(state, task) {
+         state.subTask.push(task)
       }
    },
    state: {
@@ -158,7 +183,8 @@ export default {
          tabFilter: 'my',
          filterText: ''
       },
-      taskMessages: []
+      taskMessages: [],
+      parentTask: {}
    },
    getters: {
       returnTasks(state) {
@@ -172,6 +198,9 @@ export default {
       },
       taskMessages(state) {
          return state.taskMessages
+      },
+      parentTask(state) {
+         return state.parentTask
       }
    }
 }

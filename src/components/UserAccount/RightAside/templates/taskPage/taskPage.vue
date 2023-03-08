@@ -1,8 +1,16 @@
 <template>
 <div class="Task flex flex-column empty_flex">
-   <button class="Task-closeBtn a-self-end" @click="close">
-      <span class="material-icons flex flex-center a-items-center">close</span>
-   </button>
+   <div class="flex flex-space pb-10">
+      <div @click="OpenTask(parentTask)" class="pointer Task-parentTask standart-text-grey flex a-items-center">
+         <p class="Task-parentTask-text">
+            {{ parentTask.title }}
+         </p>
+      </div>
+      <div class="empty_flex"></div>
+      <button class="Task-closeBtn" @click="close">
+         <span class="material-icons flex flex-center a-items-center">close</span>
+      </button>
+   </div>
    <h2 class="user_account-h2 pb-16">
       {{ options.task.title }}
    </h2>
@@ -46,6 +54,7 @@ import DefaultTask from '@/components/UserAccount/RightAside/templates/taskPage/
 import TaskChat from '@/components/UserAccount/RightAside/templates/taskPage/templates/taskChat.vue';
 import { openTask, closeTask } from '@/websync/tasks';
 import { tr } from '@/lang/lang';
+import { mapGetters } from 'vuex';
 
 export default {
    // eslint-disable-next-line
@@ -94,7 +103,8 @@ export default {
             this.chatStatus.tabText = tr('user_account_tasks_opentask_close');
          }
       },
-   }
+   },
+   computed: mapGetters(['parentTask'])
 }
 </script>
 
@@ -112,6 +122,21 @@ export default {
       height: 40px;
       background: rgba(128, 128, 128, 0.2);
       border-radius: 50%;
+   }
+
+   &-parentTask {
+      font-size: 14px;
+      
+      &:hover {
+         text-decoration: underline;
+      }
+
+      &-text {
+         max-width: 140px;
+         text-overflow: ellipsis;
+         overflow: hidden;
+         white-space: nowrap;
+      }
    }
 }
 </style>

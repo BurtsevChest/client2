@@ -27,15 +27,17 @@
       </div>
       <div class="flex">
          <div class="flex-col pt-16 flex-col-8 flex flex-noGutter flex-column Tasks-itemsWrapper">
-            <div v-if="tasks" class="flex flex-noGutter flex-column">
+            <div v-if="returnTasks.length > 0" class="flex flex-noGutter flex-column">
                <TaskItems
                   :Tasks = "returnTasks"
                   @onClickTask = OpenTask
                   :itemClass="'Tasks-item'"
-                  :activeItemClass = "'Tasks-item-active'"
+                  :titleClass="'secondary-text-color'"
+                  :descClass="'standart-text-grey'"
+                  :dateClass="'secondary-text-color'"
                />
             </div>
-            <p v-else class="user_account-h2">Задач нет</p>
+            <p v-else class="standart-text-grey">Задач нет</p>
          </div>
          <div class="flex-col pt-16 flex flex-column">
             <div class="flex-col pb-16">

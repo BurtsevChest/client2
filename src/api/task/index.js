@@ -17,6 +17,10 @@ class Tasks {
       return await AxiosRequest.get(`subtask/${task_id}`)
    }
 
+   async getOneTask(task_id) {
+      return await AxiosRequest.get(`oneTask/${task_id}`)
+   }
+
    async getTaskMessages(task_id) {
       return await AxiosRequest.get(`task_msg/${task_id}`)
    }
