@@ -1,5 +1,5 @@
 import Tasks from '@/api/task/index.js';
-import { generateDate, setOneTaskDate } from '@/components/Common/helpers/dateToNumbers';
+import { setOneTaskDate, generateDateMonth } from '@/components/Common/helpers/dateToNumbers';
 import { openRightAside } from '@/components/UserAccount/RightAside';
 
 const TASK_TEMPLATE = 'components/UserAccount/RightAside/templates/taskPage/taskPage.vue';
@@ -15,7 +15,7 @@ export default {
          return new Promise((resolve, reject) => {
             if(state.getters.returnTasks.length === 0) {
                Tasks.getTasks(userId).then((res)=>{
-                  state.commit('setTasks', generateDate(res.data));
+                  state.commit('setTasks', generateDateMonth(res.data));
                   if(res.data) {
                      resolve(true)
                   }
@@ -50,7 +50,7 @@ export default {
          return new Promise(function(resolve, reject) {
             Tasks.getSubTasks(task_id).then((res) => {
                if(res.data) {
-                  state.commit('setSubTasks', generateDate(res.data));
+                  state.commit('setSubTasks', generateDateMonth(res.data));
                   resolve(true);
                } else {
                   state.commit('setSubTasks', []);
