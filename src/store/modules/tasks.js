@@ -1,5 +1,5 @@
 import Tasks from '@/api/task/index.js';
-import { setOneTaskDate, generateDateMonth } from '@/components/Common/helpers/dateToNumbers';
+import { setOneTaskDate, generateDateMonth, setOneTaskMonthDate } from '@/components/Common/helpers/dateToNumbers';
 import { openRightAside } from '@/components/UserAccount/RightAside';
 
 const TASK_TEMPLATE = 'components/UserAccount/RightAside/templates/taskPage/taskPage.vue';
@@ -13,17 +13,8 @@ if(localStorage.user) {
 export default {
    actions: {
       updateTask(state, task) {
-         return new Promise((resolve, reject) => {
-            Tasks.updateTask(task).then((res) => {
-               if(res != undefined) {
-                  resolve(res.data)
-               }else {
-                  throw new Error('asdasd')
-               }
-            })
-            .catch((err)=>{
-               reject(err)
-            })
+         Tasks.updateTask(task).then((res) => {
+            state.commit('setUpdatedTask', setOneTaskMonthDate(res.data))
          })
       },
       getTask(state, userId) {
@@ -187,11 +178,12 @@ export default {
       addChildrenTask(state, task) {
          state.subTask.push(task)
       },
-      updateTask(state, task) {
-         state.filteredTasks.forEach((item)=>{
-            if(item.id == task.task_id) {
+      setUpdatedTask(state, task) {
+         state.filteredTasks = state.filteredTasks.map((item)=>{
+            if(item.task_id === task.task_id) {
                item = task
             }
+            return item
          })
       }
    },

@@ -18,9 +18,7 @@ export function getTasks() {
 
 export function updateTask(task) {
    if(task) {
-      store.dispatch('updateTask', task).then((updatedTask) => {
-         store.commit('updateTask', updatedTask)
-      })
+      store.dispatch('updateTask', task)
    }
 }
 

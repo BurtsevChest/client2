@@ -76,7 +76,7 @@ export default {
             title: this.options.task.title,
             description: ''
          },
-         task: this.options.task
+         task: JSON.parse(JSON.stringify(this.options.task))
       }
    },
    methods: {
