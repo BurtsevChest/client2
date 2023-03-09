@@ -16,7 +16,6 @@
 <script>
 import Sidebar from '@/components/UserAccount/Sidebar/Sidebar.vue';
 import RightAiside from '@/components/UserAccount/RightAside/RightAside.vue';
-import { ConnectSocket } from '@/vue_socket';
 
 export default {
    // eslint-disable-next-line
@@ -25,7 +24,6 @@ export default {
       Sidebar, RightAiside
    },
    beforeMount() {
-      ConnectSocket()
    }
 
 }
