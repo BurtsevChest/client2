@@ -50,7 +50,9 @@ export default {
          state.commit('filterTasks', USER.user_id)
       },
       setTask(state, task) {
-         Tasks.setTask(task);
+         Tasks.setTask(task).then(res=> {
+            console.log(res);
+         });
       },
       getSubTasks(state, task_id) {
          return new Promise(function(resolve, reject) {

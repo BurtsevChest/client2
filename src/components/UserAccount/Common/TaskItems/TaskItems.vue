@@ -1,22 +1,23 @@
 <template>
    <div class="flex flex-noGutter flex-column">
-         <div v-for="item in tasks" v-bind:key="item.task_id" class="flex-col">
-            <div @click="openTask(item)" :class="[itemClass] " class="TaskItem pointer flex flex-space ph-10 pv-16 mb-8">
-               <div class="flex">
-                  <div class="TaskItem-image">
-                     <img src="@/components/UserAccount/pages/Home/resources/images/users/dominic.jpg" class="">
-                  </div>
-                  <div class="pl-16">
-                     <span class="TaskItem-title" :class="[titleClass]">Andrey Churilov</span>
-                     <p class="TaskItem-desc pl-10" :class="[descClass]">{{ item.title }}</p>
-                  </div>
+      <div v-for="item in tasks" v-bind:key="item.task_id" class="flex-col">
+         <div @click="openTask(item)" :class="[itemClass] " class="TaskItem pointer flex flex-space ph-10 pv-16 mb-8">
+            <div class="flex">
+               <div class="TaskItem-image">
+                  <img src="@/components/UserAccount/pages/Home/resources/images/users/dominic.jpg" class="">
                </div>
-               <div class="" :class="dateClass">
-                  {{ item.date }}
+               <div class="pl-16">
+                  <span class="TaskItem-title" :class="[titleClass]">Andrey Churilov</span>
+                  <p class="TaskItem-desc pl-10" :class="[descClass]">{{ item.title }}</p>
                </div>
+            </div>
+            <div class="empty_flex"></div>
+            <div class="pl-16" :class="dateClass">
+               {{ item.date }}
             </div>
          </div>
       </div>
+   </div>
 </template>
 <script>
 

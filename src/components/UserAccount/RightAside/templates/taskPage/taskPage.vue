@@ -11,9 +11,10 @@
          <span class="material-icons flex flex-center a-items-center">close</span>
       </button>
    </div>
-   <input v-model="updateTaskParams.title" v-on:keyup.enter="inputTaskTitle" v-if="isCreator" class="user_account-h2 pb-16" type="text">
+   <input v-model="updateTaskParams.title" v-on:keyup.enter="updateTask" v-if="isCreator" class="user_account-h2 pb-16" type="text">
+   <!-- <textarea v-model="updateTaskParams.title" v-on:blur="inputTaskTitle" v-if="isCreator" class="user_account-h2 pb-16"></textarea> -->
    <h2 v-else class="user_account-h2 pb-16">{{ options.task.title }}</h2>
-   <input v-if="isCreator" class="pb-32" type="text" :value="options.task.description">
+   <input v-if="isCreator" v-model="updateTaskParams.description" v-on:keyup.enter="updateTask" class="pb-32" type="text">
    <p v-else class="pb-32">{{ options.task.description }}</p>
    <div class="flex">
       <div class="flex-col">
@@ -74,7 +75,7 @@ export default {
          isCreator: false,
          updateTaskParams: {
             title: this.options.task.title,
-            description: ''
+            description: this.options.task.description
          },
          task: JSON.parse(JSON.stringify(this.options.task))
       }
@@ -108,9 +109,10 @@ export default {
             this.chatStatus.tabText = tr('user_account_tasks_opentask_close');
          }
       },
-      inputTaskTitle() {
-         if(this.updateTaskParams.title != this.task.title) {
+      updateTask() {
+         if(this.updateTaskParams.title != this.task.title || this.updateTaskParams.description != this.task.description) {
             this.task.title = this.updateTaskParams.title;
+            this.task.description = this.updateTaskParams.description;
             delete this.task.date
             updateTask(this.task)
          }
