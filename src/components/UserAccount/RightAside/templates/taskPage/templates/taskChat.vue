@@ -10,7 +10,7 @@
 import Chat from '@/components/UserAccount/Common/chat/Chat.vue';
 import { mapGetters } from 'vuex';
 import { setNewMessage } from '@/websync/tasks';
-import socket from "@/vue_socket/index"
+import chatSocket from "@/vue_socket/chatSocket"
 let USER;
 if(localStorage.user) {
    // eslint-disable-next-line no-unused-vars
@@ -36,7 +36,7 @@ export default {
             user_id: USER.user_id,
             to: this.task_id
          }
-         socket.emit("PRIVATE_MESSAGE", data)
+         chatSocket.emit("PRIVATE_MESSAGE", data)
          setNewMessage(data)
       }
    },
@@ -44,14 +44,14 @@ export default {
    beforeMount() {
       // Чтоб получить сообщения чата
       // getTaskMessages()
-      socket.emit('JOIN_ROOM', this.task_id)
-      socket.on('PRIVATE_MESSAGE', (data) => {
+      chatSocket.emit('JOIN_ROOM', this.task_id)
+      chatSocket.on('PRIVATE_MESSAGE', (data) => {
          console.log(data)
          setNewMessage(data);
       })
    },
    beforeUnmount() {
-      socket.emit('DISCONNECTION_ROOM', this.task_id)
+      chatSocket.emit('DISCONNECTION_ROOM', this.task_id)
    }
 }
 </script>

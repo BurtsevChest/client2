@@ -79,6 +79,7 @@ import { openDialog } from '@/components/Common/modalView';
 import TaskItems from '@/components/UserAccount/Common/TaskItems/TaskItems.vue';
 import { dateToNumbers } from '@/components/Common/helpers/dateToNumbers';
 import { getLocale } from "@/lang/lang";
+import mainSocket from "@/vue_socket/mainSocket"
 
 export default {
    // eslint-disable-next-line
@@ -130,6 +131,10 @@ export default {
    computed: mapGetters(["returnTasks"]),
    beforeMount() {
       getTasks()
+      console.log(localStorage.task)
+      mainSocket.on('SET_TASK', data => {
+         console.log("Пуш в стор ", data.task)
+      })
    }
 }
 </script>
