@@ -67,12 +67,7 @@ export function clearTextFilter() {
 }
 
 export function setNewMessage(message) {
-   // хардкод, ибо опять же я хз в каком виде msg передавать будем
-   var msg = {
-      user_id: getUser().user_id,
-      text: message
-   }
-   store.commit('setNewMessage', msg)
+   store.commit('setNewMessage', message)
 }
 
 export function getTaskMessages(task_id) {

@@ -1,23 +1,10 @@
-import VueSocketIO from 'vue-3-socket.io';
-import app from '@/main';
-import store from '@/store';
-import SocketIO from 'socket.io-client';
+import { io } from "socket.io-client"
 
-const options = { 
-   transports: ['websocket'] 
-};
+const URL = "http://127.0.0.1:3000";
+const socket = io(URL, {transports: ['websocket']})
 
-const VueSocket = new VueSocketIO({
-   debug: true,
-   connection: SocketIO('http://127.0.0.1:5763', options),
-   options,
-   vuex: {
-      store,
-      actionPrefix: 'SOCKET_',
-      mutationPrefix: 'SOCKET_'
-   }
-});
+socket.onAny((event, ...args) => {
+   console.log(event, args);
+ });
 
-export function ConnectSocket() {
-   app.use(VueSocket)
-}
+export default socket
