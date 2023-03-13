@@ -52,7 +52,6 @@ import { openDialog } from '@/components/Common/modalView';
 import DefaultTask from '@/components/UserAccount/RightAside/templates/taskPage/templates/defaultTask.vue';
 import TaskChat from '@/components/UserAccount/RightAside/templates/taskPage/templates/taskChat.vue';
 import { openTask, closeTask, updateTask } from '@/websync/tasks';
-import { tr } from '@/lang/lang';
 import { mapGetters } from 'vuex';
 import { getUser } from '@/components/Common/helpers/user';
 
@@ -70,7 +69,7 @@ export default {
          tabTamplate: DefaultTask,
          chatStatus: {
             open: false,
-            tabText: tr('user_account_tasks_opentask_discuss')
+            tabText: this.$i18n.t('user_account_tasks_opentask_discuss')
          },
          isCreator: false,
          updateTaskParams: {
@@ -102,11 +101,11 @@ export default {
          if(this.chatStatus.open) {
             this.tabTamplate = DefaultTask
             this.chatStatus.open = false;
-            this.chatStatus.tabText = tr('user_account_tasks_opentask_discuss');
+            this.chatStatus.tabText = this.$i18n.t('user_account_tasks_opentask_discuss');
          } else {
             this.tabTamplate = TaskChat
             this.chatStatus.open = true;
-            this.chatStatus.tabText = tr('user_account_tasks_opentask_close');
+            this.chatStatus.tabText = this.$i18n.t('user_account_tasks_opentask_close');
          }
       },
       updateTask() {

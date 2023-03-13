@@ -9,7 +9,6 @@
    </div>
 </template>
 <script>
-import { tr } from '@/lang/lang';
 
 export default {
    // eslint-disable-next-line
@@ -17,7 +16,7 @@ export default {
    data() {
       return {
          text: '',
-         placeholder: tr('common_ui_searchfield_placeholder')
+         placeholder: this.$i18n.t('common_ui_searchfield_placeholder')
       }
    },
    methods: {

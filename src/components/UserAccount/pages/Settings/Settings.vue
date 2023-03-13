@@ -54,7 +54,7 @@ export default {
       },
       setLocale(locale) {
          loadLanguageAsync(locale);
-         window.location.href='/settings'
+         this.activeLocale = getLocale()
       }
    },
    mounted() {

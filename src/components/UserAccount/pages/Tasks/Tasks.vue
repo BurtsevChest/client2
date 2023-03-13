@@ -6,6 +6,10 @@
             <button @click="openAddTaskView" class="Tasks-addTask-btn flex flex-center a-items-center">
                <span class="material-icons Tasks-addTask-btn-icon">add</span>
             </button>
+            <div class="secondare-text-color pl-10">Тест новой модалки</div>
+            <span class="material-icons pl-10 pointer" @click="openNewModal" style="color: red;">
+               favorite
+            </span>
             </div>
             <div class="flex-col flex flex-nowrap a-items-center">
                <SearchField @clickSearchEnter="filterToString" @clickSearch="filterToString" @clearSearch="clearFilterText"/>
@@ -70,15 +74,23 @@
          </div>
       </div>
    </div>
+
+   <ModalDialog
+      :dialogStatus="dialogStatus"
+      :title = "'Новая задача'"
+      @onCloseClick="() => {this.dialogStatus=false}"
+      :template="'components/UserAccount/pages/Tasks/templates/addTaskDialog.vue'"
+   />
 </template>
 
 <script>
 import { mapGetters } from 'vuex';
-import { getTasks, openTask, filterOnDate, filterOnTab, clearDateFilter, filterOnText } from '@/websync/tasks';
+import { getTasks, openTask, filterOnDate, filterOnTab, clearDateFilter, filterOnText, SocketGetTask } from '@/websync/tasks';
 import { openDialog } from '@/components/Common/modalView';
 import TaskItems from '@/components/UserAccount/Common/TaskItems/TaskItems.vue';
 import { dateToNumbers } from '@/components/Common/helpers/dateToNumbers';
 import { getLocale } from "@/lang/lang";
+import socket from "@/vue_socket/index"
 
 export default {
    // eslint-disable-next-line
@@ -96,7 +108,8 @@ export default {
          date: new Date(),
          dateToFilter: '',
          dateFilterToShow: '',
-         locale: getLocale()
+         locale: getLocale(),
+         dialogStatus: false
       }
    },
    methods: {
@@ -105,6 +118,9 @@ export default {
       },
       openAddTaskView() {
          openDialog({template: 'components/Common/modalView/templates/AddTaskView.vue'});
+      },
+      openNewModal() {
+         this.dialogStatus = true;
       },
       setTab(name) {
          this.activeTab = name;
@@ -129,7 +145,10 @@ export default {
    },
    computed: mapGetters(["returnTasks"]),
    beforeMount() {
-      getTasks()
+      getTasks();
+      socket.on('SET_TASK', (task)=>{
+         SocketGetTask(task)
+      })
    }
 }
 </script>

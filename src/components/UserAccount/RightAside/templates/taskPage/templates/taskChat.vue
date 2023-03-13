@@ -11,13 +11,9 @@ import Chat from '@/components/UserAccount/Common/chat/Chat.vue';
 import { mapGetters } from 'vuex';
 import { setNewMessage } from '@/websync/tasks';
 import socket from "@/vue_socket/index"
-let USER;
-if(localStorage.user) {
-   // eslint-disable-next-line no-unused-vars
-   USER = JSON.parse(localStorage.user);
-}
+import { getUser } from '@/components/Common/helpers/user';
 // import {getTaskMessages} from '@/websync/tasks';
-// Можно сюда сокет импортировать и работать с эмиатми. А слушать уже в сторе
+
 export default {
    // eslint-disable-next-line
    name: "TaskChat",
@@ -29,11 +25,9 @@ export default {
    },
    methods: {
       sendMsg(message) {
-         // some socket emits
-         // Пока что в message просто текст сообщения я хз, в каком виде мы будем сообщения делать
          const data = {
             text: message,
-            user_id: USER.user_id,
+            user_id: getUser().user_id,
             to: this.task_id
          }
          socket.emit("PRIVATE_MESSAGE", data)
