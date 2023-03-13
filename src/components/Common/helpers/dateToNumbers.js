@@ -96,3 +96,14 @@ export function generateDateMonth(tasks) {
    });
    return tasks;
 }
+
+Array.prototype.arrSetMonthDate = function(newField, field) {
+   return this.map((item)=>{
+      item[newField] = dateToMonthText(item[field]);
+   })
+}
+
+Object.prototype.objSetMonthDate = function(newField, field) {
+   this[newField] = dateToMonthText(this[field]);
+   return this
+}

@@ -91,7 +91,9 @@ export default {
             "Authorization": "Bearer " + localStorage.accessToken,
          }
          localStorage.setItem('user', JSON.stringify(res.data.user));
-         this.$router.push('/user_account/home');
+         window.location.href = '/user_account/home';
+         // FIXME Слетает AxiosRequest
+         // this.$router.push('/user_account/home');
       }
    }
 }

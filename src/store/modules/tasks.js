@@ -1,13 +1,10 @@
 import Tasks from '@/api/task/index.js';
 import { setOneTaskDate, generateDateMonth, setOneTaskMonthDate } from '@/components/Common/helpers/dateToNumbers';
 import { openRightAside } from '@/components/UserAccount/RightAside';
+import { getUser } from '@/components/Common/helpers/user';
 
 const TASK_TEMPLATE = 'components/UserAccount/RightAside/templates/taskPage/taskPage.vue';
 const emptyArr = [];
-let USER;
-if(localStorage.user) {
-   USER = JSON.parse(localStorage.user);
-}
 
 // Сделать промисы по-нормальному
 export default {
@@ -47,7 +44,7 @@ export default {
          if(state.getters.openedTaskId === task.parent_id) {
             state.commit('addChildrenTask', setOneTaskDate(task))
          }
-         state.commit('filterTasks', USER.user_id)
+         state.commit('filterTasks', getUser().userId)
       },
       setTask(state, task) {
          Tasks.setTask(task).then(res=> {

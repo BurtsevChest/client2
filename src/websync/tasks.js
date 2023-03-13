@@ -1,12 +1,10 @@
 import store from "@/store";
-let USER;
-if(localStorage.user) {
-   USER = JSON.parse(localStorage.user);
-}
+import { getUser } from "@/components/Common/helpers/user";
+
 
 export function getTasks() {
-   if(USER.user_id) {
-      store.dispatch('getTask', USER.user_id).then((res) => {
+   if(getUser().user_id) {
+      store.dispatch('getTask', getUser().user_id).then((res) => {
          if(res.data) {
             filterTasks();
          } else {
@@ -23,7 +21,7 @@ export function updateTask(task) {
 }
 
 export function setTask(task) {
-   if(task && USER.user_id) {
+   if(task && getUser().user_id) {
       store.dispatch('setTask', task)
    }
 }
@@ -39,7 +37,7 @@ export function closeTask(task) {
 
 // set filters
 function filterTasks() {
-   store.commit('filterTasks', USER.user_id)
+   store.commit('filterTasks', getUser().user_id)
 }
 
 export function filterOnDate(date) {
@@ -71,7 +69,7 @@ export function clearTextFilter() {
 export function setNewMessage(message) {
    // хардкод, ибо опять же я хз в каком виде msg передавать будем
    var msg = {
-      user_id: USER.user_id,
+      user_id: getUser().user_id,
       text: message
    }
    store.commit('setNewMessage', msg)
