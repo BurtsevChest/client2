@@ -146,11 +146,9 @@ export default {
    },
    computed: mapGetters(["returnTasks"]),
    beforeMount() {
-      getTasks()
-      console.log(localStorage.task)
       mainSocket.on('SET_TASK', data => {
         SocketGetTask(data.task)
-      }
+      })
       getTasks();
    }
 }
