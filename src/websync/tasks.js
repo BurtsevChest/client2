@@ -1,35 +1,59 @@
 import store from "@/store";
-let USER;
-if(localStorage.user) {
-   USER = JSON.parse(localStorage.user);
-}
+import { getUser } from "@/components/Common/helpers/user";
+import { generateDateMonth, setOneTaskDate, setOneTaskMonthDate } from '@/components/Common/helpers/dateToNumbers';
+import { openRightAside, closeRightAside } from '@/components/UserAccount/RightAside';
+
+const TASK_TEMPLATE = 'components/UserAccount/RightAside/templates/taskPage/taskPage.vue';
 
 export function getTasks() {
-   if(USER.user_id) {
-      store.dispatch('getTask', USER.user_id).then((res) => {
-         if(res.data) {
-            filterTasks();
-         } else {
-            filterTasks();
-         }
+   if(store.getters.returnTasks.length === 0) {
+      store.dispatch('getTask', getUser().user_id)
+      .then((taskList) => {
+         store.commit('setTasks', generateDateMonth(taskList));
+         filterTasks();
       });
    }
 }
 
 export function updateTask(task) {
-   if(task) {
-      store.dispatch('updateTask', task)
-   }
+   store.dispatch('updateTask', task)
+   .then((updatedTask) => {
+      store.commit('setUpdatedTask', setOneTaskMonthDate(updatedTask))
+   })
 }
 
 export function setTask(task) {
-   if(task && USER.user_id) {
+   if(task) {
       store.dispatch('setTask', task)
+      .catch(() => {
+         alert('Неизвестная ошибка')
+      })
    }
 }
 
+export function SocketGetTask(task) {
+   store.commit('setOneTask', setOneTaskDate(task));
+   filterTasks()
+}
+
+// Open/Close Task
 export function openTask(task) {
-   store.dispatch('openTask', task)
+   if(store.getters.returnOpenedTaskId != task.task_id) {
+      const allToLoadTask = [
+         store.dispatch('getSubTasks', task.task_id),
+         store.dispatch('getParentTask', task.parent_id)
+      ]
+
+      Promise.all(allToLoadTask)
+      .then(()=> {
+         store.commit('setopenedTaskId', task.task_id);
+         openRightAside({template: TASK_TEMPLATE, options:{ task }});
+      })
+      .catch(()=>{
+         closeRightAside();
+         alert('Ошибка загрузки данных');
+      })
+   }
 }
 
 export function closeTask(task) {
@@ -37,9 +61,9 @@ export function closeTask(task) {
    store.commit('closeTask', task);
 }
 
-// set filters
+// Задаем фильтры
 function filterTasks() {
-   store.commit('filterTasks', USER.user_id)
+   store.commit('filterTasks', getUser().user_id)
 }
 
 export function filterOnDate(date) {
@@ -57,7 +81,7 @@ export function filterOnText(text) {
    filterTasks();
 }
 
-// clear filters
+// Чистим фильтры
 export function clearDateFilter() {
    store.commit('clearDateFilter');
    filterTasks();
@@ -68,8 +92,8 @@ export function clearTextFilter() {
    filterTasks();
 }
 
+// Task messages
 export function setNewMessage(message) {
-   // хардкод, ибо опять же я хз в каком виде msg передавать будем
    store.commit('setNewMessage', message)
 }
 

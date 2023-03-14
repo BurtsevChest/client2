@@ -24,12 +24,7 @@
 </template>
 
 <script>
-import { tr } from '@/lang/lang';
-
-let USER;
-if(localStorage.user) {
-   USER = JSON.parse(localStorage.user);
-}
+import { getUser } from '@/components/Common/helpers/user';
 
 export default {
    // eslint-disable-next-line
@@ -43,8 +38,8 @@ export default {
    data() {
       return {
          inputText: '',
-         userId: USER.user_id,
-         placeholder: tr('user_account_common_ui_chat_placeholder')
+         userId: getUser().user_id,
+         placeholder: this.$i18n.t('user_account_common_ui_chat_placeholder')
       }
    },
    methods: {

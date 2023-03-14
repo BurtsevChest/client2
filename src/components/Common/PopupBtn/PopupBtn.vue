@@ -68,7 +68,7 @@ export default {
          this.closePopupInsideBody(e)
       }, true)
    },
-   beforeUpdate() {
+   beforeUnmount() {
       window.removeEventListener('click', e => {
          this.closePopupInsideBody(e)
       }, true)

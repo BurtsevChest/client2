@@ -7,7 +7,7 @@
       <div class="menu">
          <router-link  v-for="item in menuList" v-bind:key="item.id" :to="item.href" class="light pl-8 sidebar_button radius-block flex a-items-center">
             <span class="material-icons">{{ item.icon }}</span>
-            <span class="sidebar_link">{{ item.title }}</span>
+            <span class="sidebar_link">{{ $t(item.title) }}</span>
          </router-link>
       </div>
       <div class="empty_flex"></div>

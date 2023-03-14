@@ -1,13 +1,11 @@
 import { createI18n } from 'vue-i18n';
 import messages from '@/lang/translate/ru.json';
-import messagesEn from '@/lang/translate/en.json';
 
 export const i18n = createI18n({
    locale: 'ru',
    fallbackLocale: 'en',
    messages: {
       ru: messages,
-      en: messagesEn
    }
 })
 
@@ -15,6 +13,7 @@ const loadedLanguages = ['ru'];
 
 export function getLocale() {
    if(localStorage.locale) {
+      console.log(navigator);
       return localStorage.locale;
    } else {
       return navigator.language;
@@ -26,10 +25,10 @@ export function startLocale() {
 }
 
 function setI18nLanguage(lang) {
-  i18n.global.locale = lang;
-  document.querySelector('html').setAttribute('lang', lang);
-  localStorage.setItem('locale', lang);
-  return lang;
+   i18n.global.locale = lang;
+   document.querySelector('html').setAttribute('lang', lang);
+   localStorage.setItem('locale', lang);
+   return lang;
 }
 
 export function loadLanguageAsync(lang) {
@@ -46,10 +45,6 @@ export function loadLanguageAsync(lang) {
    loadedLanguages.push(lang);
    return setI18nLanguage(lang);
   })
-}
-
-export function tr(key) {
-   return i18n.global.t(key, getLocale());
 }
 
 export const translatedlanguages = [
