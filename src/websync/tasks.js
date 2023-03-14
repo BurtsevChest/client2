@@ -62,6 +62,7 @@ export function closeTask(task) {
 }
 
 // Задаем фильтры
+// Пофиксить фильтр при переходе между страницами
 function filterTasks() {
    store.commit('filterTasks', getUser().user_id)
 }

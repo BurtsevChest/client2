@@ -12,38 +12,47 @@ export const i18n = createI18n({
 const loadedLanguages = ['ru'];
 
 export function getLocale() {
-   if(localStorage.locale) {
-      console.log(navigator);
-      return localStorage.locale;
-   } else {
-      return navigator.language;
+   let locale = localStorage.locale || navigator.language;
+   locale = locale.split('-')[0];
+   let ifLocaleExist = false;
+
+   translatedlanguages.forEach((item) => {
+      if (item.locale === locale) {
+         ifLocaleExist = true;
+         return;
+      }
+   });
+
+   if(!ifLocaleExist) {
+      locale =  'en';
    }
+
+   return locale;
 }
 
 export function startLocale() {
    loadLanguageAsync(getLocale());
 }
 
-function setI18nLanguage(lang) {
+function setLanguage(lang) {
    i18n.global.locale = lang;
    document.querySelector('html').setAttribute('lang', lang);
    localStorage.setItem('locale', lang);
-   return lang;
 }
 
 export function loadLanguageAsync(lang) {
   if (i18n.global.locale === lang) {
-    return Promise.resolve(setI18nLanguage(lang));
+    return Promise.resolve(setLanguage(lang));
   }
 
   if (loadedLanguages.includes(lang)) {
-    return Promise.resolve(setI18nLanguage(lang));
+    return Promise.resolve(setLanguage(lang));
   }
 
   return import(`@/lang/translate/${lang}.json`).then(messages => {
    i18n.global.setLocaleMessage(lang, messages.default);
    loadedLanguages.push(lang);
-   return setI18nLanguage(lang);
+   return setLanguage(lang);
   })
 }
 
