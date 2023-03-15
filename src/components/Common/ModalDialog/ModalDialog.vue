@@ -80,9 +80,7 @@ export default {
    }
 
    &-header {
-      &:hover {
-         cursor: grab;
-      }
+
       &-btnClose {
          color: grey;
          font-size: 14px;
