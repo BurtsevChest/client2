@@ -1,6 +1,5 @@
 import store from "@/store";
 import { getUser } from "@/components/Common/helpers/user";
-import { generateDateMonth, setOneTaskDate, setOneTaskMonthDate } from '@/components/Common/helpers/dateToNumbers';
 import { openRightAside, closeRightAside } from '@/components/UserAccount/RightAside';
 
 const TASK_TEMPLATE = 'components/UserAccount/RightAside/templates/taskPage/taskPage.vue';
@@ -9,7 +8,7 @@ export function getTasks() {
    if(store.getters.returnTasks.length === 0) {
       store.dispatch('getTask', getUser().user_id)
       .then((taskList) => {
-         store.commit('setTasks', generateDateMonth(taskList));
+         store.commit('setTasks', taskList);
          filterTasks();
       });
    }
@@ -18,7 +17,7 @@ export function getTasks() {
 export function updateTask(task) {
    store.dispatch('updateTask', task)
    .then((updatedTask) => {
-      store.commit('setUpdatedTask', setOneTaskMonthDate(updatedTask))
+      store.commit('setUpdatedTask', updatedTask)
    })
 }
 
@@ -32,7 +31,7 @@ export function setTask(task) {
 }
 
 export function SocketGetTask(task) {
-   store.commit('setOneTask', setOneTaskDate(task));
+   store.commit('setOneTask', task);
    filterTasks()
 }
 
@@ -91,17 +90,4 @@ export function clearDateFilter() {
 export function clearTextFilter() {
    store.commit('clearFilterText');
    filterTasks();
-}
-
-// Task messages
-export function setNewMessage(message) {
-   store.commit('setNewMessage', message)
-}
-
-export function getTaskMessages(task_id) {
-   if(task_id) {
-      store.dispatch('getTaskMessages', task_id).then((res) => {
-         store.commit('setTaskMessages', res);
-      })
-   }
 }

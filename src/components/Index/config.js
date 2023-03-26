@@ -18,5 +18,11 @@ export default [
       path: '/landing',
       component: () => import('@/components/Index/pages/Landing/Landing.vue'),
       title: 'LangingPage'
+   },
+   {
+      id: 'notFound',
+      path: '/:pathMatch(.*)*',
+      component: () => import('@/components/Index/pages/PageNotFound/PageNotFound.vue'),
+      title: 'LangingPage'
    }
 ]

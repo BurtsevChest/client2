@@ -29,10 +29,8 @@ export default {
          menuList: config
       }
    }
-
 }
 </script>
-
 
 <style scoped>
 .sidebar {

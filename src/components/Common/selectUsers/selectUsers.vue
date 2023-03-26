@@ -43,7 +43,7 @@ export default {
    methods: {
       setUser(user) {
          this.$emit('onClickUser', user)
-      }
+      },
    }
 }
 </script>

@@ -1,5 +1,4 @@
 import Tasks from '@/api/task/index.js';
-import { generateDateMonth } from '@/components/Common/helpers/dateToNumbers';
 
 const emptyArr = [];
 
@@ -61,27 +60,12 @@ export default {
             Tasks.getSubTasks(task_id)
             .then((res) => {
                if(res.data) {
-                  state.commit('setSubTasks', generateDateMonth(res.data));
+                  state.commit('setSubTasks', res.data);
                   resolve(true);
                } else {
                   state.commit('setSubTasks', emptyArr);
                   reject(false);
                }
-            })
-         })
-      },
-      getTaskMessages(state, task_id) {
-         return new Promise((resolve, reject) => {
-            Tasks.getTaskMessages(task_id)
-            .then((res) => {
-               if(res.data) {
-                  resolve(res.data);
-               } else { 
-                  reject(emptyArr);
-               }
-            })
-            .catch(() => {
-               reject(emptyArr); 
             })
          })
       }
@@ -152,13 +136,6 @@ export default {
       clearDateFilter(state) {
          state.filterRules.date_of_completion = undefined;
       },
-      // messages
-      setNewMessage(state, message) {
-         state.taskMessages.push(message)
-      },
-      setTaskMessages(state, messageList) {
-         state.taskMessages = messageList
-      },
       setParentTask(state, task) {
          state.parentTask = task
       },
@@ -184,7 +161,6 @@ export default {
          tabFilter: 'my',
          filterText: ''
       },
-      taskMessages: [],
       parentTask: {}
    },
    getters: {
@@ -196,9 +172,6 @@ export default {
       },
       returnOpenedTaskId(state) {
          return state.openedTaskId
-      },
-      taskMessages(state) {
-         return state.taskMessages
       },
       parentTask(state) {
          return state.parentTask

@@ -58,9 +58,6 @@ export default {
          this.addMsg()
       }
    },
-   beforeMount() {
-      
-   },
    mounted() {
       this.scroolItem();
    }

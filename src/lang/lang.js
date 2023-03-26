@@ -24,7 +24,7 @@ export function getLocale() {
    });
 
    if(!ifLocaleExist) {
-      locale =  'en';
+      locale =  'ru';
    }
 
    return locale;
@@ -40,7 +40,7 @@ function setLanguage(lang) {
    localStorage.setItem('locale', lang);
 }
 
-export function loadLanguageAsync(lang) {
+export async function loadLanguageAsync(lang) {
   if (i18n.global.locale === lang) {
     return Promise.resolve(setLanguage(lang));
   }

@@ -7,9 +7,16 @@
          </p>
       </div>
       <div class="empty_flex"></div>
-      <button class="Task-closeBtn" @click="close">
+      <div class="Task-edit pv-12 radius-block flex flex-center pointer a-items-center">
+         <span class="material-icons">edit</span>
+         <p class="pl-8">Изменить</p>
+      </div>
+      <button class="Task-closeBtn ml-16" @click="close">
          <span class="material-icons flex flex-center a-items-center">close</span>
       </button>
+   </div>
+   <div class="Task-responsible">
+      <p class="standart-text-grey">Исполнитель</p>
    </div>
    <input v-model="updateTaskParams.title" v-on:keyup.enter="updateTask" v-if="isCreator" class="user_account-h2 pb-16" type="text">
    <!-- <textarea v-model="updateTaskParams.title" v-on:blur="inputTaskTitle" v-if="isCreator" class="user_account-h2 pb-16"></textarea> -->
@@ -38,12 +45,11 @@
          </div>
       </div>
    </div>
-   <keep-alive>
-      <component 
-         :is="tabTamplate" 
-         :task_id = "this.options.task.task_id"
-         @openTask="OpenTask"/>
-   </keep-alive>
+   <component 
+      :is="tabTamplate" 
+      :task_id = "this.options.task.task_id"
+      @openTask="OpenTask"
+   />
 </div>
 </template>
 
@@ -157,6 +163,13 @@ export default {
          text-overflow: ellipsis;
          overflow: hidden;
          white-space: nowrap;
+      }
+   }
+
+   &-edit {
+      transition: 0.3s;
+      &:hover {
+         background-color: var(--text-block-hover);
       }
    }
 }

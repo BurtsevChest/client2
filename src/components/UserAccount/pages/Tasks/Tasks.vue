@@ -85,17 +85,24 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import { getTasks, openTask, filterOnDate, filterOnTab, clearDateFilter, filterOnText, SocketGetTask } from '@/websync/tasks';
+import {
+   getTasks, 
+   openTask,
+   filterOnDate,
+   filterOnTab,
+   clearDateFilter,
+   filterOnText,
+   SocketGetTask 
+} from '@/websync/tasks';
 import { openDialog } from '@/components/Common/modalView';
 import TaskItems from '@/components/UserAccount/Common/TaskItems/TaskItems.vue';
 import { dateToNumbers } from '@/components/Common/helpers/dateToNumbers';
 import { getLocale } from "@/lang/lang";
 import mainSocket from "@/vue_socket/mainSocket"
 
-
 export default {
    // eslint-disable-next-line
-   name: "",
+   name: "Tasks",
    components: {
       TaskItems
    },

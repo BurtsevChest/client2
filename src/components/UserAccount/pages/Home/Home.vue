@@ -3,7 +3,7 @@
       <div class="flex pb-32">
          <div class="flex-col">
             <div class="Home-avatar flex">
-               <img :src="user_avatar" alt="">
+               <img :src="user_avatar">
             </div>
          </div>
          <div class="flex-col flex-col-4">
@@ -51,6 +51,7 @@
 <script>
 import { mapGetters } from 'vuex';
 import { openDialog } from '@/components/Common/modalView';
+import { loadUserImage } from '@/components/Common/helpers/imageLoader';
 
 export default {
    // eslint-disable-next-line
@@ -68,19 +69,6 @@ export default {
          localStorage.removeItem('user');
          window.location.href = '/'
       },
-      loadImageUser() {
-         try {
-            this.user_avatar = require(`@/components/UserAccount/pages/Home/resources/images/users/${this.user.avatar}`)
-         } catch(err) {
-            this.user_avatar = require(`@/components/UserAccount/pages/Home/resources/images/users/empty_avatar.png`) 
-         }
-         if(this.user.user_id === 4) {
-            this.user_avatar = require(`@/components/UserAccount/pages/Home/resources/images/users/andrey.jpg`) 
-         }
-         if(this.user.user_id === 5) {
-            this.user_avatar = require(`@/components/UserAccount/pages/Home/resources/images/users/dominic.jpg`) 
-         }
-      },
       openPro() {
          openDialog({
             template: 'components/UserAccount/pages/Home/templates/proView.vue'
@@ -89,7 +77,9 @@ export default {
    },
    computed: mapGetters(['getUser']),
    beforeMount() {
-      this.loadImageUser();
+      loadUserImage(this.user.user_id).then((imageUrl) => {
+         this.user_avatar = imageUrl;
+      })
    }
 }
 </script>

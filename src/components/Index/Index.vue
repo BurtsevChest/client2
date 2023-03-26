@@ -47,9 +47,4 @@ export default {
 
 <style lang="less">
 @import '@/components/Index/MainCssTheme/index';
-
-.Index {
-   
-}
-
 </style>

@@ -1,37 +1,29 @@
 <template>
   <router-view/>
 
-  <!-- Модалка -->
   <ModalView/>
 </template>
 
 <script>
 import ModalView from '@/components/Common/modalView/modalView.vue';
-import store from './store';
+import store from '@/store';
 import { setPageName } from '@/components/Common/helpers/setPageName';
-import { setSeo } from './components/Index/Common/helpers/seo';
-import { startLocale } from './lang/lang';
+import { setSeo } from '@/components/Index/Common/helpers/seo';
+import { startLocale } from '@/lang/lang';
 
 export default {
   name: 'App',
   watch: {
     // Отслеживаем перемещение по ссылкам
     '$route.path'() {
-      // Задаем Title страницe
       setPageName(this.$route.path);
 
       setSeo(this.$route.path)
 
-      // Закрываем модальное окно
       store.commit('closeModalView')
     }
   },
   components: {ModalView},
-  data() {
-    return {
-      activeURL: true
-    }
-  },
   beforeCreate() {
     if(localStorage.theme) {
       document.documentElement.setAttribute('data-theme', localStorage.theme)
@@ -39,10 +31,6 @@ export default {
       document.documentElement.setAttribute('data-theme', 'light')
     }
     startLocale();
-  },
-  beforeMount() {
-    // Определяем локаль и сохраняем в истории бразуера
-    localStorage.setItem('locale', navigator.language)
   }
 }
 </script>
