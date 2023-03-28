@@ -3,7 +3,7 @@
       <div class="flex pb-32">
          <div class="flex-col">
             <div class="Home-avatar flex">
-               <img :src="user_avatar">
+               <img ref="userAvatar" :src="userPhotoBaseUrl">
             </div>
          </div>
          <div class="flex-col flex-col-4">
@@ -49,18 +49,18 @@
    </div>
 </template>
 <script>
-import { mapGetters } from 'vuex';
 import { openDialog } from '@/components/Common/modalView';
-import { loadUserImage } from '@/components/Common/helpers/imageLoader';
+import { downloadImageUser } from '@/components/Common/helpers/imageLoader';
+import { api_domain, protocol } from '@/components/Common/helpers/host';
+import { getUser } from '@/components/Common/helpers/user';
 
 export default {
    // eslint-disable-next-line
    name: "Home",
    data() {
       return {
-         user: JSON.parse(localStorage.user),
-         theme: document.documentElement,
-         user_avatar: 'empty_avatar.png'
+         user: getUser(),
+         userPhotoBaseUrl: `${protocol}${api_domain}/apiV0/photo/${getUser().user_id}`
       }
    },
    methods: {
@@ -75,11 +75,8 @@ export default {
          })
       }
    },
-   computed: mapGetters(['getUser']),
-   beforeMount() {
-      loadUserImage(this.user.user_id).then((imageUrl) => {
-         this.user_avatar = imageUrl;
-      })
+   mounted() {
+      downloadImageUser.call(this, 'userAvatar');
    }
 }
 </script>

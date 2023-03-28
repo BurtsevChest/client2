@@ -18,11 +18,8 @@
    <div class="Task-responsible">
       <p class="standart-text-grey">Исполнитель</p>
    </div>
-   <input v-model="updateTaskParams.title" v-on:keyup.enter="updateTask" v-if="isCreator" class="user_account-h2 pb-16" type="text">
-   <!-- <textarea v-model="updateTaskParams.title" v-on:blur="inputTaskTitle" v-if="isCreator" class="user_account-h2 pb-16"></textarea> -->
-   <h2 v-else class="user_account-h2 pb-16">{{ options.task.title }}</h2>
-   <input v-if="isCreator" v-model="updateTaskParams.description" v-on:keyup.enter="updateTask" class="pb-32" type="text">
-   <p v-else class="pb-32">{{ options.task.description }}</p>
+   <h2 class="user_account-h2 pb-16">{{ options.task.title }}</h2>
+   <p class="pb-32">{{ options.task.description }}</p>
    <div class="flex">
       <div class="flex-col">
          <div @click="openAddTaskView(options.task.task_id)" class="flex a-items-center pointer">
@@ -118,7 +115,6 @@ export default {
          if(this.updateTaskParams.title != this.task.title || this.updateTaskParams.description != this.task.description) {
             this.task.title = this.updateTaskParams.title;
             this.task.description = this.updateTaskParams.description;
-            delete this.task.date
             updateTask(this.task)
          }
       }

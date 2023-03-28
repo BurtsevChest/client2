@@ -2,7 +2,7 @@
    <div @click="openTask(task)" :class="[itemClass] " class="TaskItem pointer flex flex-space ph-10 pv-16 mb-8">
       <div class="flex">
          <div class="TaskItem-image">
-            <img :src="userAvatar">
+            <img ref="userAvatar" :src="userAvatar">
          </div>
          <div class="pl-16">
             <span class="TaskItem-title" :class="[titleClass]">{{ task.creator_title }}</span>
@@ -18,7 +18,8 @@
 
 <script>
 import { dateToMonthText } from '@/components/Common/helpers/dateToNumbers';
-import { loadUserImage } from '@/components/Common/helpers/imageLoader';
+import { downloadImageUser } from '@/components/Common/helpers/imageLoader';
+import { api_domain, protocol } from '@/components/Common/helpers/host';
 
 export default {
    // eslint-disable-next-line
@@ -42,7 +43,7 @@ export default {
    },
    data() {
       return {
-         userAvatar: ''
+         userAvatar: `${protocol}${api_domain}/apiV0/photo/${this.task.creator_id}`
       }
    },
    methods: {
@@ -54,9 +55,7 @@ export default {
       }
    },
    mounted() {
-      loadUserImage(this.task.creator_id).then((imageUrl) => {
-         this.userAvatar = imageUrl;
-      })
+      downloadImageUser.call(this, 'userAvatar')
    }
 }
 </script>

@@ -1,13 +1,15 @@
 <template>
-   <div class="LandingPage">
-      <section class="section-padding">
-         <div class="container">
-            <h1 class="h1">
-               LangingPage
-            </h1>
-         </div>
-      </section>
-   </div>
+   <ScrollContainer>
+      <div class="LandingPage">
+         <section class="section-padding">
+            <div class="container">
+               <h1 class="h1">
+                  LangingPage
+               </h1>
+            </div>
+         </section>
+      </div>
+   </ScrollContainer>
 </template>
 
 <script>
