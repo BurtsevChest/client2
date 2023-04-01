@@ -2,13 +2,15 @@
 <div class="Chat">
    <div class="Chat-wrapper">
       <div class="Chat-content flex-column">
-         <div class="Chat-messages pb-20" id="messageList">
-            <div v-for="item in Messages" v-bind:key="item.id">
-               <div v-if="userId === item.user_id" class="Chat-msg Chat-msg-my radius-block mt-16 pv-16 ph-10">
-                  {{ item.text }}
-               </div>
-               <div v-else class="Chat-msg radius-block mt-16 pv-16 ph-10">
-                  {{ item.text }}
+         <div class="Chat-scroll">
+            <div class="Chat-messages flex flex-column flex-end flex-nowrap pr-8 pb-20" id="messageList">
+               <div v-for="item in Messages" v-bind:key="item.id">
+                  <div v-if="userId === item.user_id" class="Chat-msg Chat-msg-my radius-block mt-16 pv-16 ph-10">
+                     {{ item.text }}
+                  </div>
+                  <div v-else class="Chat-msg radius-block mt-16 pv-16 ph-10">
+                     {{ item.text }}
+                  </div>
                </div>
             </div>
          </div>
@@ -33,10 +35,19 @@ export default {
       Messages: {
          type: Array,
          required: true
+      },
+      colorTheme: {
+         type: String
+      }
+   },
+   watch: {
+      Messages() {
+         this.scroolItem();
       }
    },
    data() {
       return {
+         messageList: this.Messages,
          inputText: '',
          userId: getUser().user_id,
          placeholder: this.$i18n.t('user_account_common_ui_chat_placeholder')
@@ -65,6 +76,8 @@ export default {
 </script>
 
 <style lang="less">
+
+
 .Chat {
    flex: 1 1 0%;
    height: 100%;
@@ -76,7 +89,6 @@ export default {
    &-content {
       height: 100%;
       display: flex;
-      align-items: flex-end;
    }
 
    &-menu {
@@ -88,6 +100,9 @@ export default {
    &-messages {
       margin-top: auto;
       width: 100%;
+   }
+
+   &-scroll {
       overflow: hidden;
       max-height: 680px;
       overflow-y: scroll;

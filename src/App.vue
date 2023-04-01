@@ -7,19 +7,12 @@
 <script>
 import ModalView from '@/components/Common/modalView/modalView.vue';
 import store from '@/store';
-import { setPageName } from '@/components/Common/helpers/setPageName';
-import { setSeo } from '@/components/Index/Common/helpers/seo';
 import { startLocale } from '@/lang/lang';
 
 export default {
   name: 'App',
   watch: {
-    // Отслеживаем перемещение по ссылкам
     '$route.path'() {
-      setPageName(this.$route.path);
-
-      setSeo(this.$route.path)
-
       store.commit('closeModalView')
     }
   },

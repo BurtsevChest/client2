@@ -1,19 +1,13 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import config from '@/components/UserAccount/Sidebar/config';
-import indexConfig from '@/components/Index/config';
+import userAccountRouter from '@/components/UserAccount/router';
+import indexConfig from '@/components/Index/router';
 
 const indexPages = indexConfig.map(function(item) {
-   return {
-      path: item.path,
-      component: item.component
-   }
+   return item;
 })
 
-const sidebarRoutes = config.map(function(item) {
-   return {
-      path: item.href,
-      component: item.component
-   }
+const sidebarRoutes = userAccountRouter.map(function(item) {
+   return item;
 })
 
 const ifAuthenticated = (to, from, next) => {
@@ -35,12 +29,7 @@ let routes = [
       path: '/user_account',
       component: () => import('@/components/UserAccount/UserAccount.vue'),
       beforeEnter: ifAuthenticated,
-      children: sidebarRoutes.concat(
-         {
-            path: '/settings',
-            component: () => import('@/components/UserAccount/pages/Settings/Settings.vue')
-         }
-      )
+      children: sidebarRoutes
    }
 ]
 

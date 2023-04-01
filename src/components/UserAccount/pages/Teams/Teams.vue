@@ -13,15 +13,64 @@
             <div class="empty_flex"></div>
          </div>
       </div>
+      <div class="Teams-maincontent p-20">
+         <h3 class="user_account-h3 pb-20">Мои команды</h3>
+         <div class="Teams-comandlist">
+            <div class="ScrollContainer">
+               <div class="flex-container">
+                  <div v-for="item in commadList" v-bind:key="item" class="flex-col">
+                     <teamBlock
+                        :team="item"
+                     />
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
    </div>
 </template>
 
 <script>
 import { openDialog } from '@/components/Common/modalView';
+import teamBlock from '@/components/UserAccount/pages/Teams/templates/teamBlock.vue';
 
 export default {
    // eslint-disable-next-line
    name: "Teams",
+   components: {teamBlock},
+   data() {
+      return {
+         commadList: [
+            {
+               name: 'Команда Дизайнеров',
+            },
+            {
+               name: 'Команда Маркетологов',
+            },
+            {
+               name: 'Команда Тестировщиков',
+            },
+            {
+               name: 'Руководство',
+            },
+            {
+               name: 'Персонал',
+            },
+            {
+               name: 'WEB-разработка',
+            },
+            {
+               name: 'Мобильная разработка',
+            },
+            {
+               name: 'Сборка',
+            },
+            {
+               name: 'Системные администраторы',
+            }
+         ]
+      }
+   },
    methods: {
       openAddTeamView() {
          openDialog({
@@ -31,7 +80,6 @@ export default {
    }
 }
 </script>
-
 
 <style lang="less">
 .Teams {
@@ -46,6 +94,11 @@ export default {
       &-icon {
          font-size: 30px;
       }
+   }
+
+   &-comandlist {
+      height: 100%;
+      
    }
 }
 </style>

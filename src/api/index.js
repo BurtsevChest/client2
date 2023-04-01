@@ -1,17 +1,19 @@
 import axios from "axios";
 import { api_domain, protocol } from '@/components/Common/helpers/host';
 
+const token = localStorage.accessToken || null;
+
 const AxiosRequest = axios.create({
    baseURL: `${protocol}${api_domain}/apiV0/`,
    withCredentials: true,
    headers: {
-      "Authorization": "Bearer " + localStorage.accessToken,
+      "Authorization": "Bearer " + token,
       "Content-Type": "application/json",
    }
 });
 
 AxiosRequest.interceptors.request.use((config) => {
-   config.headers.Authorization = `Bearer ${localStorage.getItem('accessToken')}`
+   config.headers.Authorization = `Bearer ${token}`
    return config;
 })
 

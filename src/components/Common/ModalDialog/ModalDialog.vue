@@ -47,13 +47,15 @@ export default {
             .then((resolvedTemplate) => {
                this.dialogTemplate = resolvedTemplate.default
             })
+            .then(() => {
+               this.$nextTick(() => {
+                  this.$refs.modalHeader.addEventListener("mousedown", this.dragModal);
+                  document.addEventListener("mouseup", this.stopDrag);
+               });
+            })
             .catch(()=> {
                this.close()
             })
-         this.$nextTick(() => {
-            this.$refs.modalHeader.addEventListener("mousedown", this.dragModal);
-            document.addEventListener("mouseup", this.stopDrag);
-         });
       },
       close() {
          this.$emit('onCloseClick', false)

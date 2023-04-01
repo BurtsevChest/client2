@@ -10,7 +10,9 @@
             <span class="sidebar_link">{{ $t(item.title) }}</span>
          </router-link>
       </div>
-      <div class="empty_flex"></div>
+      <div class="sidebar-background empty_flex">
+         <div class="sidebar-shadow"></div>
+      </div>
       <router-link class="light pl-8 sidebar_button radius-block flex a-items-center mb-12" to="/settings">
          <span class="material-icons">settings</span>
          <span class="sidebar_link">{{ $t('user_account_sidebar_menu_settings') }}</span>
@@ -96,4 +98,14 @@ export default {
    padding-left: 12px;
    padding-bottom: 12px;
 }
+
+.sidebar-background {
+   background: url('@/components/UserAccount/Sidebar/resources/images/sidebar-2.png') no-repeat;
+   background-size: contain;
+   background-position: bottom;
+   margin-bottom: 16px;
+   position: relative;
+}
+
+
 </style>
