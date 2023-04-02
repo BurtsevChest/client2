@@ -15,56 +15,33 @@ const monthDictionary = {
 
 /**
  * 
- * @param {*} date Принимает экземпляр класса Date() 
- * @returns Возвращает дату в виде dd.mm.yyy
+ * @param {*} date Принимает экземпляр класса Date() или строку для его образования.
+ * @returns Возвращает дату в виде dd.mm.yy
  */
 
 export function dateToNumbers(date) {
    var newDate = date;
+
    if(!(date instanceof Date)) {
       newDate = new Date(date)
    }
+
    let day = newDate.getDate();
    let month = newDate.getMonth() + 1;
    let year = newDate.getFullYear();
 
    if(day < 10) day = '0'+day
+
    if(month < 10) month = '0'+month
 
-   return day + '.' + month + '.' + year
+   return `${day}.${month}.${year}`
 }
 
 /**
  * 
- * @param {*} date Принимает массив тасков. 
- * @returns Добавляет поле date в виде dd.mm.yy
+ * @param {*} date Принимает экземпляр класса Date() или строку для его образования.
+ * @returns Возвращает дату в виде "1 января `1970" или "1 января `23"
  */
-
-export function generateDate(tasks) {
-   tasks.forEach((item) => {
-      var dat = new Date(item.date_of_completion);
-      item.date = dateToNumbers(dat);
-   });
-   return tasks;
-}
-
-/**
- * 
- * @param {*} date Принимает таску. 
- * @returns Добавляет поле date в виде dd.mm.yy
- */
-
-export function setOneTaskDate(task) {
-   var date = new Date(task.date_of_completion);
-   task.date = dateToNumbers(date);
-   return task;
-}
-
-export function setOneTaskMonthDate(task) {
-   var date = new Date(task.date_of_completion);
-   task.date = dateToMonthText(date);
-   return task
-}
 
 export function dateToMonthText(date) {
    var newDate = date;
@@ -80,30 +57,40 @@ export function dateToMonthText(date) {
       year = year.toString()[2] + year.toString()[3]
    }
 
-   return day + ' ' + month + ' \'' + year
+   return `${day} ${month} '${year}`
 }
 
-/**
- * 
- * @param {*} date Принимает таску. 
- * @returns Добавляет поле date в виде dd.mm.yy
- */
+// Дописать DateFormatter
 
-export function generateDateMonth(tasks) {
-   tasks.forEach((item) => {
-      var date = new Date(item.date_of_completion);
-      item.date = dateToMonthText(date);
-   });
-   return tasks;
+class DateFormatter {
+   _date = '';
+   _day = '';
+   _month = '';
+   _year = '';
+
+   constructor(date) {
+      this._date = date;
+
+      if(!(date instanceof Date)) {
+         this._date = new Date(date);
+      }
+
+      this._day = this._date.getDate();
+      this._month = this._date.getMonth() + 1;
+      this._year = this._date.getFullYear();
+   }
+
+   getDate() {
+      return this._day;
+   }
+
+   getMonthNumber() {
+      return this._month;
+   }
+
+   getMonthText() {
+      return monthDictionary[this._day];
+   }
 }
 
-// Array.prototype.arrSetMonthDate = function(newField, field) {
-//    return this.map((item)=>{
-//       item[newField] = dateToMonthText(item[field]);
-//    })
-// }
-
-// Object.prototype.objSetMonthDate = function(newField, field) {
-//    this[newField] = dateToMonthText(this[field]);
-//    return this
-// }
+export default DateFormatter

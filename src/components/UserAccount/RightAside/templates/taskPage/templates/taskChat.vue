@@ -2,17 +2,16 @@
    <div class="TaskChat empty_flex">
       <Chat
          :Messages="taskMessages"
-         @sendMessage="sendMsg" />
+         @sendMessage="sendMsg" 
+      />
    </div>
 </template>
 
 <script>
 import Chat from '@/components/UserAccount/Common/chat/Chat.vue';
-import { mapGetters } from 'vuex';
-import { setNewMessage } from '@/websync/tasks';
 import chatSocket from "@/vue_socket/chatSocket"
 import { getUser } from '@/components/Common/helpers/user';
-// import {getTaskMessages} from '@/websync/tasks';
+import Tasks from '@/api/task';
 
 export default {
    // eslint-disable-next-line
@@ -23,29 +22,46 @@ export default {
          type: Number
       }
    },
+   data() {
+      return {
+         taskMessages: [],
+         user: getUser()
+      }
+   },
    methods: {
       sendMsg(message) {
          const data = {
             text: message,
-            user_id: getUser().user_id,
+            user_id: this.user.user_id,
             to: this.task_id
          }
-         chatSocket.emit("PRIVATE_MESSAGE", data)
-         setNewMessage(data)
+         this.setNewMessage(data);
+         chatSocket.emit("PRIVATE_MESSAGE", data);
+      },
+      getMessages() {
+         Tasks.getTaskMessages(this.task_id)
+            .then((res) => {
+               this.taskMessages = res.data;
+            })
+            .catch((err) => {
+               throw err;
+            })
+      },
+      setNewMessage(msg) {
+         this.taskMessages.push(msg);
       }
    },
-   computed: mapGetters(['taskMessages']),
    beforeMount() {
       // Чтоб получить сообщения чата
       // getTaskMessages()
-      chatSocket.emit('JOIN_ROOM', this.task_id)
+      chatSocket.emit('JOIN_ROOM', 'taskId' + this.task_id);
+
       chatSocket.on('PRIVATE_MESSAGE', (data) => {
-         console.log(data)
-         setNewMessage(data);
+         this.setNewMessage(data);
       })
    },
    beforeUnmount() {
-      chatSocket.emit('DISCONNECTION_ROOM', this.task_id)
+      chatSocket.emit('DISCONNECTION_ROOM', this.task_id);
    }
 }
 </script>

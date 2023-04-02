@@ -3,6 +3,12 @@
    flex-wrap: wrap;
 }
 
+.flex-container {
+   display: flex;
+   flex-wrap: wrap;
+   margin: -6px -12px;
+}
+
 .flex-noGutter>.flex-col {
    padding: 0;
 }

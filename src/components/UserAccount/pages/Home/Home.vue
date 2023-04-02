@@ -3,7 +3,7 @@
       <div class="flex pb-32">
          <div class="flex-col">
             <div class="Home-avatar flex">
-               <img :src="user_avatar" alt="">
+               <img ref="userAvatar" :src="userPhotoBaseUrl">
             </div>
          </div>
          <div class="flex-col flex-col-4">
@@ -49,17 +49,18 @@
    </div>
 </template>
 <script>
-import { mapGetters } from 'vuex';
 import { openDialog } from '@/components/Common/modalView';
+import { downloadImageUser } from '@/components/Common/helpers/imageLoader';
+import { api_domain, protocol } from '@/components/Common/helpers/host';
+import { getUser } from '@/components/Common/helpers/user';
 
 export default {
    // eslint-disable-next-line
    name: "Home",
    data() {
       return {
-         user: JSON.parse(localStorage.user),
-         theme: document.documentElement,
-         user_avatar: 'empty_avatar.png'
+         user: getUser(),
+         userPhotoBaseUrl: `${protocol}${api_domain}/apiV0/photo/${getUser().user_id}`
       }
    },
    methods: {
@@ -68,28 +69,14 @@ export default {
          localStorage.removeItem('user');
          window.location.href = '/'
       },
-      loadImageUser() {
-         try {
-            this.user_avatar = require(`@/components/UserAccount/pages/Home/resources/images/users/${this.user.avatar}`)
-         } catch(err) {
-            this.user_avatar = require(`@/components/UserAccount/pages/Home/resources/images/users/empty_avatar.png`) 
-         }
-         if(this.user.user_id === 4) {
-            this.user_avatar = require(`@/components/UserAccount/pages/Home/resources/images/users/andrey.jpg`) 
-         }
-         if(this.user.user_id === 5) {
-            this.user_avatar = require(`@/components/UserAccount/pages/Home/resources/images/users/dominic.jpg`) 
-         }
-      },
       openPro() {
          openDialog({
             template: 'components/UserAccount/pages/Home/templates/proView.vue'
          })
       }
    },
-   computed: mapGetters(['getUser']),
-   beforeMount() {
-      this.loadImageUser();
+   mounted() {
+      downloadImageUser.call(this, 'userAvatar');
    }
 }
 </script>

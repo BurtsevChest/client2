@@ -1,29 +1,24 @@
 <template>
    <div class="flex flex-noGutter flex-column">
-      <div v-for="item in tasks" v-bind:key="item.task_id" class="flex-col">
-         <div @click="openTask(item)" :class="[itemClass] " class="TaskItem pointer flex flex-space ph-10 pv-16 mb-8">
-            <div class="flex">
-               <div class="TaskItem-image">
-                  <img src="@/components/UserAccount/pages/Home/resources/images/users/dominic.jpg" class="">
-               </div>
-               <div class="pl-16">
-                  <span class="TaskItem-title" :class="[titleClass]">Andrey Churilov</span>
-                  <p class="TaskItem-desc pl-10" :class="[descClass]">{{ item.title }}</p>
-               </div>
-            </div>
-            <div class="empty_flex"></div>
-            <div class="pl-16" :class="dateClass">
-               {{ item.date }}
-            </div>
-         </div>
-      </div>
+      <TaskItem
+         v-for="item in tasks"
+         :task="item"
+         v-bind:key="item.task_id"
+         @openTask="openTask"
+         :itemClass="itemClass"
+         :descClass="descClass"
+         :titleClass="titleClass"
+         :dateClass="dateClass"
+      />
    </div>
 </template>
 <script>
+import TaskItem from '@/components/UserAccount/Common/TaskItems/templates/taskItem.vue';
 
 export default {
    // eslint-disable-next-line
-   name: "TaskItem",
+   name: "TaskItems",
+   components: {TaskItem},
    props: {
       Tasks: {
          type: Array
@@ -48,10 +43,8 @@ export default {
    },
    data() {
       return {
-         taskStyle: this.itemClass,
          activeTask: '',
-         tasks: [],
-         user_avatar: 'empty_avatar.png'
+         tasks: []
       }
    },
    methods: {
@@ -67,40 +60,4 @@ export default {
 </script>
 
 <style lang="less">
-.TaskItem {
-   transition: 0.2s;
-
-   &-title {
-      font-size: 18px;
-   }
-
-   &-desc {
-      text-overflow: ellipsis;
-      overflow: hidden;
-      white-space: nowrap;
-      max-width: 200px;
-
-      @media (max-width: 800px) {
-         width: 150px;
-      }
-   }
-
-   &-image {
-      width: 40px;
-      height: 40px;
-      overflow: hidden;
-      display: flex;
-      justify-content: center;
-      border-radius: 50%;
-
-      &>img{
-         max-width: none;
-         height: auto;
-      }
-   }
-
-   &-sceletonTask {
-      
-   }
-}
 </style>

@@ -22,10 +22,7 @@ export default {
    name: "UserAccount",
    components: {
       Sidebar, RightAiside
-   },
-   beforeMount() {
    }
-
 }
 </script>
 

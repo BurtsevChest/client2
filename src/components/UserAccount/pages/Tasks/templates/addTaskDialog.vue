@@ -1,10 +1,10 @@
 <template>
    <div class="AddTask flex">
-      <div class="secondary-text-color flex-col-6">
+      <div class="flex-col-6">
          Исполнитель
       </div>
       <div class="flex-col-6 flex">
-         <div class="secondary-text-color">
+         <div>
             Срок
          </div>
          <input type="text" class="AddTask-date-input ml-8">
@@ -20,7 +20,7 @@
          </PopupBtn>
       </div>
       <div class="flex-col-12 pb-8">
-         <p class="secondary-text-color">
+         <p>
             Задача
          </p>
          <input type="text " class="AddTask-task-title-input flex-col-12 ph-4 pv-4">
