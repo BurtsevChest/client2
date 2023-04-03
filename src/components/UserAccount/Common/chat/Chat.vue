@@ -1,20 +1,20 @@
 <template>
 <div class="Chat">
    <div class="Chat-wrapper">
-      <div class="Chat-content flex-column">
-         <div class="Chat-scroll">
+      <div ref="chatContent" class="Chat-content flex-column">
+         <div ref="chatscroll" class="Chat-scroll">
             <div class="Chat-messages flex flex-column flex-end flex-nowrap pr-8 pb-20" id="messageList">
                <div v-for="item in Messages" v-bind:key="item.id">
-                  <div v-if="userId === item.user_id" class="Chat-msg Chat-msg-my radius-block mt-16 pv-16 ph-10">
-                     {{ item.text }}
+                  <div v-if="userId === item.creator_message_id" :class="[msgStyle]" class="Chat-msg Chat-msg-my radius-block mt-16 pv-16 ph-10">
+                     {{ item.content }}
                   </div>
-                  <div v-else class="Chat-msg radius-block mt-16 pv-16 ph-10">
-                     {{ item.text }}
+                  <div v-else :class="[msgStyle]" class="Chat-msg radius-block mt-16 pv-16 ph-10">
+                     {{ item.content }}
                   </div>
                </div>
             </div>
          </div>
-         <div class="Chat-menu radius-block ph-10 pv-10 flex flex-space">
+         <div ref="ChatMenu" class="Chat-menu radius-block ph-10 pv-10 flex flex-space" :class="[menuStyle]">
             <span class="material-icons pointer">person</span>
             <span class="material-icons pointer pl-4">attach_file</span>
             <input type="text" v-model.trim="inputText" v-on:keyup.enter="clickEnter" :placeholder="placeholder" class="empty_flex pl-6">
@@ -38,10 +38,19 @@ export default {
       },
       colorTheme: {
          type: String
+      },
+      msgStyle: {
+         type: String
+      },
+      menuStyle: {
+         type: String
+      },
+      chat_room_id: {
+         type: String
       }
    },
    watch: {
-      Messages() {
+      'Messages.length'() {
          this.scroolItem();
       }
    },
@@ -56,27 +65,44 @@ export default {
    methods: {
       addMsg() {
          if(this.inputText) {
-            this.$emit('sendMessage', this.inputText);
+            const newMessage = {
+               chat_room_id: this.chat_room_id,
+               creator_message_id: this.userId,
+               content: this.inputText,
+               date_of_creation: new Date()
+            }
+            this.$emit('sendMessage', newMessage);
          }
          this.inputText = '';
-         this.scroolItem();
       },
       scroolItem() {
-         var objDiv = document.getElementById("messageList");
-         objDiv.scrollTop = objDiv.scrollHeight;
+         this.$refs.chatscroll.scrollTop = this.$refs.chatscroll.scrollHeight;
       },
       clickEnter() {
          this.addMsg()
+      },
+      setHeight(maxHeight) {
+         this.$refs.chatscroll.style.height = `${maxHeight}px`;
+      },
+      afterResize() {
+         this.setHeight(this.getContentHeight());
+      },
+      getContentHeight() {
+         return this.$refs.chatContent.offsetHeight - this.$refs.ChatMenu.offsetHeight;
       }
    },
    mounted() {
       this.scroolItem();
+      this.setHeight(this.getContentHeight());
+      window.addEventListener('resize', this.afterResize(), true);
+   },
+   beforeUnmount() {
+      window.removeEventListener('resize', this.afterResize(), true);
    }
 }
 </script>
 
 <style lang="less">
-
 
 .Chat {
    flex: 1 1 0%;
@@ -92,28 +118,25 @@ export default {
    }
 
    &-menu {
-      background-color: var(--text-block-hover);
-      box-shadow: var(--block-box-shadow);
       width: 100%;
    }
 
    &-messages {
       margin-top: auto;
       width: 100%;
+      min-height: 100%;
    }
 
    &-scroll {
       overflow: hidden;
-      max-height: 680px;
-      overflow-y: scroll;
+      display: flex;
+      flex-direction: column-reverse;
+      overflow-y: auto;
    }
 
    &-msg {
-      background-color: white;
       max-width: 60%;
       margin-right: auto;
-      background-color: var(--text-block-hover);
-      box-shadow: var(--block-box-shadow);
 
       &-my {
          margin-left: auto;

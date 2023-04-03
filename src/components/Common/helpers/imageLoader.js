@@ -4,18 +4,19 @@
  * @returns В случае, если картинка не пришла с сервера, грузит заглушку с клиента
  */
 export function downloadImageUser(imageRef) {
-   let img = this.$refs[imageRef];
-
-   img.onerror = () => {
-      img.src = require(`@/components/UserAccount/pages/Home/resources/images/users/empty_avatar.png`)
-   }
+   safelyLoadImage.call(this, imageRef, 'components/UserAccount/pages/Home/resources/images/users/empty_avatar.png');
 }
 
-// TODO: поробовать её добить, нужна более универсальная штука
+/**
+ * 
+ * @param {*} imageRef Принимает ref картинки, ВЫЗЫВАТЬ ЧЕРЕЗ CALL(this, 'imageRef', 'alternateSrc')
+ * @param {*} alternativeImageSrc Путь до альтернативной картинки (начинать с 'components/...')
+ * @returns В случае, если картинка не пришла с сервера, грузит альтернативную картинку
+ */
 export function safelyLoadImage(imageRef, alternativeImageSrc) {
    let img = this.$refs[imageRef];
 
    img.onerror = () => {
-      img.src = require(alternativeImageSrc);
+      img.src = require(`@/${alternativeImageSrc}`);
    }
 }

@@ -1,6 +1,6 @@
 <template>
    <div class="Teams">
-      <div class="flex box-shadow pt-12 pv-10">
+      <div class="Teams-header flex box-shadow pt-12 pv-10">
          <div class="flex flex-col-8">
             <div class="flex-col flex a-items-center">
             <button @click="openAddTeamView" class="Teams-addTask-btn flex flex-center a-items-center">
@@ -8,31 +8,53 @@
             </button>
             </div>
             <div class="flex-col flex flex-nowrap a-items-center">
-               <SearchField :placeholder="'Найти...'" @clickSearch="filterToString" @clearSearch="clearFilterText"/>
+               <SearchField @clickSearchEnter="filterOnName" @clickSearch="filterOnName" @clearSearch="clearFilterName"/>
+            </div>
+            <div class="flex flex-col a-items-center">
+               <PopupBtn v-model:show="showPopup" :hideBtn=true>
+                  <template v-slot:popupBtn>
+                     <div class="box-shadow ph-6 pv-16 radius-block pointer">
+                        {{ filterSootvet[activeTeamsFilterRule] }}
+                     </div>
+                  </template>
+                  <template v-slot:popupTemplate>
+                     <div @click="setFilter(filter.text)" v-for="filter in filtres" v-bind:key="filter" class="box-shadow-hover ph-6 pv-16 radius-block pointer mb-8">
+                        {{ filter.text }}
+                     </div>
+                  </template>
+               </PopupBtn>
             </div>
             <div class="empty_flex"></div>
          </div>
       </div>
-      <div class="Teams-maincontent p-20">
-         <h3 class="user_account-h3 pb-20">Мои команды</h3>
-         <div class="Teams-comandlist">
-            <div class="ScrollContainer">
-               <div class="flex-container">
-                  <div v-for="item in commadList" v-bind:key="item" class="flex-col">
-                     <teamBlock
-                        :team="item"
-                     />
+      <div class="Teams-maincontent">
+         <ScrollContainerNew>
+            <template v-slot:content>
+               <div class="Teams-comandlist p-20">
+                  <div class="flex-container">
+                     <div v-for="item in filteredTeamList" v-bind:key="item" class="flex-col">
+                        <teamBlock
+                           :team="item"
+                        />
+                     </div>
                   </div>
                </div>
-            </div>
-         </div>
+            </template>
+         </ScrollContainerNew>
       </div>
    </div>
+   <ModalDialog
+      :dialogStatus="dialogStatus"
+      :title = "'Новая команда'"
+      @onCloseClick="() => {this.dialogStatus=false}"
+      :template="'components/UserAccount/pages/Teams/templates/addTeamView.vue'"
+   />
 </template>
 
 <script>
-import { openDialog } from '@/components/Common/modalView';
 import teamBlock from '@/components/UserAccount/pages/Teams/templates/teamBlock.vue';
+import { mapGetters } from 'vuex';
+import { getTeamsAny, setFilterText, filterObjects2, filterOnName } from '@/websync/teams';
 
 export default {
    // eslint-disable-next-line
@@ -40,49 +62,54 @@ export default {
    components: {teamBlock},
    data() {
       return {
-         commadList: [
+         dialogStatus: false,
+         showPopup: false,
+         activeFilter: 'Я админ',
+         filtres: [
             {
-               name: 'Команда Дизайнеров',
+               text: 'Я админ',
             },
             {
-               name: 'Команда Маркетологов',
+               text: 'Я участник',
             },
             {
-               name: 'Команда Тестировщиков',
-            },
-            {
-               name: 'Руководство',
-            },
-            {
-               name: 'Персонал',
-            },
-            {
-               name: 'WEB-разработка',
-            },
-            {
-               name: 'Мобильная разработка',
-            },
-            {
-               name: 'Сборка',
-            },
-            {
-               name: 'Системные администраторы',
+               text: 'Все',
             }
-         ]
+         ],
+         filterSootvet: filterObjects2
       }
    },
+   computed: mapGetters(['filteredTeamList', 'activeTeamsFilterRule']),
    methods: {
       openAddTeamView() {
-         openDialog({
-            template: 'components/UserAccount/pages/Teams/templates/addTeamView.vue'
-         })
+         this.dialogStatus = true;
+      },
+      setFilter(rule) {
+         this.activeFilter = rule;
+         setFilterText(rule);
+         this.showPopup = false;
+      },
+      openFilter() {
+         this.showPopup = true;
+      },
+      filterOnName(name) {
+         filterOnName(name);
+      },
+      clearFilterName() {
+         filterOnName('');
       }
+   },
+   beforeMount() {
+      getTeamsAny();
    }
 }
 </script>
 
 <style lang="less">
 .Teams {
+   background-color: #f1f5f9;
+   height: 100vh;
+
    &-addTask-btn {
       color: black;
       cursor: pointer;
@@ -99,6 +126,18 @@ export default {
    &-comandlist {
       height: 100%;
       
+   }
+
+   &-header {
+      background: white;
+      position: fixed;
+      width: 100%;
+      z-index: 1;
+   }
+
+   &-maincontent {
+      height: 100%;
+      padding-top: 64px;
    }
 }
 </style>

@@ -67,6 +67,20 @@ import { loadLanguageAsync, getLocale, translatedlanguages } from '@/lang/lang';
 export default {
    // eslint-disable-next-line
    name: "Header",
+   props: {
+      scrollValue: {
+         type: Number
+      }
+   },
+   watch: {
+      scrollValue(newScrollvalue) {
+         if(newScrollvalue > 0) {
+            this.scrollPage = true
+         } else {
+            this.scrollPage = false;
+         }
+      }
+   },
    data() {
       return {
          stasusMenu: false,

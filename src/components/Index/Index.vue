@@ -1,11 +1,15 @@
 <template>
-   <Header v-if="!pageData?.hideHeader || false" />
-      <div class="Index">
-         <router-view 
-            v-bind:pageProps="pageData?.pageProps || {}"
-         />
-      </div>
-   <Footer v-if="!pageData?.hideFooter || false" />
+   <div class="Index">
+      <ScrollContainerNew @_scroll="scrollPage">
+         <template v-slot:content>
+            <Header :scrollValue="pageScroll" v-if="!pageData?.hideHeader || false" />
+            <router-view 
+               v-bind:pageProps="pageData?.pageProps || {}"
+            />
+            <Footer v-if="!pageData?.hideFooter || false" />
+         </template>
+      </ScrollContainerNew>
+   </div>
 </template>
 
 <script>
@@ -33,7 +37,8 @@ export default {
          title: 'Project Manager',
          description: 'Project Manager is better for you'
       },
-      defaultPageTitle: 'ProjectManager'
+      defaultPageTitle: 'ProjectManager',
+      pageScroll: 0
    }
   },
   methods: {
@@ -51,6 +56,9 @@ export default {
          this.pageData = getPageData[path];
          this.setNewSeo(path);
          document.title = this.pageData?.titlePage || this.defaultPageTitle;
+      },
+      scrollPage(scrollValue) {
+         this.pageScroll = scrollValue;
       }
   },
   beforeMount() {
@@ -61,4 +69,8 @@ export default {
 
 <style lang="less">
 @import '@/components/Index/MainCssTheme/index';
+
+.Index {
+   height: 100vh;
+}
 </style>

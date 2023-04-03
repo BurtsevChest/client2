@@ -1,3 +1,4 @@
+@screem-md: 1024px;
 @screen-xm: 800px;
 @screen-sm: 400px;
 
@@ -5,6 +6,12 @@
    .flex-col-@{i} {
      width: ((@i*100%) / @n);
    }
+
+   .flex-col-md-@{i} {
+    @media (max-width: @screem-md) {
+      width: ((@i*100%) / @n);
+    }
+  }
  
    .flex-col-xm-@{i} {
      @media (max-width: @screen-xm) {

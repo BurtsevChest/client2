@@ -1,12 +1,10 @@
 <template>
    <div class="ScrollContainer">
-      <div ref="scrollContainerBody" class="ScrollContainer-body">
-         <slot name="content"></slot>
-         <div class="">
-            {{ scrollValue }}
-         </div>
+      <div ref="scrollContainerBody" class="ScrollContainer-body" :style="{'height': height + 'px'}">
+         <slot ref="content" name="content"></slot>
          <scrollBar 
             :scrollParent = "scrollValue"
+            :scrollBarHeight = "scrollBarHeight"
          />
       </div>
    </div>
@@ -19,41 +17,49 @@ export default {
    // eslint-disable-next-line
    name: "ScrollContainer",
    components: {scrollBar},
+   props: {
+      height: {
+         type: Number
+      }
+   },
+   methods: {
+      setScrollValue() {
+         this.scrollValue = this.$refs.scrollContainerBody.scrollTop;
+      }
+   },
+   watch: {
+      scrollValue(newValue, oldValue) {
+         if(newValue - oldValue >= this.heightContent - this.height) {
+            this.scrollValue = oldValue;
+         }
+      }
+   },
    data() {
       return {
-         scrollValue: 0
+         scrollValue: 0,
+         heightContent: 0,
+         scrollInPercent: 0,
+         scrollBarHeight: 0
       }
    },
    mounted() {
-      this.$refs.scrollContainerBody.addEventListener('wheel', (_event) => {
-         let scroll = _event.wheelDelta;
-         // if(scroll > 0) {
-         //    scroll = 0;
-         // }
-         this.scrollValue += scroll;
-
-         if(this.scrollValue > 0) {
-            this.scrollValue = 0;
-            scroll = 0;
-         }
-
-         if(this.scrollValue <= -300) {
-            this.scrollValue = -300;
-            scroll = 0;
-         }
-      })
+      const bodyScroll = this.$refs.scrollContainerBody;
+      this.heightContent = bodyScroll.scrollHeight;
+      bodyScroll.addEventListener('scroll', this.setScrollValue);
+      console.log(this.height - this.heightContent);
+      this.scrollBarHeight = (this.height / this.heightContent) * this.height;
    }
 }
 </script>
 
 <style lang="less">
 .ScrollContainer {
-   width: 100%;
-   height: 100%;
+   display: flex;
+   flex-direction: column-reverse;
 
    &-body {
+      overflow-y: auto;
       position: relative;
-      height: 100%;
    }
 }
 </style>

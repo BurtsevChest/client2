@@ -4,6 +4,7 @@ import ModalView from './modules/ModalView'
 import user from './modules/user'
 import tasks from './modules/tasks'
 import header from './modules/header'
+import teams from './modules/teams'
 
 export default new Vuex.Store({
    modules: {
@@ -11,6 +12,7 @@ export default new Vuex.Store({
       ModalView,
       user,
       tasks,
-      header
+      header,
+      teams
    }
 })

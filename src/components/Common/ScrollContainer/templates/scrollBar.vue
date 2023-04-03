@@ -14,11 +14,17 @@ export default {
    props: {
       scrollParent: {
          type: Number
+      },
+      scrollBarHeight: {
+         type: Number
       }
    },
    watch: {
-      scrollParent() {
-
+      scrollParent(newValue, old) {
+         this.$refs.scrollBody.style.top = `${old}px`;
+      },
+      scrollBarHeight(newValue) {
+         this.$refs.scrollBody.style.height = `${newValue}px`;
       }
    },
    data() {
@@ -63,6 +69,7 @@ export default {
    },
    mounted() {
       this.$refs.scrollBody.addEventListener('mousedown', this.dragStart);
+      this.$refs.scrollBody.style.height = `${this.scrollBarHeight}px`;
       this.wrapperHeight = this.$refs.scrollWrapper.scrollHeight;
    }
 }
@@ -89,7 +96,6 @@ export default {
 
    &-body {
       width: 100%;
-      height: 200px;
       position: absolute;
       border-radius: 20px;
       background-color: rgba(128, 128, 128, 0.3);
