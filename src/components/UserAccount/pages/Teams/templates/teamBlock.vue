@@ -1,6 +1,8 @@
 <template>
-   <div @click="toTeam" class="flex a-items-center flex-center teemBlock radius-block box-shadow p-16">
-      {{ team.name }}
+   <div @click.stop="toTeam" :style="{'background-color': team.backgroundColor}" class="flex a-items-center flex-center teemBlock radius-block box-shadow p-16 user_account-h3">
+      <span :style="{'color': team.color}">
+         {{ team.name }}
+      </span>
    </div>
 </template>
 
@@ -32,8 +34,7 @@ export default {
    transition: 0.2s;
 
    &:hover {
-      margin-top: -15px;
-      transform: scale(1.1);
+      margin-top: -10px;
    }
 }
 

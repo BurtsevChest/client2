@@ -50,6 +50,7 @@ export default {
       background-size: cover;
       background-position: center;
       height: 100vh;
+      position: relative;
 
       &-grey {
          position: absolute;

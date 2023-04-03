@@ -89,6 +89,10 @@ export default {
       overflow: hidden;
       color: black;
 
+      &-active {
+         opacity: 1;
+      }
+
       &-wrapper {
 
       }

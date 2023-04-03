@@ -1,24 +1,28 @@
 <template>
 <div class="teamPage p-20">
-   <div class="">
-      <router-link class="teamPage-linkBack flex a-items-center secondary-text-color mb-40" to='/user_account/teams'>
+   <div class="flex a-items-center mb-40">
+      <router-link class="teamPage-linkBack fit-content flex a-items-center secondary-text-color" to='/user_account/teams'>
          <span class="material-icons secondary-text-color">home</span>
-         <span class="pl-10">Все команды</span>
+         <span class="pl-10">К командам</span>
       </router-link>
+      <div class="pl-20">
+         <h2 class="user_account-h2">
+            {{ teamName }}
+         </h2>
+      </div>
    </div>
-   {{ teamName }}
    <div class="flex" style="height: 92%;">
       <div class="flex-col flex-col-8">
-         <Chat 
-            :Messages="teamMessages"
-            @sendMessage="sendMsg" 
-         />
+         <component :is="openedTemplate"/>
       </div>
       <div class="flex-col flex-col-2">
          <div class="teamPage-filtres box-shadow">
             <div class="flex pt-10">
                <div v-for="item in filterItems" v-bind:key="item" class="flex-col flex-col-12">
-                  <div class="radius-block box-shadow-hover ph-6 pv-10 pointer">
+                  <div @click="onClicklTab(item.nameTemplate, item.template)" v-if="activeTemplate === item.nameTemplate" class="radius-block box-shadow ph-6 pv-10 pointer">
+                     {{ item.name }}
+                  </div>
+                  <div @click="onClicklTab(item.nameTemplate, item.template)" v-else class="radius-block box-shadow-hover ph-6 pv-10 pointer">
                      {{ item.name }}
                   </div>
                </div>
@@ -31,7 +35,11 @@
 
 <script>
 import Chat from '@/components/UserAccount/Common/chat/Chat.vue';
-import { getUser } from '@/components/Common/helpers/user';
+import TeamChat from '@/components/UserAccount/pages/Teams/templates/teamPageTemplates/TeamChat/TeamChat.vue';
+import TeamFiles from '@/components/UserAccount/pages/Teams/templates/teamPageTemplates/TeamFiles/TeamFiles.vue';
+import TeamBoards from '@/components/UserAccount/pages/Teams/templates/teamPageTemplates/TeamBoards/TeamBoards.vue';
+import TeamTasks from '@/components/UserAccount/pages/Teams/templates/teamPageTemplates/TeamTasks/TeamTasks.vue';
+import { openRightAside } from '@/components/UserAccount/RightAside';
 
 export default {
    // eslint-disable-next-line
@@ -40,33 +48,54 @@ export default {
    data() {
       return {
          teamName: this.$route.params.teamId,
-         teamMessages: [],
-         user: getUser(),
+         openedTemplate: TeamChat,
+         activeTemplate: 'TeamChat',
          filterItems: [
             {
-               name: 'Чат'
+               name: 'Чат',
+               nameTemplate: 'TeamChat',
+               template: TeamChat
+            },
+            {
+               name: 'Файлы',
+               nameTemplate: 'TeamFiles',
+               template: TeamFiles
+            },
+            {
+               name: 'Доски',
+               nameTemplate: 'TeamBoards',
+               template: TeamBoards
+            },
+            {
+               name: 'Задачи',
+               nameTemplate: 'TeamTasks',
+               template: TeamTasks
+            },
+            {
+               name: 'Участники',
+               nameTemplate: 'TeamPeoples'
             }
          ]
       }
    },
    methods: {
-      sendMsg(message) {
-         const data = {
-            text: message,
-            user_id: this.user.user_id
+      onClicklTab(nameTemplate, template) {
+         if(nameTemplate === 'TeamPeoples') {
+            openRightAside({
+               template: 'components/UserAccount/pages/Teams/templates/teamPageTemplates/TeamPeoples/TeamPeoples.vue'
+            })
+            return;
          }
-         this.setNewMessage(data);
-      },
-      setNewMessage(message) {
-         this.teamMessages.push(message)
+         this.activeTemplate = nameTemplate;
+         this.openedTemplate = template;
       }
    }
 }
 </script>
 
-
 <style lang="less">
    .teamPage {
+      background-color: #f1f5f9;
       height: 100%;
       &-linkBack {
 
@@ -75,7 +104,6 @@ export default {
       &-filtres {
          background-color: white;
          border-radius: 12px;
-         height: 400px;
       }
    }
 </style>

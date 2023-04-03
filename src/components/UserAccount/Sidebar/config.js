@@ -12,16 +12,10 @@ export default [
       icon: 'task'
    },
    {
-      id: 'calendar',
-      title: 'user_account_sidebar_menu_calendar',
-      href: '/user_account/calendar',
-      icon: 'calendar_month'
-   },
-   {
-      id: 'plans',
-      title: 'user_account_sidebar_menu_plans',
-      href: '/user_account/plans',
-      icon: 'rule'
+      id: 'teams',
+      title: 'user_account_sidebar_menu_teams',
+      href: '/user_account/teams',
+      icon: 'group'
    },
    {
       id: 'board',
@@ -30,9 +24,15 @@ export default [
       icon: 'dashboard'
    },
    {
-      id: 'teams',
-      title: 'user_account_sidebar_menu_teams',
-      href: '/user_account/teams',
-      icon: 'group'
+      id: 'plans',
+      title: 'user_account_sidebar_menu_plans',
+      href: '/user_account/plans',
+      icon: 'rule'
+   },
+   {
+      id: 'calendar',
+      title: 'user_account_sidebar_menu_calendar',
+      href: '/user_account/calendar',
+      icon: 'calendar_month'
    }
 ]

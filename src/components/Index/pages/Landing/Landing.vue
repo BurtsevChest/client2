@@ -6,10 +6,12 @@
             LangingPage
          </h1>
          <div class="LandingPage-container box-shadow radius-block">
-            <ScrollContainer>
+            <ScrollContainer :height="200">
                <template v-slot:content>
                   <SelectUsers
-                     @onClickUser = "setUser"
+                     :userList="getUsersCommandList"
+                  />
+                  <SelectUsers
                      :userList="getUsersCommandList"
                   />
                </template>
@@ -35,9 +37,9 @@ export default {
 </script>
 
 <style lang="less" scope>
-body {
-   overflow: hidden;
-}
+// body {
+//    overflow: hidden;
+// }
 
 
 @offset-top: 100px;

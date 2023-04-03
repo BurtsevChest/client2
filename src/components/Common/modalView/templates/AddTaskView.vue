@@ -45,7 +45,6 @@
                   <v-date-picker :locale="locale" mode="date" v-model="date1"  @dayclick="setDate"/>
                </template>
             </PopupBtn>
-            
             <p class="error AddTaskView-error_position" v-if="errorParams.date_of_completion">{{ $t('user_account_tasks_add_deadline_error') }}</p>
          </div>
          <div class="flex-col flex-col-12 relative">
@@ -70,11 +69,8 @@ import { setTask } from "@/websync/tasks";
 import { closeDialog } from '@/components/Common/modalView/index';
 import { getUsersList } from '@/websync/user';
 import { getLocale } from "@/lang/lang";
+import { getUser } from "@/components/Common/helpers/user";
 
-let USER;
-if(localStorage.user) {
-   USER = JSON.parse(localStorage.user);
-}
 
 export default {
    // eslint-disable-next-line
@@ -99,7 +95,7 @@ export default {
          taskParams: {
             title: "",
             description: "",
-            creator_id: USER.user_id,
+            creator_id: getUser().user_id,
             responsible_id: '',
             date_of_creation: new Date(),
             date_of_completion: this.date1,

@@ -2,7 +2,10 @@
    <div class="TaskChat empty_flex">
       <Chat
          :Messages="taskMessages"
-         @sendMessage="sendMsg" 
+         @sendMessage="sendMsg"
+         :msgStyle="'TaskChat-chat-msg'"
+         :menuStyle="'TaskChat-chat-msg'"
+         :chat_room_id="chat_room_id"
       />
    </div>
 </template>
@@ -25,18 +28,14 @@ export default {
    data() {
       return {
          taskMessages: [],
-         user: getUser()
+         user: getUser(),
+         chat_room_id: `taskId${this.task_id}`
       }
    },
    methods: {
       sendMsg(message) {
-         const data = {
-            text: message,
-            user_id: this.user.user_id,
-            to: this.task_id
-         }
-         this.setNewMessage(data);
-         chatSocket.emit("PRIVATE_MESSAGE", data);
+         this.setNewMessage(message);
+         chatSocket.emit("PRIVATE_MESSAGE", message);
       },
       getMessages() {
          Tasks.getTaskMessages(this.task_id)
@@ -67,5 +66,12 @@ export default {
 </script>
 
 <style lang="less">
-
+.TaskChat {
+   &-chat {
+      &-msg {
+         background-color: var(--text-block-hover);
+         box-shadow: var(--block-box-shadow);
+      }
+   }
+}
 </style>

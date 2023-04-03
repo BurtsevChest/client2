@@ -83,7 +83,9 @@ export default {
       }
    },
    beforeMount() {
-      this.loadTemplate(this.template);
+      if(this.template) {
+         this.loadTemplate(this.template);
+      }
    }
 }
 </script>
@@ -92,7 +94,7 @@ export default {
 .ModalDialog {
    top: 50%;
    left: 50%;
-   transform: translate(-50%, -50%) scale(0.5);
+   transform: translate(-50%, -50%);
    position: fixed;
    display: flex;
    z-index: -1000;
@@ -106,7 +108,6 @@ export default {
    color: var(--text-hover);
    background-color: var(--background-color);
    box-shadow: 0 0 12px rgba(128, 128, 128, 0.5);
-   transition: 0.3s;
 
    &-grabbing {
       transition: none;
@@ -115,7 +116,7 @@ export default {
    &-active {
       z-index: 1000;
       opacity: 1;
-      transform: translate(-50%, -50%) scale(1);
+      transform: translate(-50%, -50%);
    }
 
    &-header {
