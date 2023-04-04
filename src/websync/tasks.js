@@ -38,12 +38,10 @@ export function SocketGetTask(task) {
 // Open/Close Task
 export function openTask(task) {
    if(store.getters.returnOpenedTaskId != task.task_id) {
-      const allToLoadTask = [
+      Promise.all([
          store.dispatch('getSubTasks', task.task_id),
          store.dispatch('getParentTask', task.parent_id)
-      ]
-
-      Promise.all(allToLoadTask)
+      ])
       .then(()=> {
          store.commit('setopenedTaskId', task.task_id);
          openRightAside({template: TASK_TEMPLATE, options:{ task }});

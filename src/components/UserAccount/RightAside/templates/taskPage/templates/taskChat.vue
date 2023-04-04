@@ -51,8 +51,7 @@ export default {
       }
    },
    beforeMount() {
-      // Чтоб получить сообщения чата
-      // getTaskMessages()
+      this.getMessages();
       chatSocket.emit('JOIN_ROOM', 'taskId' + this.task_id);
 
       chatSocket.on('PRIVATE_MESSAGE', (data) => {
