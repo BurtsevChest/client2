@@ -3,14 +3,13 @@
    <div class="Chat-wrapper">
       <div ref="chatContent" class="Chat-content flex-column">
          <div ref="chatscroll" class="Chat-scroll">
-            <div class="Chat-messages flex flex-column flex-end flex-nowrap pr-8 pb-20" id="messageList">
+            <div class="Chat-messages flex flex-column flex-end flex-nowrap pl-8 pr-8 pb-20" id="messageList">
                <div v-for="item in Messages" v-bind:key="item.id">
-                  <div v-if="userId === item.creator_message_id" :class="[msgStyle]" class="Chat-msg Chat-msg-my radius-block mt-16 pv-16 ph-10">
-                     {{ item.content }}
-                  </div>
-                  <div v-else :class="[msgStyle]" class="Chat-msg radius-block mt-16 pv-16 ph-10">
-                     {{ item.content }}
-                  </div>
+                  <oneMessage
+                     :message="item"
+                     :user_id="userId"
+                     :msgStyle="msgStyle"
+                  />
                </div>
             </div>
          </div>
@@ -27,10 +26,12 @@
 
 <script>
 import { getUser } from '@/components/Common/helpers/user';
+import oneMessage from '@/components/UserAccount/Common/chat/templates/oneMessage.vue';
 
 export default {
    // eslint-disable-next-line
    name: "Chat",
+   components: {oneMessage},
    props: {
       Messages: {
          type: Array,
@@ -132,16 +133,6 @@ export default {
       display: flex;
       flex-direction: column-reverse;
       overflow-y: auto;
-   }
-
-   &-msg {
-      max-width: 60%;
-      margin-right: auto;
-
-      &-my {
-         margin-left: auto;
-         margin-right: 0;
-      }
    }
 }
 </style>

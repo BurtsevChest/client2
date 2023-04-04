@@ -49,6 +49,10 @@
    align-self: end;
 }
 
+.a-self-start {
+   align-self: flex-start;
+}
+
 .text-center {
    text-align: center;
 }

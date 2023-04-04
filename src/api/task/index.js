@@ -22,7 +22,7 @@ class Tasks {
    }
 
    async getTaskMessages(task_id) {
-      return await AxiosRequest.get(`task_msg/${task_id}`)
+      return await AxiosRequest.get(`message/taskId${task_id}`)
    }
 }
 
