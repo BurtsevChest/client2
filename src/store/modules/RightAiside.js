@@ -12,6 +12,16 @@ export default {
             state.config = ''
          }, ANIMATION_TIMEOUT);
       },
+      newClose(state) {
+         return new Promise((resolve)=> {
+            state.status = false;
+            setTimeout(() => {
+               state.openedTemplate = '';
+               state.config = '';
+               resolve()
+            }, ANIMATION_TIMEOUT);
+         })
+      },
       openRightAside(state, options) {
          state.templateSRC = options.template;
          state.openedTemplate = '';
@@ -21,13 +31,31 @@ export default {
          }).finally(() => {
             state.status = true
          })
+      },
+      openRightAsideNew(state, options) {
+         return new Promise((resolve, reject) => {
+            if(state.templateSRC == options.template) {
+               return reject(null);
+            }
+            state.templateSRC = options.template;
+            import('@/' + options.template)
+                .then((res)=>{
+                  state.openedTemplate = res.default;
+                  state.config = options.options;
+                  state.status = true;
+                  resolve();
+               })
+                .catch(() => {
+                   reject(null)
+                })
+         })
       }
    },
    state: {
       status: false,
-      openedTemplate: '',
+      openedTemplate: null && HTMLTemplateElement,
       templateSRC: '',
-      config: []
+      config: {}
    },
    getters: {
       getStatus(state) {

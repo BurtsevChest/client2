@@ -89,7 +89,7 @@ class DateFormatter {
    }
 
    getMonthText() {
-      return monthDictionary[this._day];
+      return monthDictionary[this._month];
    }
 }
 

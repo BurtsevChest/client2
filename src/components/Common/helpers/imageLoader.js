@@ -14,7 +14,7 @@ export function downloadImageUser(imageRef) {
  * @returns В случае, если картинка не пришла с сервера, грузит альтернативную картинку
  */
 export function safelyLoadImage(imageRef, alternativeImageSrc) {
-   let img = this.$refs[imageRef];
+   const img = this.$refs[imageRef];
 
    img.onerror = () => {
       img.src = require(`@/${alternativeImageSrc}`);

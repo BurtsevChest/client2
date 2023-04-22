@@ -19,9 +19,9 @@ export default {
   components: {ModalView},
   beforeCreate() {
     if(localStorage.theme) {
-      document.documentElement.setAttribute('data-theme', localStorage.theme)
+      document.documentElement.setAttribute('data-theme', 'dark')
     }else{
-      document.documentElement.setAttribute('data-theme', 'light')
+      document.documentElement.setAttribute('data-theme', 'dark')
     }
     startLocale();
   }
@@ -45,6 +45,11 @@ body {
 }
 .vc-container {
   border: none !important;
+}
+
+.vc-pane-container {
+  background-color: var(--background-color);
+  color: var(--text-color);
 }
 
 aside {

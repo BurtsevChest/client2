@@ -1,6 +1,6 @@
 <template>
    <div class="Index">
-      <ScrollContainerNew @_scroll="scrollPage">
+      <ScrollContainerNew :hideScrollBar="true" @_scroll="scrollPage" :newScrollValue="pageScroll">
          <template v-slot:content>
             <Header :scrollValue="pageScroll" v-if="!pageData?.hideHeader || false" />
             <router-view 
@@ -10,6 +10,10 @@
          </template>
       </ScrollContainerNew>
    </div>
+   <RightAiside/>
+   <div v-if="pageScroll > 600" @click="setNewScrollValue" class="Index-top-btn pointer flex a-items-center flex-center">
+      <span class="Index-top-btn-icon material-icons">expand_less</span>
+   </div>
 </template>
 
 <script>
@@ -18,15 +22,17 @@ import Footer from '@/components/Index/Footer/Footer.vue';
 import { closeHeaderMenu } from '@/websync/header';
 import {default as getPageData} from '@/components/Index/pageOptions';
 import {default as SEO, setSeo} from '@/components/Common/helpers/meta';
+import RightAiside from '@/components/UserAccount/RightAside/RightAside.vue';
 
 export default {
    // eslint-disable-next-line
    name: "Index",
-   components: {Header, Footer},
+   components: {Header, Footer, RightAiside},
    watch: {
     '$route.path'() {
       this.setNewPageOptions(this.$route.path);
       closeHeaderMenu();
+      this.setNewScrollValue();
     }
   },
   data() {
@@ -50,6 +56,10 @@ export default {
             Object.keys(pageSeoOption).forEach((item) => {
                setSeo(SEO[item], pageSeoOption[item]);
             });
+         } else {
+            Object.keys(this.defaultSeo).forEach((item) => {
+               setSeo(SEO[item], this.defaultSeo[item]);
+            });
          }
       },
       setNewPageOptions(path) {
@@ -59,6 +69,11 @@ export default {
       },
       scrollPage(scrollValue) {
          this.pageScroll = scrollValue;
+         closeHeaderMenu();
+      },
+      setNewScrollValue() {
+         this.pageScroll = 0;
+         closeHeaderMenu();
       }
   },
   beforeMount() {
@@ -72,5 +87,21 @@ export default {
 
 .Index {
    height: 100vh;
+
+   &-top-btn {
+      position: fixed;
+      width: 50px;
+      height: 50px;
+      background: #181818;
+      border-radius: 50%;
+      bottom: 30px;
+      right: 30px;
+
+      &-icon {
+         font-size: 35px;
+         color: white;
+
+      }
+   }
 }
 </style>

@@ -161,7 +161,24 @@ export default {
          tabFilter: 'my',
          filterText: ''
       },
-      parentTask: {}
+      parentTask: {},
+      taskReglaments: [
+         {
+            name: 'Задача в разработку',
+         },
+         {
+            name: 'Поручение',
+         },
+         {
+            name: 'Разработка API',
+         },
+         {
+            name: 'Компоненты'
+         },
+         {
+            name: 'Андрей дай урл'
+         }
+      ]
    },
    getters: {
       returnTasks(state) {
@@ -175,6 +192,9 @@ export default {
       },
       parentTask(state) {
          return state.parentTask
+      },
+      taskReglaments(state) {
+         return state.taskReglaments;
       }
    }
 }

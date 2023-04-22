@@ -45,12 +45,12 @@ export default {
    .TeamChat {
       height: 100%;
       &-msg {
-         background-color: #ffffff;
+         background-color: var(--text-block-hover);
          box-shadow: 0 0 12px rgba(128, 128, 128, 0.2);
       }
 
       &-menu {
-         background-color: #ffffff;
+         background-color: var(--text-block-hover);
          box-shadow: 0 0 12px rgba(128, 128, 128, 0.2);
       }
    }

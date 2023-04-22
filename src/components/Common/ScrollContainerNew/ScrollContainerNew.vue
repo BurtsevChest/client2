@@ -2,12 +2,12 @@
    <div class="ScrollContainerNew">
       <div ref="ScrollContainerNew" class="ScrollContainerNew-content flex flex-column">
          <div ref="wrapper" :style="{'height': contentHeight + 'px'}" class="ScrollContainerNew-scroll">
-            <div>
+            <div ref="scrollContent">
                <slot  name="content"></slot>
             </div>
          </div>
       </div>
-      <div class="ScrollContainerNew-scrollbar-wrapper">
+      <div v-if="!hideScrollBar" class="ScrollContainerNew-scrollbar-wrapper">
          <div ref="scrollbar" class="ScrollContainerNew-scrollbar pointer"></div>
       </div>
    </div>
@@ -17,35 +17,80 @@
 export default {
    // eslint-disable-next-line
    name: "ScrollContainerNew",
+   props: {
+      hideScrollBar: {
+         type: Boolean
+      },
+      newScrollValue: {
+         type: Number
+      }
+   },
+   watch: {
+      newScrollValue(newValue) {
+         this.$refs.wrapper.scrollTop = newValue;
+         this.setScrollValue(newValue);
+      }
+   },
    data() {
       return {
          contentHeight: null,
          scrollValue: 0,
+         scrollMoved: 0,
+         pos2: 0,
          scrollBarHeight: 0
       }
    },
    methods: {
       setContentHeight() {
          this.contentHeight = this.$refs.ScrollContainerNew.clientHeight;
+      },
+      setScrollValue() {
+         this.scrollValue = this.$refs.wrapper.scrollTop;
+      },
+      moveSidebar(scrollBarOffsetTop) {
+         this.$refs.scrollbar.style.transform = `translateY(${scrollBarOffsetTop}px)`;
+      },
+      whenPageScroll() {
+         this.setScrollValue();
+         if(!this.hideScrollBar) {
+            const scrollBarOffsetTop = this.contentHeight / (this.$refs.wrapper.scrollHeight/this.scrollValue);
+            this.moveSidebar(scrollBarOffsetTop);
+         }
+         this.$emit('_scroll', this.scrollValue);
+      },
+      scrollbarDragStart(_event) {
+         _event.preventDefault();
+         this.scrollValue = _event.clientY;
+         document.addEventListener("mousemove", this.moveScrollBar);
+      },
+      moveScrollBar(event) {
+         this.pos2 = this.scrollMoved - event.clientY;
+         this.scrollMoved = event.clientY;
+         console.log(this.$refs.scrollbar.offsetTop + ' ' + this.pos2);
+         this.moveSidebar(this.$refs.scrollbar.offsetTop - this.pos2);
+      },
+      stopScroll() {
+         document.removeEventListener('mousemove', this.moveScrollBar);
       }
    },
    mounted() {
       this.setContentHeight();
+      window.addEventListener('resize', this.setContentHeight, true);
+      this.$refs.wrapper.addEventListener('scroll', this.whenPageScroll);
 
-      window.addEventListener('resize', this.setContentHeight(), true);
+      if(!this.hideScrollBar) {
+         // FIXME: хуйня какая-то с высчитываением скроллящейся области. 
+         setTimeout(() => {
+            this.scrollBarHeight = this.$refs.wrapper.clientHeight * (this.$refs.wrapper.clientHeight / this.$refs.scrollContent.clientHeight);
+            this.$refs.scrollbar.style.height = this.scrollBarHeight + 'px';
+         }, 100);
 
-      this.$refs.wrapper.addEventListener('scroll', () => {
-         this.scrollValue = this.$refs.wrapper.scrollTop;
-         const scrollBarOffsetTop = this.contentHeight / (this.$refs.wrapper.scrollHeight/this.scrollValue);
-         this.$refs.scrollbar.style.transform = `translateY(${scrollBarOffsetTop}px)`;
-         this.$emit('_scroll', this.scrollValue);
-      })
-
-      this.scrollBarHeight = this.$refs.wrapper.clientHeight * (this.$refs.wrapper.clientHeight / this.$refs.wrapper.scrollHeight);
-      this.$refs.scrollbar.style.height = this.scrollBarHeight + 'px';
+         this.$refs.scrollbar.addEventListener('mousedown', this.scrollbarDragStart);
+         document.addEventListener("mouseup", this.stopScroll);
+      }
    },
    beforeUnmount() {
-      window.removeEventListener('resize', this.setContentHeight(), true);
+      window.removeEventListener('resize', this.setContentHeight, true);
    }
 }
 </script>
@@ -71,9 +116,8 @@ export default {
          right: 0;
          height: 100%;
          width: 8px;
-         background-color: rgba(128, 128, 128, 0.2);
          top: 0;
-         transition: 0.3s;
+         transition: 0.2s;
 
          &:hover {
             width: 16px;

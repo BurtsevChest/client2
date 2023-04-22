@@ -33,8 +33,9 @@ AxiosRequest.interceptors.response.use((response) => {
          return AxiosRequest.request(originalRequest);
       }
    } catch (e) {
-      window.location.href = '/';
-      localStorage.clear();
+      // window.location.href = '/';
+      // localStorage.clear();
+      console.log('asdasd');
    }
 })
 

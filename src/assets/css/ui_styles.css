@@ -25,7 +25,7 @@
 
 .button {
    padding: 10px 15px;
-   background: #334155;
+   background: rgba(255, 255, 255, 0.08);
    color: white;
    border-radius: 12px;
    transition: 0.3s;
@@ -66,7 +66,7 @@
 }
 
 .box-shadow {
-   box-shadow: 0 0 12px rgba(128, 128, 128, 0.2);
+   box-shadow: 0 0 8px rgba(128, 128, 128, 0.1);
 }
 
 .box-shadow-hover {
@@ -74,7 +74,7 @@
 }
 
 .box-shadow-hover:hover {
-   box-shadow: 0 0 12px rgba(128, 128, 128, 0.2);
+   box-shadow: 0 0 8px rgba(128, 128, 128, 0.2);
 }
 
 .radius-block {
@@ -116,4 +116,26 @@
 
 .fit-content {
    width: fit-content;
+}
+
+.white-color {
+   color: white;
+}
+
+.background-grey {
+   background-color: rgba(255, 255, 255, 0.08);
+}
+
+.background-grey-hover {
+   transition: 0.2s;
+}
+
+.background-grey-hover:hover {
+   background-color: rgba(255, 255, 255, 0.08);
+}
+
+.white-line {
+   width: 100%;
+   height: 2px;
+   background: white;
 }

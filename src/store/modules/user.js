@@ -1,7 +1,24 @@
-import User from "@/api/user"
+import User from "@/api/user";
+import AxiosRequest from '@/api/index';
 
 export default {
    actions: {
+      loginUser(state) {
+         User.login()
+            .then((res) => {
+               const data = res.data;
+               state.commit('setUser', data.user);
+               localStorage.accessToken = data.accessToken;
+               AxiosRequest.headers.Authorization = `Bearer ${data.accessToken}`;
+               state.commit('setAuth', true);
+            })
+            .catch(() => {
+               state.commit('setUser', {});
+               localStorage.removeItem('accessToken')
+               AxiosRequest.headers.Authorization = ` `;
+               state.commit('setAuth', false);
+            })
+      },
       getUsersList(state) {
          // Кэшируем список прилетевших юзеров. Кэш сбросится, когда пользователь обновит страницу
          if(!state.state.CommandUsersList) {
@@ -17,11 +34,15 @@ export default {
       },
       setCommandUsersList(state, userList) {
          state.CommandUsersList = userList
+      },
+      setAuth(state, value) {
+         state.ifAuthenticated = value
       }
    },
    state: {
       user: {},
-      CommandUsersList: ''
+      CommandUsersList: '',
+      ifAuthenticated: false
    },
    getters: {
       getUser(state) {
@@ -29,6 +50,9 @@ export default {
       },
       getUsersCommandList(state) {
          return state.CommandUsersList
+      },
+      ifAuthenticated(state) {
+         return state.ifAuthenticated
       }
    }
 }

@@ -22,7 +22,7 @@
                <button @click="signUp" class="button">{{ $t('index_header_enter_btn') }}</button>
             </div>
             <div class="flex-col flex flex-center">
-               <router-link to="/register">
+               <router-link to="/register" class="white-color">
                   {{ $t('index_header_login_register') }}
                </router-link>
             </div>
@@ -104,7 +104,8 @@ export default {
    &-view {
       padding: 15px;
       width: 500px;
-      background: white;
+      background: #181818;
+      color: white;
       &-nameSite {
          font-size: 30px;
          text-shadow: 0 0 15px rgba(128, 128, 128, 0.3);

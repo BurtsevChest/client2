@@ -13,7 +13,6 @@
 <script>
 import Chat from '@/components/UserAccount/Common/chat/Chat.vue';
 import chatSocket from "@/vue_socket/chatSocket"
-import { getUser } from '@/components/Common/helpers/user';
 import Tasks from '@/api/task';
 
 export default {
@@ -28,7 +27,6 @@ export default {
    data() {
       return {
          taskMessages: [],
-         user: getUser(),
          chat_room_id: `taskId${this.task_id}`
       }
    },
@@ -59,7 +57,7 @@ export default {
       })
    },
    beforeUnmount() {
-      chatSocket.emit('DISCONNECTION_ROOM', this.task_id);
+      chatSocket.emit('DISCONNECTION_ROOM', 'taskId' + this.task_id);
    }
 }
 </script>

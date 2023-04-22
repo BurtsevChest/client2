@@ -105,9 +105,9 @@ export default {
    background: white;
    height: fit-content;
    border-radius: 12px;
-   color: var(--text-hover);
-   background-color: var(--background-color);
-   box-shadow: 0 0 12px rgba(128, 128, 128, 0.5);
+   color: white;
+   background: #181818;
+   box-shadow: 0 0 8px rgba(128, 128, 128, 0.1);
 
    &-grabbing {
       transition: none;

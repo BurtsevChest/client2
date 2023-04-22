@@ -1,12 +1,13 @@
 /* Темная тема */
 html[data-theme='dark'] {
-   --background-color: #1e293b;
-   --background-right-aside-color: #1e293b;
+   --background-color: #181818;
+   --background-right-aside-color: #181818;
    --text-color: #f1f5f9;
-   --text-block-hover: #334155;
+   --text-block-hover: rgba(255, 255, 255, 0.08);
    --text-hover: #f1f5f9;
-   --block-box-shadow: none;
+   --block-box-shadow: 0 0 8px rgba(128, 128, 128, 0.1);
    --task-title-color: #f1f5f9;
+   --background-color-wrapper: #222222;
 }
 
 /* Светлая тема */

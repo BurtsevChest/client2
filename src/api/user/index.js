@@ -5,6 +5,10 @@ class User {
       return await AxiosRequest.post('login', JSON.stringify(param));
    }
 
+   async login() {
+      return await AxiosRequest.post('loginCheck');
+   }
+
    async getCommandUsers() {
       return await AxiosRequest.get('userOnTeam/1');
    }

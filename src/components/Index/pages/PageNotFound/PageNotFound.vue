@@ -1,8 +1,7 @@
 <template>
-<div class="PageNotFound">
-   <div class="container">
-      <section class="">
-         <h1 class="h1">Страница не найдена</h1>
+<div class="PageNotFound PageNotFound-h100vh">
+   <div class="container PageNotFound-h100">
+      <section class="PageNotFound-main PageNotFound-h100">
       </section>
    </div>
 </div>
@@ -23,5 +22,17 @@ export default {
 .PageNotFound {
    padding-top: @offset-top;
 
+   &-main {
+      background: url('@/components/Index/pages/PageNotFound/resources/images/error_404.png') no-repeat;
+      height: 100%;
+   }
+
+   &-h100 {
+      height: 100%;
+   }
+
+   &-h100vh {
+      height: 100vh;
+   }
 }
 </style>

@@ -1,15 +1,22 @@
 <template>
    <div class="Tasks flex flex-column">
-      <div class="flex box-shadow pt-12 pv-10">
+      <div class="Tasks-header flex box-shadow pt-12 pv-10">
          <div class="flex flex-col-8">
             <div class="flex-col flex a-items-center">
-            <button @click="openAddTaskView" class="Tasks-addTask-btn flex flex-center a-items-center">
-               <span class="material-icons Tasks-addTask-btn-icon">add</span>
-            </button>
-            <div class="secondare-text-color pl-10">Тест новой модалки</div>
-            <span class="material-icons pl-10 pointer" @click="openNewModal" style="color: red;">
-               favorite
-            </span>
+            <PopupBtn v-model:show="reglamentDialog" :positionStyle="'Tasks-reglament-popup-position'" :hideBtn=true>
+               <template v-slot:popupBtn>
+                  <button class="Tasks-addTask-btn flex flex-center a-items-center">
+                     <span class="material-icons Tasks-addTask-btn-icon">add</span>
+                  </button>
+               </template>
+               <template v-slot:popupTemplate>
+                  <div class="Tasks-reglament-popup ph-8 pv-10 fit-content radius-block box-shadow">
+                     <div v-for="item in taskReglaments" v-bind:key="item.name"  @click="openAddTaskView" class="Tasks-reglament-popup-item pointer radius-block ph-6 pv-10">
+                        {{ item.name }}
+                     </div>
+                  </div>
+               </template>
+            </PopupBtn>
             </div>
             <div class="flex-col flex flex-nowrap a-items-center">
                <SearchField @clickSearchEnter="filterToString" @clickSearch="filterToString" @clearSearch="clearFilterText"/>
@@ -17,12 +24,12 @@
             <div class="empty_flex"></div>
             <div class="flex a-self-end">
                <div class="flex-col">
-                  <div class="select_tab" :class="{'active' : activeTab === 'my'}" @click="setTab('my')">
+                  <div class="Tasks-tabs ph-8 pv-12 radius-block pointer" :class="{'active' : activeTab === 'my'}" @click="setTab('my')">
                      {{ $t('user_account_tasks_filter_my') }}
                   </div>
                </div>
                <div class="flex-col">
-                  <div class="select_tab" :class="{'active' : activeTab === 'from'}" @click="setTab('from')">
+                  <div class="Tasks-tabs ph-8 pv-12 radius-block pointer" :class="{'active' : activeTab === 'from'}" @click="setTab('from')">
                      {{ $t('user_account_tasks_filter_from') }}
                   </div>
                </div>
@@ -30,21 +37,20 @@
          </div>
       </div>
       <div class="flex">
-         <div class="flex-col pt-16 flex-col-8 flex flex-noGutter flex-column Tasks-itemsWrapper">
+         <div class="flex-col pt-16 flex-col-9 flex flex-noGutter flex-column Tasks-itemsWrapper">
             <div v-if="returnTasks.length > 0" class="flex flex-noGutter flex-column">
                <TaskItems
                   :Tasks = "returnTasks"
                   @onClickTask = OpenTask
                   :itemClass="'Tasks-item'"
-                  :titleClass="'secondary-text-color'"
                   :descClass="'standart-text-grey'"
-                  :dateClass="'secondary-text-color'"
                />
             </div>
             <p v-else class="standart-text-grey">Задач нет</p>
          </div>
-         <div class="flex-col pt-16 flex flex-column">
-            <div class="flex-col pb-16">
+         <div class="flex-col flex-col-3 pt-16 flex flex-column">
+            <div class="Tasks-filtres p-10 radius-block">
+               <div class="flex-col pb-16">
                {{ $t('user_account_tasks_filtres_text') }}
             </div>
             <div class="flex-col flex">
@@ -56,7 +62,9 @@
                      </div>
                   </template>
                   <template v-slot:popupTemplate>
-                     <v-date-picker :locale="locale" mode="date" v-model="dateToFilter" @dayclick="setDate"/>
+                     <div class="Tasks-filtres-popupCalendar">
+                        <v-date-picker :locale="locale" mode="date" v-model="dateToFilter" @dayclick="setDate"/>
+                     </div>
                   </template>
                </PopupBtn>
                <span v-if="dateFilterToShow" @click="deleteDate" class="material-icons pl-10 pointer">close</span>
@@ -71,16 +79,10 @@
                   <span class="flex a-items-center material-icons">group</span>
                </div>
             </div>
+            </div>
          </div>
       </div>
    </div>
-
-   <ModalDialog
-      :dialogStatus="dialogStatus"
-      :title = "'Новая задача'"
-      @onCloseClick="() => {this.dialogStatus=false}"
-      :template="'components/UserAccount/pages/Tasks/templates/addTaskDialog.vue'"
-   />
 </template>
 
 <script>
@@ -98,7 +100,7 @@ import { openDialog } from '@/components/Common/modalView';
 import TaskItems from '@/components/UserAccount/Common/TaskItems/TaskItems.vue';
 import { dateToNumbers } from '@/components/Common/helpers/dateToNumbers';
 import { getLocale } from "@/lang/lang";
-import mainSocket from "@/vue_socket/mainSocket"
+import mainSocket from "@/vue_socket/mainSocket";
 
 export default {
    // eslint-disable-next-line
@@ -117,7 +119,7 @@ export default {
          dateToFilter: '',
          dateFilterToShow: '',
          locale: getLocale(),
-         dialogStatus: false
+         reglamentDialog: false
       }
    },
    methods: {
@@ -125,10 +127,8 @@ export default {
          openTask(task)
       },
       openAddTaskView() {
+         this.reglamentDialog = false;
          openDialog({template: 'components/Common/modalView/templates/AddTaskView.vue'});
-      },
-      openNewModal() {
-         this.dialogStatus = true;
       },
       setTab(name) {
          this.activeTab = name;
@@ -151,7 +151,7 @@ export default {
          clearDateFilter()
       }
    },
-   computed: mapGetters(["returnTasks"]),
+   computed: mapGetters(["returnTasks",'taskReglaments']),
    beforeMount() {
       mainSocket.on('SET_TASK', data => {
         SocketGetTask(data.task)
@@ -165,17 +165,22 @@ export default {
 .Tasks {
    height: 100%;
    flex-wrap: unset;
+   background-color: var(--background-color-wrapper);
+
+   &-header {
+      background-color: var(--background-color);
+      color: var(--text-color);
+   }
 
    &-search-field {
       width: auto;
    }
 
    &-addTask-btn {
-      color: black;
       cursor: pointer;
       width: 40px;
       height: 40px;
-      background: rgba(128, 128, 128, 0.3);
+      background: var(--text-block-hover);
       border-radius: 50%;   
 
       &-icon {
@@ -184,16 +189,15 @@ export default {
    }
 
    &-itemsWrapper {
-      overflow: hidden;
-      overflow-y: scroll;
-      height: 90vh;
    }
 
    &-item {
       border-radius: 20px;
       transition: 0.2s;
+      color: white;
+
       &:hover, &:focus {
-         background: #f1f5f9;
+         background: var(--text-block-hover);
       }
 
       &-active {
@@ -229,6 +233,48 @@ export default {
    &-filter {
       &-popupDate {
          left: 0;
+      }
+   }
+
+   &-filtres {
+      background-color: var(--background-color);
+      color: var(--text-color);
+
+      &-popupCalendar {
+         box-shadow: var(--block-box-shadow);
+      }
+   }
+
+   &-tabs {
+      color: var(--text-color);
+      &.active {
+         background-color: var(--text-block-hover);
+      }
+
+      &:hover {
+         background-color: var(--text-block-hover);
+      }
+   }
+
+   &-reglament-popup {
+      background-color: var(--background-color);
+      color: var(--text-color);
+      width: max-content;
+
+      &-position {
+         top: 0;
+         left: 0;
+      }
+
+      &-item {
+         margin-bottom: 8px;
+         &:last-child {
+            margin-bottom: 0;
+         }
+         &:hover {
+            transition: 0.2s;
+            background-color: var(--text-block-hover);
+         }
       }
    }
 }

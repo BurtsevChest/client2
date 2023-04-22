@@ -14,16 +14,15 @@ const ifAuthenticated = (to, from, next) => {
    if (localStorage.accessToken && localStorage.user) {
      next()
    } else {
-     next('/main')
+     next()
    }
- }
+}
 
 let routes = [
    {
       path: '/',
       component: () => import('@/components/Index/Index.vue'),
       children: indexPages,
-      redirect: '/main'
    },
    {
       path: '/user_account',

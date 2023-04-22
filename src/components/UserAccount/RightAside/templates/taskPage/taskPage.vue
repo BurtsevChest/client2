@@ -1,53 +1,53 @@
 <template>
 <div class="Task flex flex-column empty_flex">
-   <div class="flex flex-space pb-10">
-      <div @click="OpenTask(parentTask)" class="pointer Task-parentTask standart-text-grey flex a-items-center">
-         <p class="Task-parentTask-text">
+      <div class="flex flex-space pb-10">
+        <div @click="OpenTask(parentTask)" class="pointer Task-parentTask standart-text-grey flex a-items-center">
+          <p class="Task-parentTask-text">
             {{ parentTask.title }}
-         </p>
+          </p>
+        </div>
+        <div class="empty_flex"></div>
+        <div class="Task-edit pv-12 radius-block flex flex-center pointer a-items-center">
+          <span class="material-icons">edit</span>
+          <p class="pl-8">Изменить</p>
+        </div>
+        <button class="Task-closeBtn ml-16" @click="close">
+          <span class="material-icons flex flex-center a-items-center">close</span>
+        </button>
       </div>
-      <div class="empty_flex"></div>
-      <div class="Task-edit pv-12 radius-block flex flex-center pointer a-items-center">
-         <span class="material-icons">edit</span>
-         <p class="pl-8">Изменить</p>
+      <div class="Task-responsible">
+        <p class="standart-text-grey">Исполнитель</p>
       </div>
-      <button class="Task-closeBtn ml-16" @click="close">
-         <span class="material-icons flex flex-center a-items-center">close</span>
-      </button>
-   </div>
-   <div class="Task-responsible">
-      <p class="standart-text-grey">Исполнитель</p>
-   </div>
-   <h2 class="user_account-h2 pb-16">{{ options.task.title }}</h2>
-   <p class="pb-32">{{ options.task.description }}</p>
-   <div class="flex">
-      <div class="flex-col">
-         <div @click="openAddTaskView(options.task.task_id)" class="flex a-items-center pointer">
-            <span class="material-icons">
-               task
-            </span>
+      <h2 class="user_account-h2 pb-16">{{ options.task.title }}</h2>
+      <p class="pb-32">{{ options.task.description }}</p>
+      <div class="flex">
+        <div class="flex-col">
+          <div @click="openAddTaskView(options.task.task_id)" class="flex a-items-center pointer">
+              <span class="material-icons">
+                 task
+              </span>
             <p class="pl-4 Task-tabs">{{ $t('user_account_tasks_opentask_subtask') }}</p>
-         </div>
-      </div>
-      <div class="flex-col">
-         <div class="flex a-items-center pointer">
+          </div>
+        </div>
+        <div class="flex-col">
+          <div class="flex a-items-center pointer">
             <span class="material-icons">attach_file</span>
             <div class="Task-addFileBtn Task-tabs">{{ $t('user_account_tasks_opentask_attach') }}</div>
-         </div>
-      </div>
-      <div class="flex-col">
-         <div @click="openChat" class="flex a-items-center pointer">
+          </div>
+        </div>
+        <div class="flex-col">
+          <div @click="openChat" class="flex a-items-center pointer">
             <span class="material-icons">chat</span>
             <p class="pl-4 Task-tabs">{{ chatStatus.tabText }}</p>
-         </div>
+          </div>
+        </div>
       </div>
-   </div>
-   <component 
-      :is="tabTamplate" 
-      :task_id = "this.options.task.task_id"
-      @openTask="OpenTask"
-   />
-</div>
+      <component
+          :is="tabTamplate"
+          :task_id = "this.options.task.task_id"
+          @openTask="OpenTask"
+      />
+    </div>
 </template>
 
 <script>
@@ -61,7 +61,7 @@ import { getUser } from '@/components/Common/helpers/user';
 export default {
    // eslint-disable-next-line
    name: "",
-   props: {
+  props: {
       options: {
          type: Object
       }

@@ -1,5 +1,5 @@
 import store from "@/store";
-import { getUser } from "@/components/Common/helpers/user";
+// import { getUser } from "@/components/Common/helpers/user";
 
 export const filterObjects = {
    'Я админ': 'admin',
@@ -14,7 +14,7 @@ export const filterObjects2 = {
 };
 
 export function getTeams() {
-   store.dispatch('getTeams', getUser().user_id)
+   store.dispatch('getTeams', 4)
       .then((res) => {
          store.commit('setTeamsList', res.data);
       })
@@ -31,7 +31,7 @@ export function createTeam(team) {
 }
 
 function filterTeamList() {
-   store.commit('filterTeamList', getUser().user_id)
+   store.commit('filterTeamList', 4)
 }
 
 export function setFilterText(filterText) {

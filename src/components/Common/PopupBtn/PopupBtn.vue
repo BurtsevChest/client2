@@ -3,7 +3,7 @@
    <div class="pointer PopupBtn-btn" @click="openPopup">
       <slot name="popupBtn"></slot>
    </div>
-   <div v-if="showPopup" class="PopupBtn-template radius-block p-10" :class="[positionStyle]">
+   <div v-if="showPopup" class="PopupBtn-template" :class="[positionStyle]">
       <div class="PopupBtn-wrapper">
          <div v-if="!hideBtn" class="flex flex-end pb-4">
             <span @click="close" class="material-icons pointer" :style="{ color : btnColor }"> {{ btnIcon ? btnIcon : 'close' }}</span>
@@ -83,11 +83,7 @@ export default {
    &-template {
       position: absolute;
       min-width: 200px;
-      background: white;
-      box-shadow: 0 0 15px rgba(128, 128, 128, 0.4);
       z-index: 11111;
-      overflow: hidden;
-      color: black;
 
       &-active {
          opacity: 1;

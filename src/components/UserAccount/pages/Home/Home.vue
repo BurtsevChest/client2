@@ -83,6 +83,9 @@ export default {
 
 <style lang="less" scoped>
 .Home {
+   background-color: var(--background-color-wrapper);
+   color: var(--text-color);
+   height: 100vh;
    &-avatar {
       overflow: hidden;
       width: 200px;

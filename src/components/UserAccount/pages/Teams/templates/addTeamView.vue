@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import { getUser } from '@/components/Common/helpers/user';
+// import { getUser } from '@/components/Common/helpers/user';
 import { createTeam } from '@/websync/teams';
 
 export default {
@@ -18,7 +18,7 @@ export default {
    data() {
       return {
          newTeam: {
-            creator_id: getUser().user_id,
+            creator_id: 4,
             name: '',
             backgroundColor: '',
             color: '',

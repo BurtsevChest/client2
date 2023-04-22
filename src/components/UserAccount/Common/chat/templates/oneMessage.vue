@@ -10,7 +10,7 @@
          <img ref="userAvatar" class="oneMessage-avatar ml-10 a-self-start" :src="userPhotoBaseUrl">
       </div>
       <div v-else class="oneMessage-msg oneMessage-msg flex flex-nowrap a-items-center mt-16 pointer">
-         <img ref="userAvatar" class="oneMessage-avatar mr-10 a-self-start" :src="userPhotoBaseUrl">
+         <img ref="userAvatar" class="oneMessage-avatar mr-10 a-self-start" :src="userPhotoBaseUrlSecond">
          <div :class="[msgStyle]" class="radius-block oneMessage-arrow-right pr-10 pl-14 pb-6 pt-10">
             {{ message.content }}
             <div class="oneMessage-arrow-date">
@@ -42,7 +42,8 @@ export default {
    },
    data() {
       return {
-         userPhotoBaseUrl: `${protocol}${api_domain}/apiV0/photo/${this.user_id}`
+         userPhotoBaseUrl: `${protocol}${api_domain}/apiV0/photo/${this.user_id}`,
+         userPhotoBaseUrlSecond: `${protocol}${api_domain}/apiV0/photo/${this.message.creator_message_id}`
       }
    },
    methods: {

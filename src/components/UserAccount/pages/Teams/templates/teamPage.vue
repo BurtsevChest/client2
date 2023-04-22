@@ -1,8 +1,8 @@
 <template>
 <div class="teamPage p-20">
    <div class="flex a-items-center mb-40">
-      <router-link class="teamPage-linkBack fit-content flex a-items-center secondary-text-color" to='/user_account/teams'>
-         <span class="material-icons secondary-text-color">home</span>
+      <router-link class="teamPage-linkBack fit-content flex a-items-center" to='/user_account/teams'>
+         <span class="material-icons">home</span>
          <span class="pl-10">К командам</span>
       </router-link>
       <div class="pl-20">
@@ -16,13 +16,13 @@
          <component :is="openedTemplate"/>
       </div>
       <div class="flex-col flex-col-2">
-         <div class="teamPage-filtres box-shadow">
+         <div class="teamPage-filtres radius-block box-shadow">
             <div class="flex pt-10">
                <div v-for="item in filterItems" v-bind:key="item" class="flex-col flex-col-12">
-                  <div @click="onClicklTab(item.nameTemplate, item.template)" v-if="activeTemplate === item.nameTemplate" class="radius-block box-shadow ph-6 pv-10 pointer">
+                  <div @click="onClicklTab(item.nameTemplate, item.template)" v-if="activeTemplate === item.nameTemplate" class="radius-block teamPage-filtres-item active box-shadow ph-6 pv-10 pointer">
                      {{ item.name }}
                   </div>
-                  <div @click="onClicklTab(item.nameTemplate, item.template)" v-else class="radius-block box-shadow-hover ph-6 pv-10 pointer">
+                  <div @click="onClicklTab(item.nameTemplate, item.template)" v-else class="radius-block teamPage-filtres-item ph-6 pv-10 pointer">
                      {{ item.name }}
                   </div>
                </div>
@@ -95,15 +95,26 @@ export default {
 
 <style lang="less">
    .teamPage {
-      background-color: #f1f5f9;
+      background-color: var(--background-color-wrapper);
+      color: var(--text-color);
       height: 100%;
       &-linkBack {
-
+         color: var(--text-color);
       }
 
       &-filtres {
-         background-color: white;
-         border-radius: 12px;
+         background-color: var(--background-color);
+         color: var(--text-color);
+
+         &-item {
+            &:hover {
+               background-color: var(--text-block-hover);
+            }
+
+            &.active {
+               background-color: var(--text-block-hover);
+            }
+         }
       }
    }
 </style>

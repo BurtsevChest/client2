@@ -16,16 +16,16 @@ export default {
 
 <style lang="less">
 .RightAside {
-   position: absolute;
+   position: fixed;
    width: 600px;
    height: 100%;
    top: 0;
-   right: -600px;
-   box-shadow: 0 0 15px rgb(128 128 128 / 50%);
+   right: -615px;
+   box-shadow: 0 0 8px rgb(128 128 128 / 10%);
    background-color: var(--background-right-aside-color);
    color: var(--text-color);
    transition: 0.3s;
-
+   z-index: 100;
    &-active {
       right: 0;
    }

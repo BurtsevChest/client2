@@ -1,4 +1,4 @@
-@screem-md: 1024px;
+@screen-md: 1024px;
 @screen-xm: 800px;
 @screen-sm: 400px;
 
@@ -8,7 +8,7 @@
    }
 
    .flex-col-md-@{i} {
-    @media (max-width: @screem-md) {
+    @media (max-width: @screen-md) {
       width: ((@i*100%) / @n);
     }
   }
@@ -276,4 +276,4 @@
  }
  
  .generateStandartColumns(12); //сетка 12ти-колоночная
- .generateStandartGutters(40); //отступы сгенерируются от 0 до 40(только четные)
+ .generateStandartGutters(80); //отступы сгенерируются от 0 до 40(только четные)

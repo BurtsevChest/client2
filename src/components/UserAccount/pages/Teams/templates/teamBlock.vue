@@ -1,6 +1,6 @@
 <template>
-   <div @click.stop="toTeam" :style="{'background-color': team.backgroundColor}" class="flex a-items-center flex-center teemBlock radius-block box-shadow p-16 user_account-h3">
-      <span :style="{'color': team.color}">
+   <div @click.stop="toTeam" class="flex a-items-center flex-center teemBlock background-grey radius-block box-shadow p-16 user_account-h3">
+      <span class="white-color">
          {{ team.name }}
       </span>
    </div>
@@ -26,7 +26,6 @@ export default {
 
 <style lang="less">
 .teemBlock {
-   background-color: white;
    height: 250px;
    width: 250px;
    text-align: center;

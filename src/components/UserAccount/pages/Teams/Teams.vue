@@ -1,6 +1,6 @@
 <template>
    <div class="Teams">
-      <div class="Teams-header flex box-shadow pt-12 pv-10">
+      <div class="Teams-header background-grey flex box-shadow pt-12 pv-10">
          <div class="flex flex-col-8">
             <div class="flex-col flex a-items-center">
             <button @click="openAddTeamView" class="Teams-addTask-btn flex flex-center a-items-center">
@@ -11,15 +11,17 @@
                <SearchField @clickSearchEnter="filterOnName" @clickSearch="filterOnName" @clearSearch="clearFilterName"/>
             </div>
             <div class="flex flex-col a-items-center">
-               <PopupBtn v-model:show="showPopup" :hideBtn=true>
+               <PopupBtn v-model:show="showPopup" :hideBtn='true' :positionStyle="'Teams-filterBtn-popup'">
                   <template v-slot:popupBtn>
-                     <div class="box-shadow ph-6 pv-16 radius-block pointer">
+                     <div class="background-grey white-color ph-6 pv-16 radius-block pointer">
                         {{ filterSootvet[activeTeamsFilterRule] }}
                      </div>
                   </template>
                   <template v-slot:popupTemplate>
-                     <div @click="setFilter(filter.text)" v-for="filter in filtres" v-bind:key="filter" class="box-shadow-hover ph-6 pv-16 radius-block pointer mb-8">
-                        {{ filter.text }}
+                     <div class="Teams-filtres-popup p-10">
+                        <div @click="setFilter(filter.text)" v-for="filter in filtres" v-bind:key="filter" class="Teams-filtres-popup-item ph-6 pv-16 radius-block pointer mb-8">
+                           {{ filter.text }}
+                        </div>
                      </div>
                   </template>
                </PopupBtn>
@@ -107,11 +109,10 @@ export default {
 
 <style lang="less">
 .Teams {
-   background-color: #f1f5f9;
+   background-color: var(--background-color-wrapper);
    height: 100vh;
 
    &-addTask-btn {
-      color: black;
       cursor: pointer;
       width: 40px;
       height: 40px;
@@ -123,21 +124,38 @@ export default {
       }
    }
 
+   &-filterBtn {
+      &-popup {
+         top: calc(100% + 15px);
+      }
+   }
+
    &-comandlist {
       height: 100%;
       
    }
 
    &-header {
-      background: white;
       position: fixed;
       width: 100%;
       z-index: 1;
+      background-color: var(--background-color);
+      color: var(--text-color);
    }
 
    &-maincontent {
       height: 100%;
       padding-top: 64px;
+   }
+
+   &-filtres-popup {
+      background-color: var(--background-color);
+
+      &-item {
+         &:hover {
+            background-color: var(--text-block-hover);
+         }
+      }
    }
 }
 </style>

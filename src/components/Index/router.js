@@ -1,7 +1,7 @@
 export default [
    {
-      path: '/main',
-      component: () => import('@/components/Index/pages/Main/Main.vue')
+      path: '/',
+      component: () => import('@/components/Index/pages/Landing/Landing.vue')
    },
    {
       path: '/register',
@@ -9,7 +9,7 @@ export default [
    },
    {
       path: '/landing',
-      component: () => import('@/components/Index/pages/Landing/Landing.vue'),
+      component: () => import('@/components/Index/pages/Main/Main.vue'),
    },
    {
       path: '/:pathMatch(.*)*',

@@ -1,5 +1,5 @@
 export default {
-   '/main': {
+   '/': {
       titlePage: 'Project Manager',
       seo: {
          title: 'Project Manager',
@@ -10,7 +10,7 @@ export default {
       titlePage: 'Регистрация',
    },
    '/landing': {
-      titlePage: 'Регистрация',
+      titlePage: 'landing',
       seo: {
          title: 'MySuperLanding',
          description: 'MySuperLanding desc'

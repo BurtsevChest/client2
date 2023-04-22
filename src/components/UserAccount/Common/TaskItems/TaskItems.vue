@@ -1,15 +1,19 @@
 <template>
    <div class="flex flex-noGutter flex-column">
-      <TaskItem
-         v-for="item in tasks"
-         :task="item"
-         v-bind:key="item.task_id"
-         @openTask="openTask"
-         :itemClass="itemClass"
-         :descClass="descClass"
-         :titleClass="titleClass"
-         :dateClass="dateClass"
-      />
+      <ScrollContainerNew :hideScrollBar="true">
+         <template v-slot:content>
+            <TaskItem
+               v-for="item in tasks"
+               :task="item"
+               v-bind:key="item.task_id"
+               @openTask="openTask"
+               :itemClass="itemClass"
+               :descClass="descClass"
+               :titleClass="titleClass"
+               :dateClass="dateClass"
+            />
+         </template>
+      </ScrollContainerNew>
    </div>
 </template>
 <script>

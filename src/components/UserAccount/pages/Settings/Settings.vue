@@ -1,7 +1,7 @@
 <template>
    <div class="Settings p-20">
       <h2 class="user_account-h2 pb-16">{{ $t('user_account_settings_title') }}</h2>
-      <h3 class="user_account-h3 pb-8">{{ $t('user_account_settings_themes') }}</h3>
+      <!-- <h3 class="user_account-h3 pb-8">{{ $t('user_account_settings_themes') }}</h3>
       <div class="Settings-themesWrapper">
          <div class="flex">
             <div class="flex-col">
@@ -15,7 +15,7 @@
                </div>
             </div>
          </div>
-      </div>
+      </div> -->
       <h3 class="user_account-h3 pb-8">{{ $t('user_account_settings_languages') }}</h3>
       <div class="flex">
          <div v-for="item in languages" v-bind:key="item.locale" class="flex-col">
@@ -58,11 +58,7 @@ export default {
       }
    },
    mounted() {
-      if(localStorage.theme) {
-         this.activeTheme = localStorage.theme
-      } else {
-         this.activeTheme = 'light'
-      }
+      this.activeTheme = localStorage?.theme || 'light';
    }
 }
 </script>
