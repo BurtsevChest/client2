@@ -92,8 +92,9 @@ export default {
             for(var key in state.filterRules) {
                // Фильтр по дате
                if(state.filterRules.date_of_completion != undefined && key != undefined) {
-                  var date = new Date(item.date_of_completion);
-                  if(state.filterRules.date_of_completion < date) {
+                  const date = new Date(item.date_of_completion).getTime();
+                  const filterDate = new Date(state.filterRules.date_of_completion).getTime();
+                  if(filterDate <= date) {
                      return false;
                   }
                }

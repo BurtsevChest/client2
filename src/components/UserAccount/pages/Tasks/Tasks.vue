@@ -263,7 +263,7 @@ export default {
 
       &-position {
          top: 0;
-         left: 0;
+         left: -18px;
       }
 
       &-item {

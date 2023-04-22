@@ -10,6 +10,7 @@
          </div>
       </div>
       <div class="empty_flex"></div>
+      <div v-if="new Date(task.date_of_completion).getTime() < new Date().getTime()" class="error">Просрочено</div>
       <div class="pl-16" :class="dateClass">
          {{ setDate(task.date_of_completion) }}
       </div>

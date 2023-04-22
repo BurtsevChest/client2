@@ -5,6 +5,7 @@ import ModalDialog from '@/components/Common/ModalDialog/ModalDialog.vue'
 import ScrollContainer from '@/components/Common/ScrollContainer/ScrollContainer.vue'
 import ListItems from '@/components/Common/ListItems/ListItems.vue'
 import ScrollContainerNew from '@/components/Common/ScrollContainerNew/ScrollContainerNew.vue'
+import control from '@/components/Common/control/control.vue'
 
 export default [
    SelectUser,
@@ -13,5 +14,6 @@ export default [
    ModalDialog,
    ScrollContainer,
    ListItems,
-   ScrollContainerNew
+   ScrollContainerNew,
+   control
 ]
