@@ -1,7 +1,7 @@
 <template>
-   <div class="AddTaskView radius-block p-20 p-sm-10">
-      <h2 class="user_account-h2 text-center pb-8">{{ $t('user_account_tasks_add_task') }}</h2>
-      <div class="flex pb-10">
+   <div class="AddTaskView box-shadow radius-block p-20 p-sm-10">
+      <h2 class="user_account-h2 pb-8">{{ options.reglament.name }}</h2>
+      <div class="flex-container pb-10">
          <div class="flex-col flex-col-6 flex-col-sm-12 relative">
             <PopupBtn :positionStyle="'AddTaskView-personView'" v-model:show="showUserView" :hideBtn=true>
                <template v-slot:popupBtn>
@@ -48,11 +48,6 @@
             <p class="error AddTaskView-error_position" v-if="errorParams.date_of_completion">{{ $t('user_account_tasks_add_deadline_error') }}</p>
          </div>
          <div class="flex-col flex-col-12 relative">
-            <h3 class="user_account-h3 pb-8">{{ $t('user_account_tasks_add_task_title') }}</h3>
-            <input type="text" class="input" v-model.trim="taskParams.title">
-            <p class="error AddTaskView-error_position" v-if="errorParams.title">{{ $t('user_account_tasks_add_task_title_error') }}</p>
-         </div>
-         <div class="flex-col flex-col-12 relative">
             <h3 class="user_account-h3 pb-8">{{ $t('user_account_tasks_add_desc') }}</h3>
             <textarea class="textarea" v-model.trim="taskParams.description" style="resize: none; " name="" id="" cols="30" rows="10"></textarea>
             <p class="error AddTaskView-error_position" v-if="errorParams.description">{{ $t('user_account_tasks_add_desc_error') }}</p>
@@ -93,7 +88,7 @@ export default {
          date: dateToNumbers(new Date()),
          user: [],
          taskParams: {
-            title: "",
+            title: this.options.reglament.name,
             description: "",
             creator_id: getUser().user_id,
             responsible_id: '',
@@ -155,6 +150,7 @@ export default {
          if(this.options?.task_id) {
             this.taskParams.parent_id = this.options.task_id;
          }
+         this.taskParams.title = this.options.reglament.name
       }
    }, 
    beforeMount() {
@@ -166,7 +162,8 @@ export default {
 <style lang="less">
 @wrapper-width: 1000px;
 .AddTaskView {
-   background: white;
+   background: var(--background-color);
+   color: var(--text-color);
    width: extract(@wrapper-width, 1);
 
    @media (max-width: 1000px) {

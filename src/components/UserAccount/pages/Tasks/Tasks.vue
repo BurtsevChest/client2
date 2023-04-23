@@ -11,7 +11,7 @@
                </template>
                <template v-slot:popupTemplate>
                   <div class="Tasks-reglament-popup ph-8 pv-10 fit-content radius-block box-shadow">
-                     <div v-for="item in taskReglaments" v-bind:key="item.name"  @click="openAddTaskView" class="Tasks-reglament-popup-item pointer radius-block ph-6 pv-10">
+                     <div v-for="item in taskReglaments" v-bind:key="item.name"  @click="openAddTaskView(item)" class="Tasks-reglament-popup-item pointer radius-block ph-6 pv-10">
                         {{ item.name }}
                      </div>
                   </div>
@@ -126,9 +126,14 @@ export default {
       OpenTask(task) {
          openTask(task)
       },
-      openAddTaskView() {
+      openAddTaskView(reglament) {
          this.reglamentDialog = false;
-         openDialog({template: 'components/Common/modalView/templates/AddTaskView.vue'});
+         openDialog({
+            template: 'components/Common/modalView/templates/AddTaskView.vue',
+            options: {
+               reglament
+            }
+         });
       },
       setTab(name) {
          this.activeTab = name;

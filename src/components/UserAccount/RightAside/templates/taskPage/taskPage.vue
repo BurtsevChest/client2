@@ -21,14 +21,25 @@
       <h2 class="user_account-h2 pb-16">{{ options.task.title }}</h2>
       <p class="pb-32">{{ options.task.description }}</p>
       <div class="flex">
-        <div class="flex-col">
-          <div @click="openAddTaskView(options.task.task_id)" class="flex a-items-center pointer">
-              <span class="material-icons">
-                 task
-              </span>
-            <p class="pl-4 Task-tabs">{{ $t('user_account_tasks_opentask_subtask') }}</p>
-          </div>
-        </div>
+         <PopupBtn v-model:show="reglamentDialog" :positionStyle="'Task-reglament-popup-position'" :hideBtn=true>
+            <template v-slot:popupBtn>
+               <div class="flex-col">
+                  <div class="flex a-items-center pointer">
+                     <span class="material-icons">
+                        task
+                     </span>
+                     <p class="pl-4 Task-tabs">{{ $t('user_account_tasks_opentask_subtask') }}</p>
+                  </div>
+               </div>
+            </template>
+            <template v-slot:popupTemplate>
+               <div class="Task-reglament-popup ph-8 pv-10 fit-content radius-block box-shadow">
+                  <div v-for="item in taskReglaments" v-bind:key="item.name"  @click="openAddTaskView(item)" class="Task-reglament-popup-item pointer radius-block ph-6 pv-10">
+                     {{ item.name }}
+                  </div>
+               </div>
+            </template>
+         </PopupBtn>
         <div class="flex-col">
           <div class="flex a-items-center pointer">
             <span class="material-icons">attach_file</span>
@@ -79,15 +90,18 @@ export default {
             title: this.options.task.title,
             description: this.options.task.description
          },
-         task: JSON.parse(JSON.stringify(this.options.task))
+         task: JSON.parse(JSON.stringify(this.options.task)),
+         reglamentDialog: false
       }
    },
    methods: {
-      openAddTaskView(task_id) {
+      openAddTaskView(reglament) {
+         this.reglamentDialog = false;
          openDialog({
             template: 'components/Common/modalView/templates/AddTaskView.vue',
             options: {
-               task_id
+               reglament,
+               task_id: this.options.task.task_id
             }
          })
       },
@@ -119,7 +133,7 @@ export default {
          }
       }
    },
-   computed: mapGetters(['parentTask']),
+   computed: mapGetters(['parentTask','taskReglaments']),
    beforeMount() {
       if(this.options.task.creator_id === getUser().user_id) {
          this.isCreator = true
@@ -166,6 +180,28 @@ export default {
       transition: 0.3s;
       &:hover {
          background-color: var(--text-block-hover);
+      }
+   }
+
+   &-reglament-popup {
+      background-color: var(--background-color);
+      color: var(--text-color);
+      width: max-content;
+
+      &-position {
+         top: 0;
+         left: -18px;
+      }
+
+      &-item {
+         margin-bottom: 8px;
+         &:last-child {
+            margin-bottom: 0;
+         }
+         &:hover {
+            transition: 0.2s;
+            background-color: var(--text-block-hover);
+         }
       }
    }
 }
