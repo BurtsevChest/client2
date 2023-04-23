@@ -1,6 +1,6 @@
 <template>
    <div v-if="errorLoad" style="color: red;">
-      Компонент не был загружен. Возможно указан неверный путь или компонента не существует.
+     {{ errorLoad }}
    </div>
    <component v-else :is="templateName" v-bind:options="options"/>
 </template>
@@ -37,8 +37,8 @@ export default {
                this.templateName = resolve.default;
                this.errorLoad = false
             })
-            .catch(() => {
-               this.errorLoad = true
+            .catch((err) => {
+               this.errorLoad = err
             })
       }
    },
