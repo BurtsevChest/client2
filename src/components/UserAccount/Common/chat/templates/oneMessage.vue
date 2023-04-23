@@ -84,36 +84,36 @@ export default {
             color: grey;
          }
 
-         &::before {
-            content: '';
-            display: block;
-            position: absolute;
-            width: 15px;
-            height: 15px;
-            background: inherit;
-            /* z-index: 0; */
-            z-index: -1;
-            right: -2px;
-            transform: rotate(17deg);
-         }
+         // &::before {
+         //    content: '';
+         //    display: block;
+         //    position: absolute;
+         //    width: 15px;
+         //    height: 15px;
+         //    background: inherit;
+         //    /* z-index: 0; */
+         //    z-index: -1;
+         //    right: -2px;
+         //    transform: rotate(17deg);
+         // }
 
-         &-right {
-            position: relative;
-            z-index: 6;
+         // &-right {
+         //    position: relative;
+         //    z-index: 6;
 
-            &::before {
-               content: '';
-               display: block;
-               position: absolute;
-               width: 15px;
-               height: 15px;
-               background: inherit;
-               /* z-index: 0; */
-               z-index: -1;
-               left: -2px;
-               transform: rotate(-17deg);
-            }
-         }
+         //    &::before {
+         //       content: '';
+         //       display: block;
+         //       position: absolute;
+         //       width: 15px;
+         //       height: 15px;
+         //       background: inherit;
+         //       /* z-index: 0; */
+         //       z-index: -1;
+         //       left: -2px;
+         //       transform: rotate(-17deg);
+         //    }
+         // }
       }
    }
 </style>

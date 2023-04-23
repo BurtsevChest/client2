@@ -1,20 +1,18 @@
 <template>
-   <div class="flex flex-noGutter flex-column">
-      <ScrollContainerNew :hideScrollBar="true">
-         <template v-slot:content>
-            <TaskItem
-               v-for="item in tasks"
-               :task="item"
-               v-bind:key="item.task_id"
-               @openTask="openTask"
-               :itemClass="itemClass"
-               :descClass="descClass"
-               :titleClass="titleClass"
-               :dateClass="dateClass"
-            />
-         </template>
-      </ScrollContainerNew>
-   </div>
+   <ScrollContainerNew :hideScrollBar="true">
+      <template v-slot:content>
+         <TaskItem
+            v-for="item in tasks"
+            :task="item"
+            v-bind:key="item.task_id"
+            @openTask="openTask"
+            :itemClass="itemClass"
+            :descClass="descClass"
+            :titleClass="titleClass"
+            :dateClass="dateClass"
+         />
+      </template>
+   </ScrollContainerNew>
 </template>
 <script>
 import TaskItem from '@/components/UserAccount/Common/TaskItems/templates/taskItem.vue';

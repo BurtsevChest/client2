@@ -36,16 +36,15 @@
             </div>
          </div>
       </div>
-      <div class="flex">
+      <div class="flex height-100">
          <div class="flex-col pt-16 flex-col-9 flex flex-noGutter flex-column Tasks-itemsWrapper">
-            <div v-if="returnTasks.length > 0" class="flex flex-noGutter flex-column">
-               <TaskItems
-                  :Tasks = "returnTasks"
-                  @onClickTask = OpenTask
-                  :itemClass="'Tasks-item'"
-                  :descClass="'standart-text-grey'"
-               />
-            </div>
+            <TaskItems
+               v-if="returnTasks.length > 0"
+               :Tasks = "returnTasks"
+               @onClickTask = OpenTask
+               :itemClass="'Tasks-item'"
+               :descClass="'standart-text-grey'"
+            />
             <p v-else class="standart-text-grey">Задач нет</p>
          </div>
          <div class="flex-col flex-col-3 pt-16 flex flex-column">
@@ -194,6 +193,7 @@ export default {
    }
 
    &-itemsWrapper {
+      height: 100%;
    }
 
    &-item {
