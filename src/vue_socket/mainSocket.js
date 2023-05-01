@@ -10,6 +10,7 @@ socket.onAny((event, ...args) => {
  });
 
  socket.on('notificatonDefault', (data) => {
+  console.log(data);
   store.commit('showNotice', data);
  })
 
