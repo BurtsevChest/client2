@@ -53,6 +53,7 @@ import { openDialog } from '@/components/Common/modalView';
 import { downloadImageUser } from '@/components/Common/helpers/imageLoader';
 import { api_domain, protocol } from '@/components/Common/helpers/host';
 import { getUser } from '@/components/Common/helpers/user';
+import user from '@/api/user';
 
 export default {
    // eslint-disable-next-line
@@ -67,7 +68,8 @@ export default {
       clearLocalStorage() {
          localStorage.removeItem('accessToken');
          localStorage.removeItem('user');
-         window.location.href = '/'
+         user.logout();
+         window.location.href = '/';
       },
       openPro() {
          openDialog({

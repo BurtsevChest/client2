@@ -145,10 +145,9 @@ export default {
 @offset-top: 87px;
 
 .LandingPage {
-   padding-top: extract(@offset-top, 1);
    
    &-banner {
-      height: calc(100vh - 87px);
+      height: 100vh;
       width: 100%;
       background: url('@/components/Index/pages/Landing/resources/images/landing_banner.png') no-repeat;
       background-size: cover;

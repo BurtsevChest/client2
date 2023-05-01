@@ -10,8 +10,8 @@
          </div>
       </div>
       <div class="empty_flex"></div>
-      <div v-if="new Date(task.date_of_completion).getTime() < new Date().getTime()" class="error">Просрочено</div>
-      <div class="pl-16" :class="dateClass">
+      <div v-if="new Date(task.date_of_completion).getTime() < new Date().getTime() && !hideStatus" class="error">Просрочено</div>
+      <div v-if="!hideDate" class="pl-16" :class="dateClass">
          {{ setDate(task.date_of_completion) }}
       </div>
    </div>
@@ -40,6 +40,12 @@ export default {
       },
       dateClass: {
          type: String
+      },
+      hideDate: {
+         type: Boolean
+      },
+      hideStatus: {
+         type: Boolean
       }
    },
    data() {
@@ -56,7 +62,11 @@ export default {
       }
    },
    mounted() {
-      downloadImageUser.call(this, 'userAvatar')
+      if(this.task.creator_id === 523) {
+         this.userAvatar = require('@/components/UserAccount/pages/Home/resources/images/users/statham.png')
+      } else {
+         downloadImageUser.call(this, 'userAvatar')
+      }
    }
 }
 </script>
@@ -64,10 +74,6 @@ export default {
 <style lang="less">
 .TaskItem {
    transition: 0.2s;
-
-   &-title {
-      font-size: 18px;
-   }
 
    &-desc {
       text-overflow: ellipsis;

@@ -82,7 +82,6 @@ export default {
 
    &-template {
       position: absolute;
-      min-width: 200px;
       z-index: 11111;
 
       &-active {

@@ -27,7 +27,6 @@ export default {
 <style lang="less">
 .teemBlock {
    height: 250px;
-   width: 250px;
    text-align: center;
    cursor: pointer;
    transition: 0.2s;

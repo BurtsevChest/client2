@@ -5,6 +5,7 @@ import user from './modules/user'
 import tasks from './modules/tasks'
 import header from './modules/header'
 import teams from './modules/teams'
+import notification from './modules/notification'
 
 export default new Vuex.Store({
    modules: {
@@ -13,6 +14,7 @@ export default new Vuex.Store({
       user,
       tasks,
       header,
-      teams
+      teams,
+      notification
    }
 })

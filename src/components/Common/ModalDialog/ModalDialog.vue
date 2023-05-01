@@ -11,6 +11,7 @@
             :is="dialogTemplate"
             class="pb-10 pv-10"
          />
+         <slot v-if="!template" name="content" class="pb-10 pv-10"></slot>
       </div>
    </div>
 </template>
@@ -47,12 +48,6 @@ export default {
             .then((resolvedTemplate) => {
                this.dialogTemplate = resolvedTemplate.default
             })
-            .then(() => {
-               this.$nextTick(() => {
-                  this.$refs.modalHeader.addEventListener("mousedown", this.dragModal);
-                  document.addEventListener("mouseup", this.stopDrag);
-               });
-            })
             .catch(()=> {
                this.close()
             })
@@ -85,7 +80,11 @@ export default {
    beforeMount() {
       if(this.template) {
          this.loadTemplate(this.template);
-      }
+      } 
+   },
+   mounted() {
+      this.$refs.modalHeader.addEventListener("mousedown", this.dragModal);
+      document.addEventListener("mouseup", this.stopDrag);
    }
 }
 </script>

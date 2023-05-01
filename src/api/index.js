@@ -1,7 +1,7 @@
 import axios from "axios";
 import { api_domain, protocol } from '@/components/Common/helpers/host';
 
-const token = localStorage.accessToken || null;
+const token = localStorage.accessToken;
 
 const AxiosRequest = axios.create({
    baseURL: `${protocol}${api_domain}/apiV0/`,
@@ -13,7 +13,6 @@ const AxiosRequest = axios.create({
 });
 
 AxiosRequest.interceptors.request.use((config) => {
-   config.headers.Authorization = `Bearer ${token}`
    return config;
 })
 
@@ -22,20 +21,17 @@ AxiosRequest.interceptors.response.use((response) => {
 }, async (error) => {
    const originalRequest = error?.config;
    try {
-      if(error.response.status === 401 && error?.config && !error?.config?._isRetry) {
+      if(error.response.status === 401 && !originalRequest._isRetry) {
          originalRequest._isRetry = true;
-
-         const response = await axios.get(`${protocol}${api_domain}/apiV0/refresh`, { withCredentials: true })
-         
+         const response = await axios.get(`${protocol}${api_domain}/apiV0/refresh`, { withCredentials: true });
          localStorage.setItem('accessToken',  response.data.accessToken);
-         originalRequest.headers = { ...originalRequest.headers };
-         originalRequest.headers["Authorization"] = `Bearer ${response.data.access_token}`;
+         originalRequest.headers['Authorization'] = `Bearer ${response.data.accessToken}`;
+
          return AxiosRequest.request(originalRequest);
       }
    } catch (e) {
-      // window.location.href = '/';
-      // localStorage.clear();
-      console.log('asdasd');
+      window.location.href = '/';
+      localStorage.clear();
    }
 })
 

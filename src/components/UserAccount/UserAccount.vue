@@ -4,7 +4,7 @@
     <Sidebar/>
 
     <!-- Content -->
-    <main>
+    <main class="UserAccount-main">
       <router-view/>
     </main>
 
@@ -27,6 +27,12 @@ export default {
 </script>
 
 <style lang="less">
-   @import '@/components/UserAccount/Common/styles/styles';
+@import '@/components/UserAccount/Common/styles/styles';
 
+.UserAccount {
+   &-main {
+      background-color: var(--background-color-wrapper);
+      color: var(--text-color);
+   }
+}
 </style>

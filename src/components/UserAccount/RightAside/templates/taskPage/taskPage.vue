@@ -7,20 +7,37 @@
           </p>
         </div>
         <div class="empty_flex"></div>
-        <div class="Task-edit pv-12 radius-block flex flex-center pointer a-items-center">
-          <span class="material-icons">edit</span>
-          <p class="pl-8">Изменить</p>
+        <div v-if="isResponsible" class="flex a-items-center">
+         <PopupBtn :positionStyle="''" :hideBtn=true>
+            <template v-slot:popupBtn>
+               <p>Статус таска</p>
+            </template>
+            <template v-slot:popupTemplate>
+               <div class="Task-reglament-popup ph-8 pv-10 fit-content radius-block box-shadow">
+                  <div class="Task-reglament-popup-item pointer radius-block ph-6 pv-10">выполнить</div>
+                  <div class="Task-reglament-popup-item pointer radius-block ph-6 pv-10">уточнить</div>
+                  <div class="Task-reglament-popup-item pointer radius-block ph-6 pv-10">переназначить</div>
+               </div>
+            </template>
+         </PopupBtn>
+        </div>
+        <div class="flex a-items-center pl-12">
+         <span class="material-icons pointer">edit</span>
+        </div>
+        <div class="flex a-items-center pl-12">
+         <span v-if="!chatStatus.open" @click="openChat" class="material-icons pointer">chat</span>
+         <span v-else @click="openChat" class="material-icons pointer">close</span>
         </div>
         <button class="Task-closeBtn ml-16" @click="close">
           <span class="material-icons flex flex-center a-items-center">close</span>
         </button>
       </div>
+      <!-- <h2 class="user_account-h2 pb-16 pointer">{{ options.task.title }}</h2>
       <div class="Task-responsible">
         <p class="standart-text-grey">Исполнитель</p>
       </div>
-      <h2 class="user_account-h2 pb-16">{{ options.task.title }}</h2>
-      <p class="pb-32">{{ options.task.description }}</p>
-      <div class="flex">
+      <p class="pb-32">{{ options.task.description }}</p> -->
+      <!-- <div class="flex">
          <PopupBtn v-model:show="reglamentDialog" :positionStyle="'Task-reglament-popup-position'" :hideBtn=true>
             <template v-slot:popupBtn>
                <div class="flex-col">
@@ -52,10 +69,11 @@
             <p class="pl-4 Task-tabs">{{ chatStatus.tabText }}</p>
           </div>
         </div>
-      </div>
+      </div> -->
       <component
           :is="tabTamplate"
-          :task_id = "this.options.task.task_id"
+          :task="options.task"
+          :task_id = "options.task.task_id"
           @openTask="OpenTask"
       />
     </div>
@@ -86,6 +104,7 @@ export default {
             tabText: this.$i18n.t('user_account_tasks_opentask_discuss')
          },
          isCreator: false,
+         isResponsible: false,
          updateTaskParams: {
             title: this.options.task.title,
             description: this.options.task.description
@@ -137,6 +156,9 @@ export default {
    beforeMount() {
       if(this.options.task.creator_id === getUser().user_id) {
          this.isCreator = true
+      }
+      if(this.options.task.responsible_id === getUser().user_id) {
+         this.isResponsible = true
       }
    },
    beforeUnmount() {

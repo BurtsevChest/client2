@@ -9,6 +9,10 @@ class User {
       return await AxiosRequest.post('loginCheck');
    }
 
+   async logout() {
+      return await AxiosRequest.post('logout');
+   }
+
    async getCommandUsers() {
       return await AxiosRequest.get('userOnTeam/1');
    }

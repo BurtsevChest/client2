@@ -1,6 +1,7 @@
 import { io } from "socket.io-client"
+import { protocol, chatApi } from "@/components/Common/helpers/host";
 
-const URL = "http://127.0.0.1:3000";
+const URL = `${protocol}${chatApi}`;
 const socket = io(URL, {transports: ['websocket'], query: {"accessToken": localStorage.accessToken} })
 
 socket.onAny((event, ...args) => {

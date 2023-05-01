@@ -70,7 +70,7 @@ import { getUser } from "@/components/Common/helpers/user";
 export default {
    // eslint-disable-next-line
    name: "",
-   computed: mapGetters(["getModalViewConfig", 'getUsersCommandList']),
+   computed: mapGetters(['getUsersCommandList']),
    props: {
       options: {
          type: Object

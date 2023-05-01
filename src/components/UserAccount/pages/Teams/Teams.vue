@@ -34,7 +34,7 @@
             <template v-slot:content>
                <div class="Teams-comandlist p-20">
                   <div class="flex-container">
-                     <div v-for="item in filteredTeamList" v-bind:key="item" class="flex-col">
+                     <div v-for="item in filteredTeamList" v-bind:key="item" class="flex-col flex-col-3">
                         <teamBlock
                            :team="item"
                         />
@@ -150,6 +150,7 @@ export default {
 
    &-filtres-popup {
       background-color: var(--background-color);
+      width: max-content;
 
       &-item {
          &:hover {

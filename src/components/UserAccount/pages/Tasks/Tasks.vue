@@ -36,7 +36,7 @@
             </div>
          </div>
       </div>
-      <div class="flex height-100">
+      <div class="flex-container height-100">
          <div class="flex-col pt-16 flex-col-9 flex flex-noGutter flex-column Tasks-itemsWrapper">
             <TaskItems
                v-if="returnTasks.length > 0"

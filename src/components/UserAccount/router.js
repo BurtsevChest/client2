@@ -20,6 +20,10 @@ export default [
       component: () => import('@/components/UserAccount/pages/Boards/Boards.vue'),
    },
    {
+      path: '/user_account/board/:boardId',
+      component: () => import('@/components/UserAccount/pages/Boards/templates/boardPage.vue'),
+   },
+   {
       path: '/user_account/teams',
       component: () => import('@/components/UserAccount/pages/Teams/Teams.vue'),
    },

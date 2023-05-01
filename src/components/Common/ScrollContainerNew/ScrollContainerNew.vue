@@ -2,7 +2,7 @@
    <div class="ScrollContainerNew">
       <div ref="ScrollContainerNew" class="ScrollContainerNew-content flex flex-column">
          <div ref="wrapper" :style="{'height': contentHeight + 'px'}" class="ScrollContainerNew-scroll">
-            <div ref="scrollContent">
+            <div class="height-100" ref="scrollContent">
                <slot  name="content"></slot>
             </div>
          </div>

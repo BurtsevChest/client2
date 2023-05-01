@@ -5,7 +5,7 @@
             <div class="flex flex-space flex-noGutter">
                <div class="flex-col flex a-items-center">
                   <router-link to="/">
-                     <div class="Header-logo">
+                     <div class="Header-logo" :class="{ 'Header-logo scroll' : scrollPage }">
                         ProjectManager
                      </div>
                   </router-link>
@@ -31,7 +31,7 @@
                   </PopupBtn>
                   <a class="pointer Header-signUp ml-18" @click="signUp">{{ $t('index_header_enter_btn') }}</a>
                   <div class="flex a-items-center pl-40">
-                     <div class="Header-burger pointer" @click="openMenu" :class="{ 'Header-burger-active' : HeaderStatus }">
+                     <div class="Header-burger pointer" @click="openMenu" :class="{ 'Header-burger-active' : HeaderStatus, 'Header-burger scroll' : scrollPage }">
                         <span></span>
                      </div>
                   </div>
@@ -138,15 +138,6 @@ export default {
       }
    },
    computed: mapGetters(['HeaderStatus']),
-   beforeCreate() {
-      window.addEventListener("scroll", () => {
-         if(window.scrollY > 0) {
-            this.scrollPage = true
-         }else {
-            this.scrollPage = false
-         }
-      });
-   },
    beforeMount() {
       this.getFlag()
    }
@@ -164,6 +155,11 @@ export default {
       transition: 0.3s;
       color: white;
       background: #181818;
+      transition: 0.2s;
+
+      &.scroll {
+         padding: 12px 0 12px 0;
+      }
    }
 
    &-dropMenu {
@@ -192,6 +188,11 @@ export default {
       @media (max-width: 400px) {
          font-size: 18px;
       }
+      transition: 0.2s;
+
+      &.scroll {
+         font-size: 20px;
+      }
    }
 
    &-signUp {
@@ -208,6 +209,12 @@ export default {
       width: 35px;
       height: 35px;
       position: relative;
+      transition: 0.2s;
+
+      &.scroll {
+         width: 30px;
+         height: 30px;
+      }
 
       &>span, &::after, &::before  {
          position: absolute;
@@ -270,6 +277,7 @@ export default {
 
       &-template {
          background-color: var(--background-color);
+         width: max-content;
       }
 
       &-item {

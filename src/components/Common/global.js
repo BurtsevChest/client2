@@ -6,6 +6,7 @@ import ScrollContainer from '@/components/Common/ScrollContainer/ScrollContainer
 import ListItems from '@/components/Common/ListItems/ListItems.vue'
 import ScrollContainerNew from '@/components/Common/ScrollContainerNew/ScrollContainerNew.vue'
 import control from '@/components/Common/control/control.vue'
+import userImage from '@/components/Common/userImage/userImage.vue'
 
 export default [
    SelectUser,
@@ -15,5 +16,6 @@ export default [
    ScrollContainer,
    ListItems,
    ScrollContainerNew,
-   control
+   control,
+   userImage
 ]
