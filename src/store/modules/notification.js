@@ -23,6 +23,9 @@ export default {
          switch(event) {
             case 'SET_TASK':
                if(window.location.pathname != TASKS_URL) {
+                  const audio = new Audio(require(`@/${NOTICE_SOUND}`));
+                  audio.volume = 0.2;
+                  audio.play();
                   state.data = data;
                   state.template = taskNotice;
                   state.show = true;
