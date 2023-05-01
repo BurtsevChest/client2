@@ -10,7 +10,7 @@
                   </button>
                </template>
                <template v-slot:popupTemplate>
-                  <div class="Tasks-reglament-popup ph-8 pv-10 fit-content radius-block box-shadow">
+                  <div class="Tasks-reglament-popup ph-8 pv-10 radius-block box-shadow">
                      <div v-for="item in taskReglaments" v-bind:key="item.name"  @click="openAddTaskView(item)" class="Tasks-reglament-popup-item pointer radius-block ph-6 pv-10">
                         {{ item.name }}
                      </div>

@@ -33,7 +33,7 @@
          <ScrollContainerNew>
             <template v-slot:content>
                <div class="Teams-comandlist p-20">
-                  <div class="flex-container">
+                  <div class="flex-container flex-wrap">
                      <div v-for="item in filteredTeamList" v-bind:key="item" class="flex-col flex-col-3">
                         <teamBlock
                            :team="item"

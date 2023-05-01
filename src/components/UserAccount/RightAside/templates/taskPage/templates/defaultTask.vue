@@ -63,7 +63,7 @@
             </span>
             <p class="pl-4 Task-tabs">{{ $t('user_account_tasks_opentask_attach') }}</p>
          </div>
-         <div class="flex-container">
+         <div class="flex-container flex-wrap">
             <div v-for="file in taskFiles" v-bind:key="file" class="flex-col flex-col-3">
                <div class="ph-8 pv-10 radius-block background-grey pointer">
                   {{file}}

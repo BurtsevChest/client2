@@ -388,7 +388,7 @@ export default {
    &-content {
       height: 100%;
       width: 100%;
-      padding-top: 80px;
+      padding-top: 80px !important;;
       padding-bottom: 20px;
    }
 

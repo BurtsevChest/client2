@@ -17,7 +17,7 @@
       </div>
       <div class="flex-col flex-col-2">
          <div class="teamPage-filtres radius-block box-shadow">
-            <div class="flex pt-10">
+            <div class="flex flex-wrap pt-10">
                <div v-for="item in filterItems" v-bind:key="item" class="flex-col flex-col-12">
                   <div @click="onClicklTab(item.nameTemplate, item.template)" v-if="activeTemplate === item.nameTemplate" class="radius-block teamPage-filtres-item active box-shadow ph-6 pv-10 pointer">
                      {{ item.name }}
