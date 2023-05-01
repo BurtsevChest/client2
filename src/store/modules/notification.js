@@ -19,14 +19,14 @@ const timeTask = {
 export default {
    actions: {},
    mutations: {
-      showNotice(state, event, data) {
-         switch(event) {
+      showNotice(state, opt) {
+         switch(opt.event) {
             case 'SET_TASK':
                if(window.location.pathname != TASKS_URL) {
                   const audio = new Audio(require(`@/${NOTICE_SOUND}`));
                   audio.volume = 0.2;
                   audio.play();
-                  state.data = data;
+                  state.data = opt.data;
                   state.template = taskNotice;
                   state.show = true;
                }
