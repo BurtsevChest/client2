@@ -24,7 +24,7 @@
                         </span>
                      </template>
                      <template v-slot:popupTemplate>
-                        <div class="boardPage-column-addPopup ph-8 pv-10 fit-content radius-block box-shadow">
+                        <div class="boardPage-column-addPopup ph-8 pv-10radius-block box-shadow">
                            <div class="boardPage-column-addPopup-item pointer radius-block ph-6 pv-10">Новая задача</div>
                            <div @click="addTask" class="boardPage-column-addPopup-item pointer radius-block ph-6 pv-10">Мои задачи</div>
                         </div>

@@ -13,7 +13,7 @@
                <p>Статус таска</p>
             </template>
             <template v-slot:popupTemplate>
-               <div class="Task-reglament-popup ph-8 pv-10 fit-content radius-block box-shadow">
+               <div class="Task-reglament-popup ph-8 pv-10radius-block box-shadow">
                   <div class="Task-reglament-popup-item pointer radius-block ph-6 pv-10">выполнить</div>
                   <div class="Task-reglament-popup-item pointer radius-block ph-6 pv-10">уточнить</div>
                   <div class="Task-reglament-popup-item pointer radius-block ph-6 pv-10">переназначить</div>
@@ -50,7 +50,7 @@
                </div>
             </template>
             <template v-slot:popupTemplate>
-               <div class="Task-reglament-popup ph-8 pv-10 fit-content radius-block box-shadow">
+               <div class="Task-reglament-popup ph-8 pv-10radius-block box-shadow">
                   <div v-for="item in taskReglaments" v-bind:key="item.name"  @click="openAddTaskView(item)" class="Task-reglament-popup-item pointer radius-block ph-6 pv-10">
                      {{ item.name }}
                   </div>

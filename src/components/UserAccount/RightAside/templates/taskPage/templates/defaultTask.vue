@@ -32,14 +32,14 @@
                </div>
             </template>
             <template v-slot:popupTemplate>
-               <div class="Task-reglament-popup ph-8 pv-10 fit-content radius-block box-shadow">
+               <div class="Task-reglament-popup ph-8 pv-10radius-block box-shadow">
                   <div v-for="item in taskReglaments" v-bind:key="item.name"  @click="openAddTaskView(item)" class="Task-reglament-popup-item pointer radius-block ph-6 pv-10">
                      {{ item.name }}
                   </div>
                </div>
             </template>
          </PopupBtn>
-         <div v-if="!taskFiles" class="flex a-items-center pointer fit-content pl-12">
+         <div v-if="!taskFiles" class="flex a-items-center pointerpl-12">
             <span class="material-icons">
                attach_file
             </span>
@@ -57,7 +57,7 @@
          />
       </div>
       <div v-if="taskFiles">
-         <div class="flex a-items-center pointer fit-content pb-12">
+         <div class="flex a-items-center pointerpb-12">
             <span class="material-icons">
                attach_file
             </span>
