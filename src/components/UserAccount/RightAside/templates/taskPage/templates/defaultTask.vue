@@ -16,7 +16,7 @@
                <img ref="responsibleAvatar" :src="responsibleAvatar">
             </div>
             <div class="pl-10">
-               <div class="pb-6">{{ task.creator_title }}</div>
+               <div class="pb-6">{{ task.responsible_title }}</div>
                <div class="">{{ task.description }}</div>
             </div>
          </div>
@@ -126,6 +126,7 @@ export default {
       },
    },
    mounted() {
+      console.log(this.task);
       downloadImageUser.call(this, 'creatorAvatar');
       downloadImageUser.call(this, 'responsibleAvatar');
    }
