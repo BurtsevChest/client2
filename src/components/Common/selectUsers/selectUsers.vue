@@ -1,15 +1,12 @@
 <template>
-   <div class="SelectUsers pt-10">
-      <div class="flex">
-         <div class="flex-col flex-col-12">
-            <SearchField :placeholder="'Найти...'"/>
-         </div>
+   <div class="SelectUsers radius-block p-10">
+      <div class="flex-container flex-wrap">
          <div v-for="user in userList" v-bind:key="user.user_id" class="SelectUsers-user-lastItem flex-col flex-col-12">
-            <div class="SelectUsers-user flex flex-noGutter a-items-center p-10 radius-block" @click="setUser(user)">
-               <div class="flex-col flex a-items-center flex-col-1">
-                  <span class="material-icons">person</span>
+            <div class="SelectUsers-user flex radius-block" @click="setUser(user)">
+               <div class="flex a-items-center flex-col-1">
+                  <userImage v-model:user_id="user.user_id"/>
                </div>
-               <div class="flex-col flex a-items-center flex-col-11">
+               <div class="flex a-items-center flex-col-11">
                   <div class="pl-8 ">
                      {{ user.name }} {{ user.last_name }}
                   </div>
@@ -50,15 +47,18 @@ export default {
 
 <style lang="less" scoped>
 .SelectUsers {
-   max-height: 300px;
    overflow: hidden;
    overflow-y: scroll;
+   width: 500px;
+   background-color: var(--background-color-wrapper);
+   box-shadow: 0 0 18px rgb(128 128 128 / 30%);
+   height: 162px;
 
    &-user {
       cursor: pointer;
       transition: 0.3s;
-      &:hover, :focus {
-         background: rgba(30, 41, 59, 0.1);
+      &:hover {
+         background-color: var(--text-block-hover);
       }
 
       &-lastItem:last-child {

@@ -52,11 +52,12 @@ body {
 }
 .vc-container {
   border: none !important;
+  border-radius: 12px;
 }
 
 .vc-pane-container {
   background-color: var(--background-color);
-  color: var(--text-color);
+  color: var(--text-color);border-radius: 12px;
 }
 
 aside {

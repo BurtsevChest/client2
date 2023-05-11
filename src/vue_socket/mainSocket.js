@@ -10,8 +10,8 @@ socket.onAny((event, ...args) => {
  });
 
  socket.on('notificationDefault', (data) => {
-  console.log(data[0]);
-  store.commit('showNotice', data[0]);
+  console.log(data);
+  store.commit('showNotice', data);
  })
 
 export default socket

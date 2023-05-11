@@ -10,7 +10,7 @@
                </div>
             </div>
          </div>
-         <span @click.stop @click="closeNotice" class="material-icons">close</span>
+         <span @click.stop @click="closeNotice(options)" class="material-icons">close</span>
       </div>
       <div class="taskNotice-body">
          {{ options.description }}
@@ -33,7 +33,7 @@ export default {
    methods: {
       ...mapMutations(['closeNotice']),
       openTask() {
-         openTask(this.options),
+         openTask(this.options, this),
          this.closeNotice();
       }
    }

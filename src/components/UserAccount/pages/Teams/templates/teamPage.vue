@@ -1,7 +1,7 @@
 <template>
 <div class="teamPage p-20">
    <div class="flex a-items-center mb-40">
-      <router-link class="teamPage-linkBackflex a-items-center" to='/user_account/teams'>
+      <router-link class="teamPage-linkBack flex a-items-center" to='/user_account/teams'>
          <span class="material-icons">home</span>
          <span class="pl-10">К командам</span>
       </router-link>

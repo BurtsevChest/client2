@@ -25,6 +25,12 @@
                </div>
             </div>
          </div>
+         <div class="">
+            <button ref="button" @click="openAsideNew" class="radius-block pl-20 background-grey ph-8 pv-10">openAside</button>
+         </div>
+         <div class="">
+            <button ref="button2" @click="openAsideFew" class="radius-block pl-20 background-grey ph-8 pv-10">openAside</button>
+         </div>
       </div>
       <div class="">
          <h2 class="user_account-h2 pb-20">{{ $t('user_account_home_skills') }}</h2>
@@ -54,6 +60,7 @@ import { downloadImageUser } from '@/components/Common/helpers/imageLoader';
 import { api_domain, protocol } from '@/components/Common/helpers/host';
 import { getUser } from '@/components/Common/helpers/user';
 import user from '@/api/user';
+import {openAside} from '@/components/UserAccount/RightAside/index.js';
 
 export default {
    // eslint-disable-next-line
@@ -74,6 +81,18 @@ export default {
       openPro() {
          openDialog({
             template: 'components/UserAccount/pages/Home/templates/proView.vue'
+         })
+      },
+      openAsideFew() {
+         openAside({
+            template: 'components/UserAccount/pages/Home/templates/asdadadasdasdproView.vue',
+            opener: this.$refs.button2,
+         })
+      },
+      openAsideNew() {
+         openAside({
+            template: 'components/UserAccount/pages/Boards/templates/addTaskRightAside.vue',
+            opener: this.$refs.button,
          })
       }
    },

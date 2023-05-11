@@ -20,7 +20,7 @@ AxiosRequest.interceptors.response.use((response) => {
    return response;
 }, async (error) => {
    const originalRequest = error?.config;
-   try {
+   if(error.response) {
       if(error.response.status === 401 && !originalRequest._isRetry) {
          originalRequest._isRetry = true;
          const response = await axios.get(`${protocol}${api_domain}/apiV0/refresh`, { withCredentials: true });
@@ -29,10 +29,8 @@ AxiosRequest.interceptors.response.use((response) => {
 
          return AxiosRequest.request(originalRequest);
       }
-   } catch (e) {
-      window.location.href = '/';
-      localStorage.clear();
    }
+   return Promise.reject(error);
 })
 
 export default AxiosRequest;

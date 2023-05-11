@@ -7,3 +7,11 @@ export function openRightAside(options) {
 export function closeRightAside() {
    store.commit('close')
 }
+
+export function openAside(options) {
+   store.commit('openAsideNew', options)
+}
+
+export function closeAsideNew(opener) {
+   store.commit('closeAsideNew', opener);
+}

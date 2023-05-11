@@ -60,6 +60,25 @@ export function dateToMonthText(date) {
    return `${day} ${month} '${year}`
 }
 
+/**
+ * 
+ * @param {*} date1 первая дата (в виде строки или экземпляра класса Date)
+ * @param {*} date2 вторая дата (в виде строки или экземпляра класса Date)
+ * @returns Возвращает разницу date1 - date2
+ */
+
+export function dayDiff(date1, date2) {
+   var newDate1 = date1;
+   var newDate2 = date2;
+   if(!(newDate2 instanceof Date)) {
+      newDate2 = new Date(date2)
+   }
+   if(!(newDate1 instanceof Date)) {
+      newDate1 = new Date(date1)
+   }
+   return Math.ceil((newDate1 - newDate2) / (1000 * 60 * 60 * 24));
+}
+
 // Дописать DateFormatter
 
 class DateFormatter {

@@ -28,7 +28,7 @@ export default {
    position: fixed;
    display: flex;
    background: rgba(0, 0, 0, 0.2);
-   z-index: 100;
+   z-index: 150;
    overflow-y: scroll;
    cursor: pointer;
 

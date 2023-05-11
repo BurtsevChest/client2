@@ -1,5 +1,5 @@
 <template>
-   <div class="ModalDialog flex flex-column" ref="modalContent" :class="{ 'ModalDialog-active' : dialogStatus, 'ModalDialog-grabbing' : grabbingStatus}">
+   <div v-if="dialogStatus" class="ModalDialog flex flex-column" ref="modalContent" :class="{'ModalDialog-grabbing' : grabbingStatus}">
       <div class="ModalDialog-content">
          <div :class="{ 'ModalDialog-header-grabbing' : grabbingStatus }" class="ModalDialog-header ph-10 pv-10 flex flex-space" ref="modalHeader">
             <div class="ModalDialog-header-title user_account-h3">{{ title }}</div>
@@ -42,6 +42,19 @@ export default {
          type: Boolean
       }
    },
+   watch: {
+      dialogStatus() {
+         if(this.dialogStatus === true) {
+            setTimeout(() => {
+               this.$refs.modalHeader.addEventListener("mousedown", this.dragModal, true);
+               document.addEventListener("mouseup", this.stopDrag, true);
+            }, 100)
+         } else {
+            this.$refs.modalHeader.removeEventListener("mousedown", this.dragModal, true);
+            document.removeEventListener("mouseup", this.stopDrag, true);
+         }
+      }
+   },
    methods: {
       loadTemplate(template) {
          import(`@/${template}`)
@@ -53,7 +66,7 @@ export default {
             })
       },
       close() {
-         this.$emit('onCloseClick', false)
+         this.$emit('update:dialogStatus', false)
       },
       dragModal(e) {
          e.preventDefault();
@@ -82,9 +95,11 @@ export default {
          this.loadTemplate(this.template);
       } 
    },
-   mounted() {
-      this.$refs.modalHeader.addEventListener("mousedown", this.dragModal);
-      document.addEventListener("mouseup", this.stopDrag);
+   beforeUnmount() {
+      if(this.dialogStatus === true) {
+         this.$refs.modalHeader.removeEventListener("mousedown", this.dragModal, true);
+         document.removeEventListener("mouseup", this.stopDrag, true);
+      }
    }
 }
 </script>
@@ -96,10 +111,9 @@ export default {
    transform: translate(-50%, -50%);
    position: fixed;
    display: flex;
-   z-index: -1000;
+   z-index: 1000;
    overflow: inherit;
    cursor: default;
-   opacity: 0;
    width: 500px;
    background: white;
    height: fit-content;
@@ -110,12 +124,6 @@ export default {
 
    &-grabbing {
       transition: none;
-   }
-
-   &-active {
-      z-index: 1000;
-      opacity: 1;
-      transform: translate(-50%, -50%);
    }
 
    &-header {

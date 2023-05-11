@@ -5,6 +5,7 @@
 .flex-container {
    display: flex;
    margin: 0 -6px -12px -6px;
+   flex-wrap: wrap;
 }
 
 .flex-noGutter>.flex-col {
@@ -46,6 +47,11 @@
 .a-items-end {
    align-items: flex-end;
 }
+
+.a-items-start {
+   align-items: flex-start;
+}
+
 
 .a-self-end {
    align-self: end;

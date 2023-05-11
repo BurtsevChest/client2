@@ -56,7 +56,7 @@
          </div>
       </section>
       <section class="LandingPage-section-2">
-         <div class="LandingPage-section-2-contentmr-62">
+         <div class="LandingPage-section-2-content mr-62">
             <h2 class="LandingPage-section-2-title">Sunset at Mount Fuji</h2>
             <p class="LandingPage-section-2-text">
                Duis tristique sed lorem a vestibulum. Cras commodo consequat orci, in convallis risus egestas non.
@@ -80,7 +80,7 @@
             </div>
       </section>
       <section class="LandingPage-section-4">
-         <div class="LandingPage-section-2-contentmr-62">
+         <div class="LandingPage-section-2-content mr-62">
             <h2 class="LandingPage-section-2-title ">Sunset at Mount Fuji</h2>
             <p class="LandingPage-section-2-text">
                Duis tristique sed lorem a vestibulum. Cras commodo consequat orci, in convallis risus egestas non.
@@ -113,7 +113,7 @@
          </div>
       </section>
       <section class="LandingPage-section-6">
-         <div class="LandingPage-section-2-contentmr-62">
+         <div class="LandingPage-section-2-content mr-62">
             <h2 class="LandingPage-section-2-title ">Star fall in the Himalayas</h2>
             <p class="LandingPage-section-2-text">
                Nulla rhoncus feugiat eros quis consectetur. Morbi neque ex, condimentum dapibus congue et, vulputate ut ligula.

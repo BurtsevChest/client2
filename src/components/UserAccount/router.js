@@ -12,8 +12,8 @@ export default [
       component: () => import('@/components/UserAccount/pages/Calendar/Calendar.vue'),
    },
    {
-      path: '/user_account/plans',
-      component: () => import('@/components/UserAccount/pages/Plans/Plans.vue'),
+      path: '/user_account/projects',
+      component: () => import('@/components/UserAccount/pages/Projects/Projects.vue'),
    },
    {
       path: '/user_account/board',
@@ -30,6 +30,14 @@ export default [
    {
       path: '/user_account/teams/:teamId',
       component: () => import('@/components/UserAccount/pages/Teams/templates/teamPage.vue'),
+   },
+   {
+      path: '/user_account/business_proccess',
+      component: () => import('@/components/UserAccount/pages/BusnessProccess/BusnessProccess.vue'),
+   },
+   {
+      path: '/user_account/business_proccess/:proccessId',
+      component: () => import('@/components/UserAccount/pages/BusnessProccess/templates/createProccessPage.vue'),
    },
    {
       path: '/settings',

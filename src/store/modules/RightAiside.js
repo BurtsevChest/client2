@@ -1,5 +1,3 @@
-// придумать защиту от дурака при повторном открытии RightAside с теми же параметрами (мешает Proxy)
-
 const ANIMATION_TIMEOUT = 300;
 
 export default {
@@ -32,30 +30,70 @@ export default {
             state.status = true
          })
       },
-      openRightAsideNew(state, options) {
-         return new Promise((resolve, reject) => {
-            if(state.templateSRC == options.template) {
-               return reject(null);
+      openAsideNew(state, options) {
+         let openNewAside = true;
+         let changeAside = false;
+
+         state.openedAsides.forEach((item) => {
+            if((item.opener === options.opener) || options.opener === null) {
+               openNewAside = false;
+               if(options.templateProps && (item.templateProps != options.templateProps)) {
+                  changeAside = true;
+               }
             }
-            state.templateSRC = options.template;
+         });
+
+         if(openNewAside) {
+            if(state.openedAsides.length > 0) {
+               state.zindex = state.zindex + 1;
+            }
             import('@/' + options.template)
                 .then((res)=>{
-                  state.openedTemplate = res.default;
-                  state.config = options.options;
-                  state.status = true;
-                  resolve();
-               })
-                .catch(() => {
-                   reject(null)
-                })
+                  state.openedAsides.push({
+                     status: true,
+                     openedTemplate: res.default,
+                     opener: options.opener,
+                     templateProps: options.templateProps,
+                     zindex: state.zindex
+                  })
+               });
+         }
+
+         if(changeAside) {
+            state.openedAsides = state.openedAsides.map((item) => {
+               if((item.opener === options.opener) || options.opener === null) {
+                  item.templateProps = options.templateProps;
+                  if(item.zindex < state.zindex) {
+                     state.zindex = state.zindex + 1;
+                     item.zindex = state.zindex;
+                  }
+               }
+               return item;
+            })
+         }
+      },
+      closeAsideNew(state, opener) {
+         state.openedAsides.forEach((item, index) => {
+            if(item.opener === opener) {
+               item.status = false;
+               setTimeout(() => {
+                  state.openedAsides.splice(index, 1);
+                  return;
+               }, ANIMATION_TIMEOUT)
+            }
          })
+         if(state.openedAsides.length === 0) {
+            state.zindex = 100;
+         }
       }
    },
    state: {
+      openedAsides: [],
       status: false,
       openedTemplate: null && HTMLTemplateElement,
       templateSRC: '',
-      config: {}
+      config: {},
+      zindex: 100
    },
    getters: {
       getStatus(state) {
@@ -66,6 +104,9 @@ export default {
       },
       getConfig(state) {
          return state.config
+      },
+      getAsides(state) {
+         return state.openedAsides
       }
    }
 }

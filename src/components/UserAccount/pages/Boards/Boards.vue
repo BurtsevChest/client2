@@ -22,25 +22,26 @@
          </ScrollContainerNew>
       </div>
    </div>
-   <ModalDialog
-      :dialogStatus="dialogStatus"
-      :title = "'Новая доска'"
-      @onCloseClick="() => {this.dialogStatus=false}"
-      :template="'components/UserAccount/pages/Teams/templates/addTeamView.vue'"
-   />
+   <ModalDialog v-model:dialogStatus="dialogStatus" :title="'Новая доска'">
+      <template v-slot:content>
+         <addBoardView @addBoard="addBoard"/>
+      </template>
+   </ModalDialog>
 </template>
 
 <script>
+import addBoardView from '@/components/UserAccount/pages/Boards/templates/addBoardView.vue';
 
 export default {
    // eslint-disable-next-line
    name: "Boards",
+   components: {addBoardView},
    data() {
       return {
          dialogStatus: false,
          boards: [
             {
-               id: 1,
+               id: 0,
                name: 'Доска 1'
             }
          ]
@@ -52,6 +53,13 @@ export default {
       },
       openBoard(href) {
          this.$router.push(`/user_account/board/${href}`);
+      },
+      addBoard(name) {
+         this.dialogStatus = false;
+         this.boards.push({
+            id: this.boards.length,
+            name
+         })
       }
    }
 }

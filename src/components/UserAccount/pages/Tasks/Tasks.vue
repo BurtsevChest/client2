@@ -2,8 +2,8 @@
    <div class="Tasks flex flex-column">
       <div class="Tasks-header flex box-shadow pt-12 pv-10">
          <div class="flex flex-col-8">
-            <div class="flex-col flex a-items-center">
-            <PopupBtn v-model:show="reglamentDialog" :positionStyle="'Tasks-reglament-popup-position'" :hideBtn=true>
+            <div ref="AddTaskBtn" class="flex-col flex a-items-center">
+            <PopupBtn :accessShow="true" v-model:show="reglamentDialog" :top="'0px'" :left="'-18px'" :hideBtn=true>
                <template v-slot:popupBtn>
                   <button class="Tasks-addTask-btn flex flex-center a-items-center">
                      <span class="material-icons Tasks-addTask-btn-icon">add</span>
@@ -11,7 +11,7 @@
                </template>
                <template v-slot:popupTemplate>
                   <div class="Tasks-reglament-popup ph-8 pv-10 radius-block box-shadow">
-                     <div v-for="item in taskReglaments" v-bind:key="item.name"  @click="openAddTaskView(item)" class="Tasks-reglament-popup-item pointer radius-block ph-6 pv-10">
+                     <div v-for="item in taskReglaments"  v-bind:key="item.name"  @click="openAddTaskView(item)" class="Tasks-reglament-popup-item pointer radius-block ph-6 pv-10">
                         {{ item.name }}
                      </div>
                   </div>
@@ -19,17 +19,17 @@
             </PopupBtn>
             </div>
             <div class="flex-col flex flex-nowrap a-items-center">
-               <SearchField @clickSearchEnter="filterToString" @clickSearch="filterToString" @clearSearch="clearFilterText"/>
+               <SearchField @clickSearchEnter="filterText" @clickSearch="filterText" @clearSearch="clearTextFilter"/>
             </div>
             <div class="empty_flex"></div>
             <div class="flex a-self-end">
                <div class="flex-col">
-                  <div class="Tasks-tabs ph-8 pv-12 radius-block pointer" :class="{'active' : activeTab === 'my'}" @click="setTab('my')">
+                  <div class="Tasks-tabs ph-8 pv-12 radius-block pointer" :class="{'active' : filterRules.tabFilter === 'my'}" @click="filterTab('my')">
                      {{ $t('user_account_tasks_filter_my') }}
                   </div>
                </div>
                <div class="flex-col">
-                  <div class="Tasks-tabs ph-8 pv-12 radius-block pointer" :class="{'active' : activeTab === 'from'}" @click="setTab('from')">
+                  <div class="Tasks-tabs ph-8 pv-12 radius-block pointer" :class="{'active' : filterRules.tabFilter === 'from'}" @click="filterTab('from')">
                      {{ $t('user_account_tasks_filter_from') }}
                   </div>
                </div>
@@ -37,10 +37,10 @@
          </div>
       </div>
       <div class="flex-container height-100">
-         <div class="flex-col pt-16 flex-col-9 flex flex-noGutter flex-column Tasks-itemsWrapper">
+         <div class="flex-col pt-16 mb-16 flex-col-9 flex flex-noGutter flex-column Tasks-itemsWrapper">
             <TaskItems
-               v-if="returnTasks.length > 0"
-               :Tasks = "returnTasks"
+               v-if="filteredTasks.length > 0"
+               :Tasks = "filteredTasks"
                @onClickTask = OpenTask
                :itemClass="'Tasks-item'"
                :descClass="'standart-text-grey'"
@@ -53,7 +53,7 @@
                {{ $t('user_account_tasks_filtres_text') }}
             </div>
             <div class="flex-col flex">
-               <PopupBtn :positionStyle="'Tasks-filter-popupDate'" :hideBtn=true>
+               <PopupBtn :accessShow="true" :hideBtn=true>
                   <template v-slot:popupBtn>
                      <div class="flex pointer a-items-center">
                         <span class="flex a-items-center material-icons">calendar_month</span>
@@ -62,11 +62,11 @@
                   </template>
                   <template v-slot:popupTemplate>
                      <div class="Tasks-filtres-popupCalendar">
-                        <v-date-picker :locale="locale" mode="date" v-model="dateToFilter" @dayclick="setDate"/>
+                        <v-date-picker :locale="locale" mode="date" :is-dark="true" v-model="filterRules.date_of_completion" @dayclick="filterDate"/>
                      </div>
                   </template>
                </PopupBtn>
-               <span v-if="dateFilterToShow" @click="deleteDate" class="material-icons pl-10 pointer">close</span>
+               <span v-if="dateFilterToShow" @click="clearDateFilter" class="material-icons pl-10 pointer">close</span>
             </div>
             <div class="flex-col">
                <div class="flex pointer  a-items-center">
@@ -86,20 +86,14 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import {
-   getTasks, 
-   openTask,
-   filterOnDate,
-   filterOnTab,
-   clearDateFilter,
-   filterOnText,
-   SocketGetTask 
-} from '@/websync/tasks';
-import { openDialog } from '@/components/Common/modalView';
+import { openTask } from '@/websync/tasks';
 import TaskItems from '@/components/UserAccount/Common/TaskItems/TaskItems.vue';
-import { dateToNumbers } from '@/components/Common/helpers/dateToNumbers';
+import { dateToNumbers, dayDiff } from '@/components/Common/helpers/dateToNumbers';
 import { getLocale } from "@/lang/lang";
 import mainSocket from "@/vue_socket/mainSocket";
+import Task from '@/api/task';
+import { getUser } from '@/components/Common/helpers/user';
+import { openAddTask } from '@/components/Common/helpers/tasks';
 
 export default {
    // eslint-disable-next-line
@@ -109,58 +103,108 @@ export default {
    },
    data() {
       return {
-         filterString: '',
-         filteredArr: [],
-         activeTab: 'my',
-         activeTask: 'Tasks-item',
          tasks: [],
+         filterRules: {
+            date_of_completion: '',
+            tabFilter: 'my',
+            filterText: ''
+         },
+         filteredTasks: [],
          date: new Date(),
-         dateToFilter: '',
          dateFilterToShow: '',
          locale: getLocale(),
-         reglamentDialog: false
+         reglamentDialog: false,
+         user_id: getUser().user_id
       }
    },
    methods: {
       OpenTask(task) {
-         openTask(task)
+         openTask(task, this)
       },
       openAddTaskView(reglament) {
          this.reglamentDialog = false;
-         openDialog({
-            template: 'components/Common/modalView/templates/AddTaskView.vue',
-            options: {
-               reglament
+         openAddTask({reglament}, this.$refs.AddTaskBtn);
+      },
+      setTasks(tasks) {
+         this.tasks = tasks;
+         this.filterTasks();
+      },
+      setSocketTask(task) {
+         const indexExistTask = this.tasks.findIndex(item => item.task_id === task.task_id);
+         if(indexExistTask >= 0) {
+            this.tasks.splice(indexExistTask, 1, task);
+         } else {
+            this.tasks.push(task);
+         }
+         this.filterTasks();
+      },
+      filterTasks() {
+         this.filteredTasks = this.tasks.filter((item) => {
+            for(var key in this.filterRules) {
+               // On Date
+               if(this.filterRules.date_of_completion != '' && key != undefined) {
+                  const diffTime = dayDiff(this.filterRules.date_of_completion, item.date_of_completion);
+                  if(diffTime < 0) {
+                     return false;
+                  }
+               }
+               // Если я ответственный
+               if(this.filterRules.tabFilter === 'my') {
+                  if(item.responsible_id != this.user_id) {
+                     return false;
+                  }
+               }
+               // Если я создатель
+               if(this.filterRules.tabFilter === 'from') {
+                  if(item.creator_id != this.user_id) {
+                     return false;
+                  }
+               }
+               // Поиск по тексту
+               if(this.filterRules.filterText != '') {
+                  if(!(item.title.toLowerCase().includes(this.filterRules.filterText.toLowerCase()) || item.description.toLowerCase().includes(this.filterRules.filterText.toLowerCase()))) {
+                     return false;
+                  }
+               }
             }
-         });
+            return true;
+         })
       },
-      setTab(name) {
-         this.activeTab = name;
-         filterOnTab(name);
+      filterDate(date) {
+         this.dateFilterToShow = dateToNumbers(date.date);
+         this.filterRules.date_of_completion = date.date;
+         this.filterTasks();
       },
-      filterToString(text) {
-         filterOnText(text);
+      filterTab(tab) {
+         this.filterRules.tabFilter = tab;
+         this.filterTasks();
       },
-      clearFilterText() {
-         filterOnText('');
+      filterText(text) {
+         this.filterRules.filterText = text;
+         this.filterTasks();
       },
-      setDate(date) {
-         this.dateToFilter = date;
-         this.dateFilterToShow = dateToNumbers(date.date); 
-         filterOnDate(date.date);
+      clearTextFilter() {
+         this.filterRules.filterText = '';
+         this.filterTasks();
       },
-      deleteDate() {
-         this.dateToFilter = '';
+      clearDateFilter() {
          this.dateFilterToShow = '';
-         clearDateFilter()
+         this.filterRules.date_of_completion = '';
+         this.filterTasks();
       }
    },
-   computed: mapGetters(["returnTasks",'taskReglaments']),
+   computed: mapGetters(['taskReglaments']),
    beforeMount() {
       mainSocket.on('SET_TASK', data => {
-        SocketGetTask(data.task)
+         this.setSocketTask(data.task)
       })
-      getTasks();
+   },
+   beforeRouteEnter(to, from, next) {
+      // Предзагрузка данных перед перходом по роутеру
+      Task.getTasks(getUser().user_id)
+      .then((res) => {
+         next(vm => vm.setTasks(res.data));
+      })
    }
 }
 </script>

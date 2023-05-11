@@ -22,6 +22,11 @@ export default {
          type: Number
       }
    },
+   watch: {
+      user_id(newValue) {
+         this.userPhotoBaseUrl = `${protocol}${api_domain}/apiV0/photo/${newValue}`;
+      }
+   },
    data() {
       return {
          userPhotoBaseUrl: `${protocol}${api_domain}/apiV0/photo/${this.user_id}`

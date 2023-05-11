@@ -178,6 +178,12 @@ export default {
          },
          {
             name: 'Андрей дай урл'
+         },
+         {
+            name: 'Новый лендинг'
+         },
+         {
+            name: 'Pull Request'
          }
       ]
    },

@@ -2,7 +2,7 @@
    <div class="DefaultTask">
       <div class="DefaultTask-header flex flex-nowrap mb-10">
          <div class="DefaultTask-header-creator flex-shrink-0">
-            <img class="DefaultTask-header-creator-image" ref="creatorAvatar" :src="creatorAvatar">
+            <userImage :user_id="task.creator_id"/>
          </div>
          <div class="DefaultTask-header-title pl-12">
             <div class="">{{ task.creator_title }}</div>
@@ -13,79 +13,90 @@
          <div class="pb-10">Исполнитель</div>
          <div class="flex flex-nowrap">
             <div class="DefaultTask-main-responsible  flex-shrink-0">
-               <img ref="responsibleAvatar" :src="responsibleAvatar">
+               <userImage :user_id="updateTaskParams.responsible_id"/>
+            </div>
+            <div class="pl-10 empty_flex">
+               <div class="pb-6">{{ updateTaskParams.responsible_title }}</div>
+               <TextField @inputText="updateDesc" v-if="isEditMode" :value="updateTaskParams.description"/>
+               <div v-else class="">{{ updateTaskParams.description }}</div>
             </div>
             <div class="pl-10">
-               <div class="pb-6">{{ task.responsible_title }}</div>
-               <div class="">{{ task.description }}</div>
+               <PopupBtn :accessShow="isEditMode" :right="'0px'" :hideBtn=true>
+                  <template v-slot:popupBtn>
+                     <span :class="{ 'error': errorParams.date_of_completion }">{{ showDate(updateTaskParams.date_of_completion) }}</span>
+                  </template>
+                  <template v-slot:popupTemplate>
+                     <div class="box-shadow" style="border-radius: 12px; box-shadow: 0 0 18px rgba(128, 128, 128, 0.5);">
+                        <v-date-picker @dayclick="setDate" :locale="locale" mode="date" borderless  :is-dark="true" v-model="updateTaskParams.date_of_completion"/>
+                     </div>
+                  </template>
+               </PopupBtn>
             </div>
          </div>
       </div>
-      <div class="flex  pb-12">
-         <PopupBtn v-model:show="reglamentDialog" :positionStyle="'Task-reglament-popup-position'" :hideBtn=true>
-            <template v-slot:popupBtn>
-               <div class="flex a-items-center pointer fit-content">
-                  <span class="material-icons">
-                     task
-                  </span>
-                  <p class="pl-4 Task-tabs">{{ $t('user_account_tasks_opentask_subtask') }}</p>
-               </div>
-            </template>
-            <template v-slot:popupTemplate>
-               <div class="Task-reglament-popup ph-8 pv-10radius-block box-shadow">
-                  <div v-for="item in taskReglaments" v-bind:key="item.name"  @click="openAddTaskView(item)" class="Task-reglament-popup-item pointer radius-block ph-6 pv-10">
-                     {{ item.name }}
-                  </div>
-               </div>
-            </template>
-         </PopupBtn>
-         <div v-if="!taskFiles" class="flex a-items-center pointerpl-12">
-            <span class="material-icons">
-               attach_file
-            </span>
-            <p class="pl-4 Task-tabs">{{ $t('user_account_tasks_opentask_attach') }}</p>
-         </div>
+      <div class="pb-20 flex a-items-start">
+         <span @click="openPullRequestView" class="flex-shrink-0 pr-16 pointer">Pull request</span>
       </div>
-      <div v-if="returnSubTasks">
-         <TaskItems
-            :Tasks = "returnSubTasks"
-            @onClickTask="openTask"
-            :itemClass="'DefaultTask-subTask'"
-            :descClass="'standart-text-grey'"
-            :titleClass="'DefaultTask-subTask-titleClass'"
-            :dateClass="'DefaultTask-subTask-titleClass'"
-         />
+      <div class="flex a-items-center pointer pb-12">
+         <span class="material-icons">
+            attach_file
+         </span>
+         <p class="pl-4 Task-tabs">{{ $t('user_account_tasks_opentask_attach') }}</p>
       </div>
-      <div v-if="taskFiles">
-         <div class="flex a-items-center pointerpb-12">
-            <span class="material-icons">
-               attach_file
-            </span>
-            <p class="pl-4 Task-tabs">{{ $t('user_account_tasks_opentask_attach') }}</p>
-         </div>
-         <div class="flex-container flex-wrap">
-            <div v-for="file in taskFiles" v-bind:key="file" class="flex-col flex-col-3">
-               <div class="ph-8 pv-10 radius-block background-grey pointer">
-                  {{file}}
-               </div>
+      <div class="flex-container flex-wrap pb-20">
+         <div v-for="file in taskFiles" v-bind:key="file" class="flex-col flex-col-3">
+            <div class="ph-8 pv-10 radius-block background-grey pointer">
+               {{file}}
             </div>
          </div>
       </div>
+      <PopupBtn :accessShow="true" class="pb-20" v-model:show="reglamentDialog" :positionStyle="'DefaultTask-reglament-popup-position'" :hideBtn=true>
+         <template v-slot:popupBtn>
+            <div class="flex a-items-center pointer fit-content">
+               <span class="material-icons">
+                  task
+               </span>
+               <p class="pl-4 Task-tabs">{{ $t('user_account_tasks_opentask_subtask') }}</p>
+            </div>
+         </template>
+         <template v-slot:popupTemplate>
+            <div class="DefaultTask-reglament-popup ph-8 pv-10 radius-block box-shadow">
+               <div v-for="item in taskReglaments" v-bind:key="item.name"  @click="openAddTaskView(item)" class="DefaultTask-reglament-popup-item pointer radius-block ph-6 pv-10">
+                  {{ item.name }}
+               </div>
+            </div>
+         </template>
+      </PopupBtn>
+      <TaskItems
+         :Tasks = "subTaskList"
+         @onClickTask="openTask"
+         :itemClass="'DefaultTask-subTask'"
+         :descClass="'standart-text-grey'"
+         :titleClass="'DefaultTask-subTask-titleClass'"
+         :dateClass="'DefaultTask-subTask-titleClass'"
+      />
    </div>
+<ModalDialog v-model:dialogStatus="dialogStatus" :title = "'Pull request'">
+   <template v-slot:content>
+      <addPullRequestVue/>
+   </template>
+</ModalDialog>
 </template>
 
 <script>
 import TaskItems from '@/components/UserAccount/Common/TaskItems/TaskItems.vue';
 import { mapGetters } from 'vuex';
-import { downloadImageUser } from '@/components/Common/helpers/imageLoader';
-import { api_domain, protocol } from '@/components/Common/helpers/host';
-import { openDialog } from '@/components/Common/modalView';
+import { openAddTask } from '@/components/Common/helpers/tasks';
+import addPullRequestVue from '@/components/UserAccount/RightAside/templates/taskPage/templates/addPullRequest.vue';
+import { dateToNumbers, dayDiff } from '@/components/Common/helpers/dateToNumbers';
+import { getLocale } from '@/lang/lang';
+import Task from '@/api/task';
 
 export default {
    // eslint-disable-next-line
    name: "DefaultTask",
    components: {
-      TaskItems
+      TaskItems, addPullRequestVue
    },
    props: {
       task_id: {
@@ -93,12 +104,37 @@ export default {
       },
       task: {
          type: Object
+      },
+      subTaskList: {
+         type: Array
+      },
+      isEditMode: {
+         type: Boolean
+      }
+   },
+   watch: {
+      task() {
+         this.dialogStatus = false;
+         this.updateTaskParams = {
+            task_id: this.task.task_id,
+            title: this.task.title,
+            description: this.task.description,
+            creator_id: this.task.creator_id,
+            responsible_id: this.task.responsible_id,
+            date_of_creation: this.task.date_of_creation,
+            date_of_completion: this.task.date_of_completion,
+            parent_id: this.task.parent_id,
+            status_task_id: this.task.status_task_id,
+         };
+      },
+      isEditMode(newValue) {
+         if(!newValue) {
+            this.checkUpdateParams();
+         }
       }
    },
    data() {
       return {
-         creatorAvatar: `${protocol}${api_domain}/apiV0/photo/${this.task.creator_id}`,
-         responsibleAvatar: `${protocol}${api_domain}/apiV0/photo/${this.task.responsible_id}`,
          reglamentDialog: false,
          taskFiles: [
             'image1.jpg',
@@ -106,35 +142,89 @@ export default {
             'image3.jpg',
             'image4.jpg',
             'image5.jpg',
-         ]
+         ],
+         dialogStatus: false,
+         locale: getLocale(),
+         updateTaskParams: {
+            task_id: this.task.task_id,
+            title: this.task.title,
+            description: this.task.description,
+            creator_id: this.task.creator_id,
+            responsible_id: this.task.responsible_id,
+            date_of_creation: this.task.date_of_creation,
+            date_of_completion: this.task.date_of_completion,
+            parent_id: this.task.parent_id,
+            status_task_id: this.task.status_task_id,
+         },
+         errorParams: {
+            date_of_completion: false
+         },
+         paramsChecked: false
       }
    },
-   computed: mapGetters(['returnSubTasks','taskReglaments']),
+   computed: mapGetters(['taskReglaments']),
    methods: {
       openTask(task) {
          this.$emit('openTask', task)
       },
       openAddTaskView(reglament) {
          this.reglamentDialog = false;
-         openDialog({
-            template: 'components/Common/modalView/templates/AddTaskView.vue',
-            options: {
-               reglament,
-               task_id: this.task_id
-            }
-         })
+         openAddTask({reglament, parentTask: this.task}, this);
       },
-   },
-   mounted() {
-      console.log(this.task);
-      downloadImageUser.call(this, 'creatorAvatar');
-      downloadImageUser.call(this, 'responsibleAvatar');
+      openPullRequestView() {
+         this.dialogStatus = true;
+      },
+      showDate(date) {
+         return dateToNumbers(date);
+      },
+      setDate() {
+         const daysDiff = dayDiff(this.updateTaskParams.date_of_completion, new Date());
+         if (daysDiff < 0) {
+            this.errorParams.date_of_completion = true;
+            this.paramsChecked = false;
+         } else {
+            this.errorParams.date_of_completion = false;
+            this.paramsChecked = true;
+         }
+      },
+      updateDesc(newDesc) {
+         if(newDesc) {
+            this.updateTaskParams.description = newDesc;
+         } else {
+            this.paramsChecked = false;
+         }
+      },
+      checkUpdateParams() {
+         this.paramsChecked = true;
+         if(this.updateTaskParams.description && (this.updateTaskParams.description === this.task.description)) {
+            this.paramsChecked = false;
+         } else if(!this.updateTaskParams.description) {
+            this.updateTaskParams.description = this.task.description;
+         }
+         if(!this.paramsChecked) {
+            this.updateTaskParams = {
+               task_id: this.task.task_id,
+               title: this.task.title,
+               description: this.task.description,
+               creator_id: this.task.creator_id,
+               responsible_id: this.task.responsible_id,
+               date_of_creation: this.task.date_of_creation,
+               date_of_completion: this.task.date_of_completion,
+               parent_id: this.task.parent_id,
+               status_task_id: this.task.status_task_id,
+         };
+            this.errorParams.date_of_completion = false;
+         } else {
+            Task.updateTask(this.updateTaskParams);
+         }
+      },
    }
 }
 </script>
 
 <style lang="less">
 .DefaultTask {
+   height: 100%;
    &-header {
       &-creator {
          width: 40px;
@@ -178,13 +268,13 @@ export default {
    }
 
    &-reglament-popup {
-      background-color: var(--background-color);
+      background-color: var(--background-popup-color);
       color: var(--text-color);
       width: max-content;
 
       &-position {
          top: 0;
-         left: -18px;
+         left: -12px;
       }
 
       &-item {

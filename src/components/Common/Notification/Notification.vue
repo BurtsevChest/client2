@@ -1,18 +1,43 @@
 <template>
    <div class="Notification" :class="{ 'active' : showNotificate }">
       <div class="Notification-body pointer radius-block" >
-         <component :options="noticeData" :is="noticeTemplate"/>
+         <component @closeNotice="closeNotice" :options="noticeData" :is="noticeTemplate"/>
       </div>
    </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters, mapMutations } from 'vuex';
+import Task from '@/api/task';
+import { getUser } from '@/components/Common/helpers/user';
+import { dayDiff } from '@/components/Common/helpers/dateToNumbers';
 
 export default {
    // eslint-disable-next-line
    name: "Notification",
-   computed: mapGetters(['showNotificate', 'noticeTemplate', 'noticeData'])
+   computed: mapGetters(['showNotificate', 'noticeTemplate', 'noticeData']),
+   methods: {
+      ...mapMutations(['showNotice', 'closeNotice'])
+   },
+   mounted() {
+      if(localStorage.accessToken) {
+         const user_id = getUser().user_id;
+         Task.getTasks(user_id).then((res) => {
+            const userTasks = res.data.filter((item) => {
+               const daysDiff = dayDiff(new Date(), item.date_of_completion);
+               if(item.responsible_id === user_id && (daysDiff > -1)) {
+                  return true;
+               }
+            });
+            if(userTasks.length > 0) {
+               this.showNotice({
+                  data: userTasks,
+                  event: 'task_deadline'
+               });
+            }
+      })
+      }
+   }
 }
 </script>
 
@@ -33,7 +58,6 @@ export default {
       background-color: rgb(43, 43, 43);
       color: var(--text-color);
       width: 400px;
-      height: 130px;
       transition: 0.3s;
 
       &:hover {

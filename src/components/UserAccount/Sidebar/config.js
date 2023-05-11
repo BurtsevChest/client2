@@ -24,9 +24,9 @@ export default [
       icon: 'dashboard'
    },
    {
-      id: 'plans',
-      title: 'user_account_sidebar_menu_plans',
-      href: '/user_account/plans',
+      id: 'projects',
+      title: 'user_account_sidebar_menu_projects',
+      href: '/user_account/projects',
       icon: 'rule'
    },
    {
@@ -34,5 +34,11 @@ export default [
       title: 'user_account_sidebar_menu_calendar',
       href: '/user_account/calendar',
       icon: 'calendar_month'
+   },
+   {
+      id: 'business_proccess',
+      title: 'user_account_sidebar_menu_business_proccess',
+      href: '/user_account/business_proccess',
+      icon: 'polyline'
    }
 ]

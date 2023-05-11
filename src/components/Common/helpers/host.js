@@ -1,3 +1,5 @@
+import api_settings from '../../../../api.json';
+
 const protocol = 'http://';
 let domain = window.location.hostname;
 let api_domain, chatApi, socket_domain;
@@ -5,14 +7,14 @@ let api_domain, chatApi, socket_domain;
 switch(domain) {
    case 'localhost':
       domain = window.location.host;
-      api_domain = 'localhost:5763';
-      chatApi = 'localhost:3000';
-      socket_domain = 'localhost:5763'; 
+      api_domain = api_settings["local"].api_domain;
+      chatApi = api_settings["local"].chatApi;
+      socket_domain = api_settings["local"].socket_domain;
       break;
    default:
-      api_domain = '45.91.8.70:5769';
-      chatApi = '45.91.8.70:5775';
-      socket_domain = '45.91.8.70:5769'; 
+      api_domain = api_settings["production"].api_domain;
+      chatApi = api_settings["production"].chatApi;
+      socket_domain = api_settings["production"].socket_domain;
       break;
 }
 

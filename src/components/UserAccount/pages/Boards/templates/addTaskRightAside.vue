@@ -1,11 +1,5 @@
 <template>
-   <div class="addTaskRightAside">
-      <div class="flex pb-20">
-         <div class="empty_flex"></div>
-         <div class="a-self-end">
-            <span @click="close" class="material-icons pointer">close</span>
-         </div>
-      </div>
+   <div class="addTaskRightAside pt-60">
       <draggable item-key="task_id" :list="testTasks" group="tasks" class="boardPage-column-body-drggabble">
          <template #item="{ element }">
             <div class="boardPage-column-body-item radius-block pointer">

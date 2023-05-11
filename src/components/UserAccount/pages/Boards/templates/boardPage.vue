@@ -17,14 +17,14 @@
             <div class="boardPage-column-body p-10 radius-block flex flex-nowrap flex-column">
                <div class="boardPage-column-body-title text-center pb-20 flex a-items-center flex-grow-1">
                   <div class="empty_flex">{{ column.name }}</div>
-                  <PopupBtn v-model:show="addTaskPopup" :hideBtn="true" :positionStyle="'boardPage-column-addPopup-position'">
+                  <PopupBtn :closeAfterClick="true" :accessShow="true" :hideBtn="true" :right="'0px'" :top="'0'">
                      <template v-slot:popupBtn>
                         <span class="material-icons boardPage-header-add-icon a-self-end pointer">
                            add
                         </span>
                      </template>
                      <template v-slot:popupTemplate>
-                        <div class="boardPage-column-addPopup ph-8 pv-10radius-block box-shadow">
+                        <div class="boardPage-column-addPopup ph-8 pv-10 radius-block box-shadow">
                            <div class="boardPage-column-addPopup-item pointer radius-block ph-6 pv-10">Новая задача</div>
                            <div @click="addTask" class="boardPage-column-addPopup-item pointer radius-block ph-6 pv-10">Мои задачи</div>
                         </div>
@@ -46,7 +46,7 @@
          </div>
       </div>
    </div>
-   <ModalDialog :dialogStatus="dialogStatus" :title = "'Новая колонка'" @onCloseClick="() => {this.dialogStatus=false}">
+   <ModalDialog v-model:dialogStatus="dialogStatus" :title = "'Новая колонка'">
       <template v-slot:content>
          <addColumnView @addColumn="addColumn"/>
       </template>
@@ -57,10 +57,9 @@
 import TaskItem from '@/components/UserAccount/Common/TaskItems/templates/taskItem.vue';
 import draggable from 'vuedraggable';
 import { mapGetters } from 'vuex';
-// import { getUser } from '@/components/Common/helpers/user';
 import {openTask} from '@/websync/tasks';
 import addColumnView from '@/components/UserAccount/pages/Boards/templates/addColumnView.vue';
-import { openRightAside } from '@/components/UserAccount/RightAside';
+import { openAside } from '@/components/UserAccount/RightAside';
 
 export default {
    // eslint-disable-next-line
@@ -71,68 +70,6 @@ export default {
          dialogStatus: false,
          boardId: this.$route.params.boardId,
          addTaskPopup: false,
-         testTasks: [
-            {
-               task_id: 1,
-               creator_title: 'Джейсон ХренЗавалишь Стетхем',
-               title: 'Тестовый таск',
-               description: "тестим канбану",
-               creator_id: 523,
-               responsible_id: '',
-               date_of_creation: new Date(),
-               date_of_completion: new Date(),
-               parent_id: null,
-               status_task_id: null
-            },
-            {
-               task_id: 2,
-               creator_title: 'Джейсон ХренЗавалишь Стетхем',
-               title: 'Тестовый таск',
-               description: "тестим канбану",
-               creator_id: 523,
-               responsible_id: '',
-               date_of_creation: new Date(),
-               date_of_completion: new Date(),
-               parent_id: null,
-               status_task_id: null
-            },
-            {
-               task_id: 3,
-               creator_title: 'Джейсон ХренЗавалишь Стетхем',
-               title: 'Тестовый таск',
-               description: "тестим канбану",
-               creator_id: 523,
-               responsible_id: '',
-               date_of_creation: new Date(),
-               date_of_completion: new Date(),
-               parent_id: null,
-               status_task_id: null
-            },
-            {
-               task_id: 4,
-               creator_title: 'Джейсон ХренЗавалишь Стетхем',
-               title: 'Тестовый таск',
-               description: "тестим канбану",
-               creator_id: 523,
-               responsible_id: '',
-               date_of_creation: new Date(),
-               date_of_completion: new Date(),
-               parent_id: null,
-               status_task_id: null
-            },
-            {
-               task_id: 5,
-               creator_title: 'Джейсон ХренЗавалишь Стетхем',
-               title: 'Тестовый таск',
-               description: "тестим канбану",
-               creator_id: 523,
-               responsible_id: '',
-               date_of_creation: new Date(),
-               date_of_completion: new Date(),
-               parent_id: null,
-               status_task_id: null
-            }
-         ],
          columns: [
             {
                name: 'To Do',
@@ -338,7 +275,7 @@ export default {
          this.$router.go(-1);
       },
       openTask(task) {
-         openTask(task);
+         openTask(task, this);
       },
       openAddColumnView() {
          this.dialogStatus = true;
@@ -352,13 +289,11 @@ export default {
       },
       addTask() {
          this.addTaskPopup = false;
-         openRightAside({
-            template: 'components/UserAccount/pages/Boards/templates/addTaskRightAside.vue'
-         })
+         openAside({
+            template: 'components/UserAccount/pages/Boards/templates/addTaskRightAside.vue',
+            opener: 'kanbanBoardPage'
+         });
       }
-   },
-   mounted() {
-      console.log(this.columns[0]);
    }
 }
 </script>
@@ -387,19 +322,25 @@ export default {
 
    &-content {
       height: 100%;
-      width: 100%;
-      padding-top: 80px !important;;
+      padding-top: 80px !important;
       padding-bottom: 20px;
+      width: 1620px;
+      overflow: auto;
+      overflow-x: auto;
+      overflow-y: hidden;
    }
 
    &-column {
       top: 0;
       min-width: 400px;
+      max-width: 400px;
       padding-right: 12px;
+
       &:last-child {padding-right: 0;}
 
       &-body {
          height: 100%;
+         width: 388px;
          background-color: var(--text-block-hover);
 
          &-title {

@@ -5,8 +5,8 @@
             <img ref="userAvatar" :src="userAvatar">
          </div>
          <div class="pl-16">
-            <span class="TaskItem-title" :class="[titleClass]">{{ task.creator_title }}</span>
-            <p class="TaskItem-desc pl-10" :class="[descClass]">{{ task.title }}</p>
+            <p class="TaskItem-title" :class="[titleClass]">{{ task.title }}</p>
+            <p class="TaskItem-desc pl-10" :class="[descClass]">{{ task.description }}</p>
          </div>
       </div>
       <div class="empty_flex"></div>
@@ -74,6 +74,17 @@ export default {
 <style lang="less">
 .TaskItem {
    transition: 0.2s;
+
+   &-title {
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+      max-width: 300px;
+
+      @media (max-width: 800px) {
+         width: 150px;
+      }
+   }
 
    &-desc {
       text-overflow: ellipsis;

@@ -1,70 +1,190 @@
 <template>
-   <div class="AddTask flex">
-      <div class="flex-col-6">
-         Исполнитель
-      </div>
-      <div class="flex-col-6 flex">
-         <div>
-            Срок
+   <div class="addTaskDialog box-shadow radius-block p-20 p-sm-10">
+      <h2 class="user_account-h2 pb-8">{{ options.reglament.name }}</h2>
+      <div class="flex-container pb-10">
+         <div class="flex-col flex-col-6 flex-col-sm-12 relative">
+            <PopupBtn :positionStyle="'addTaskDialog-personView'" v-model:show="showUserView" :hideBtn=true>
+               <template v-slot:popupBtn>
+                  <div class="flex a-items-center">
+                     <h3 class="user_account-h3">{{ $t('user_account_tasks_add_responsible') }}</h3>
+                     <div class="flex">
+                        <span class="material-icons pl-4">person</span>
+                        <div class="flex a-items-center pl-4">
+                           {{ user.name }} {{ user.last_name }}
+                        </div>
+                     </div>
+                  </div>
+               </template>
+               <template v-slot:popupTemplate>
+                  <SelectUsers
+                     @onClickUser = "setUser"
+                     :userList="getUsersCommandList"
+                  />
+               </template>
+            </PopupBtn>
+            <p class="error addTaskDialog-error_position" v-if="errorParams.responsible_id">{{ $t('user_account_tasks_add_responsible_error') }}</p>
          </div>
-         <input type="text" class="AddTask-date-input ml-8">
-         <PopupBtn :hideBtn=true>
-            <template v-slot:popupBtn>
-               <div class="flex a-items-center">
-                  <span class="material-icons pl-8">calendar_month</span>
-               </div>
-            </template>
-            <template v-slot:popupTemplate>
-               <v-date-picker :locale="locale" mode="date" v-model="date1"  @dayclick="setDate"/>
-            </template>
-         </PopupBtn>
+         <div class="flex-col flex-col-6 flex-col-sm-12 relative">
+            <PopupBtn :positionStyle="'addTaskDialog-dateView'" :hideBtn=true>
+               <template v-slot:popupBtn>
+                  <div class="flex flex-noGutter">
+                     <div class="flex-col">
+                        <h3 class="user_account-h3">{{ $t('user_account_tasks_add_deadline') }}</h3>
+                     </div>
+                     <div class="flex-col flex a-items-center">
+                        <div class="pl-8">
+                           {{ date }}
+                        </div>
+                     </div>
+                     <div class="flex-col flex a-items-center">
+                        <span class="material-icons pl-8">calendar_month</span>
+                     </div>
+                  </div>
+               </template>
+               <template v-slot:popupTemplate>
+                  <v-date-picker :locale="locale" mode="date" v-model="date1"  @dayclick="setDate"/>
+               </template>
+            </PopupBtn>
+            <p class="error addTaskDialog-error_position" v-if="errorParams.date_of_completion">{{ $t('user_account_tasks_add_deadline_error') }}</p>
+         </div>
+         <div class="flex-col flex-col-12 relative">
+            <h3 class="user_account-h3 pb-8">{{ $t('user_account_tasks_add_desc') }}</h3>
+            <textarea class="textarea" v-model.trim="taskParams.description" style="resize: none; " name="" id="" cols="30" rows="10"></textarea>
+            <p class="error addTaskDialog-error_position" v-if="errorParams.description">{{ $t('user_account_tasks_add_desc_error') }}</p>
+         </div>
       </div>
-      <div class="flex-col-12 pb-8">
-         <p>
-            Задача
-         </p>
-         <input type="text " class="AddTask-task-title-input flex-col-12 ph-4 pv-4">
-      </div>
+      <button @click="setTask" class="button">{{ $t('user_account_tasks_add_addBtn') }}</button>
    </div>
 </template>
 
 <script>
-import { getLocale } from '@/lang/lang'
+import { mapGetters } from "vuex";
+import { dateToNumbers } from '@/components/Common/helpers/dateToNumbers';
+import { setTask } from "@/websync/tasks";
+import { closeDialog } from '@/components/Common/modalView/index';
+import { getUsersList } from '@/websync/user';
+import { getLocale } from "@/lang/lang";
+import { getUser } from "@/components/Common/helpers/user";
+
 
 export default {
    // eslint-disable-next-line
-   name: "AddTask",
+   name: "",
+   computed: mapGetters(['getUsersCommandList']),
+   props: {
+      options: {
+         type: Object
+      }
+   },
    data() {
       return {
+         errorParams: {
+            title: '',
+            description: '',
+            responsible_id: '',
+            date_of_completion: '',
+         },
          date1: new Date(),
+         date: dateToNumbers(new Date()),
+         user: [],
+         taskParams: {
+            title: this.options.reglament.name,
+            description: "",
+            creator_id: getUser().user_id,
+            responsible_id: '',
+            date_of_creation: new Date(),
+            date_of_completion: this.date1,
+            parent_id: null,
+            status_task_id: null
+         },
+         showUserView: false,
          locale: getLocale()
       }
+   },
+   methods: {
+      setTask() {
+         this.createParams();
+         if(this.checkParams()) {
+            setTask(this.taskParams);
+            closeDialog()
+         }
+      },
+      setDate(date) {
+         this.date = dateToNumbers(date.date)
+      },
+      setUser(user) {
+         this.showUserView = false
+         this.user = user,
+         this.taskParams.responsible_id = user.user_id
+      },
+      checkParams() {
+         if(!this.taskParams.title) {
+            this.errorParams.title = true
+         } else {
+            this.errorParams.title = false
+         }
+         if(!this.taskParams.description) {
+            this.errorParams.description = true
+         } else {
+            this.errorParams.description = false
+         }
+         if(!this.taskParams.responsible_id) {
+            this.errorParams.responsible_id = true
+         } else {
+            this.errorParams.responsible_id = false
+         }
+         if(this.taskParams.date_of_completion < this.taskParams.date_of_creation) {
+            this.errorParams.date_of_completion = true
+         } else {
+            this.errorParams.date_of_completion = false
+         }
+
+         if((this.errorParams.responsible_id === true) || (this.errorParams.description === true) || (this.errorParams.title === true) || (this.errorParams.date_of_completion === true)) {
+            return false
+         }else {
+            return true
+         }
+      },
+      createParams() {
+         this.taskParams.date_of_completion = this.date1;
+         if(this.options?.task_id) {
+            this.taskParams.parent_id = this.options.task_id;
+         }
+         this.taskParams.title = this.options.reglament.name
+      }
+   }, 
+   beforeMount() {
+      getUsersList()
    }
 }
 </script>
 
 <style lang="less">
-.AddTask {
-   &-date {
-      &-input {
-         width: inherit;
-         border-bottom: 1px solid rgba(128, 128, 128, 0.2);
+@wrapper-width: 1000px;
+.addTaskDialog {
+   background: var(--background-color);
+   color: var(--text-color);
+   width: extract(@wrapper-width, 1);
 
-         &:hover,&:focus {
-            border-bottom: 1px solid rgba(128, 128, 128, 0.8);
-         }
-      }
+   @media (max-width: 1000px) {
+      width: 100%;
+   }
+   &-pointer {
+      cursor: pointer;
    }
 
-   &-task-title {
-      &-input {
-         width: inherit;
-         border-bottom: 1px solid rgba(128, 128, 128, 0.2);
+   &-error_position {
+      position: absolute;
+      bottom: -5px;
+   }
 
-         &:hover,&:focus {
-            border-bottom: 1px solid rgba(128, 128, 128, 0.8);
-         }
-      }
+   &-dateView {
+      left: 0;
+   }
+
+   &-personView {
+      top: 100%;
+      left: 0;
    }
 }
 </style>

@@ -1,5 +1,6 @@
 import taskNotice from '@/components/Common/Notification/templates/taskNotice.vue';
-// import { getUser } from '@/components/Common/helpers/user';
+import taskDeadline from '@/components/Common/Notification/templates/taskDeadline.vue';
+
 const TASKS_URL = '/user_account/tasks';
 const NOTICE_SOUND = 'components/UserAccount/pages/Home/resources/images/users/notice_sound_4.mp3'
 
@@ -30,7 +31,13 @@ export default {
                   state.template = taskNotice;
                   state.show = true;
                }
-            }
+               break;
+            case 'task_deadline':
+               state.data = opt.data;
+               state.template = taskDeadline;
+               state.show = true;
+               break;
+         }
       },
       closeNotice(state) {
          state.data = null;
