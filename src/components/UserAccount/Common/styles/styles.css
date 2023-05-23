@@ -28,3 +28,10 @@
    }
 }
 
+.user_account-header {
+   background-color: var(--background-color);
+   color: var(--text-color);
+   padding: 12px 10px;
+   box-shadow: 0 0 8px rgb(128 128 128 / 10%);
+}
+

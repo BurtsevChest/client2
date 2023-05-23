@@ -12,6 +12,13 @@ export default [
       icon: 'task'
    },
    {
+      id: 'github',
+      title: 'user_account_sidebar_menu_github',
+      href: '/user_account/github',
+      customIcon: '#github',
+      customIconUseStyle: 'transform: scale(1.5);'
+   },
+   {
       id: 'teams',
       title: 'user_account_sidebar_menu_teams',
       href: '/user_account/teams',

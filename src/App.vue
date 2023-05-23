@@ -1,8 +1,8 @@
 <template>
   <router-view/>
-
   <ModalView/>
   <Notification/>
+  <FileReader/>
 </template>
 
 <script>
@@ -10,27 +10,19 @@ import ModalView from '@/components/Common/modalView/modalView.vue';
 import store from '@/store';
 import { startLocale } from '@/lang/lang';
 import Notification from '@/components/Common/Notification/Notification.vue';
+import FileReader from '@/components/Common/FileReader/FileReader.vue';
 
 export default {
   name: 'App',
   watch: {
     '$route.path'() {
-      store.commit('closeModalView')
+      store.commit('closeModalView');
     }
   },
-  components: {ModalView, Notification},
+  components: {ModalView, Notification, FileReader},
   beforeCreate() {
-    if(localStorage.theme) {
-      document.documentElement.setAttribute('data-theme', 'dark')
-    }else{
-      document.documentElement.setAttribute('data-theme', 'dark')
-    }
+    store.commit('setTheme', 'dark');
     startLocale();
-  },
-  mounted() {
-    setTimeout(()=>{
-      store.commit('showNoticeTime')
-    }, 5000)
   }
 }
 </script>
@@ -50,6 +42,7 @@ main {
 body {
   min-width: 375px;
 }
+
 .vc-container {
   border: none !important;
   border-radius: 12px;

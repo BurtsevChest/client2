@@ -4,13 +4,13 @@ import indexConfig from '@/components/Index/router';
 
 const ifAuthenticated = (to, from, next) => {
    if (localStorage.accessToken && localStorage.user) {
-     next()
+     next();
    } else {
-     next()
+     next('/');
    }
 }
 
-let routes = [
+const routes = [
    {
       path: '/',
       component: () => import('@/components/Index/Index.vue'),
@@ -20,12 +20,12 @@ let routes = [
       path: '/user_account',
       component: () => import('@/components/UserAccount/UserAccount.vue'),
       beforeEnter: ifAuthenticated,
-      children: userAccountRouter
+      children: userAccountRouter.map(item => ({...item, beforeEnter: ifAuthenticated}))
    }
 ]
 
 const router = createRouter( {
-   routes: routes,
+   routes,
    history: createWebHistory(process.env.BASE_URL)
 })
 

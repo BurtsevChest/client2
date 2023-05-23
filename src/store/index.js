@@ -6,6 +6,8 @@ import tasks from './modules/tasks'
 import header from './modules/header'
 import teams from './modules/teams'
 import notification from './modules/notification'
+import themes from './modules/themes'
+import fileReader from './modules/fileReader'
 
 export default new Vuex.Store({
    modules: {
@@ -15,6 +17,8 @@ export default new Vuex.Store({
       tasks,
       header,
       teams,
-      notification
+      notification,
+      themes,
+      fileReader
    }
 })

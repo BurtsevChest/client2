@@ -179,13 +179,15 @@ export default {
       },
       setDate() {
          const daysDiff = dayDiff(this.updateTaskParams.date_of_completion, new Date());
-         if (daysDiff < 0) {
-            this.errorParams.date_of_completion = true;
-            this.paramsChecked = false;
-         } else {
+         console.log(daysDiff);
+         if (daysDiff > 0) {
             this.errorParams.date_of_completion = false;
             this.paramsChecked = true;
+         } else {
+            this.errorParams.date_of_completion = true;
+            this.paramsChecked = false;
          }
+         console.log(this.updateTaskParams.date_of_completion);
       },
       updateDesc(newDesc) {
          if(newDesc) {
@@ -196,11 +198,6 @@ export default {
       },
       checkUpdateParams() {
          this.paramsChecked = true;
-         if(this.updateTaskParams.description && (this.updateTaskParams.description === this.task.description)) {
-            this.paramsChecked = false;
-         } else if(!this.updateTaskParams.description) {
-            this.updateTaskParams.description = this.task.description;
-         }
          if(!this.paramsChecked) {
             this.updateTaskParams = {
                task_id: this.task.task_id,
@@ -214,9 +211,8 @@ export default {
                status_task_id: this.task.status_task_id,
          };
             this.errorParams.date_of_completion = false;
-         } else {
-            Task.updateTask(this.updateTaskParams);
          }
+         Task.updateTask(this.updateTaskParams);
       },
    }
 }

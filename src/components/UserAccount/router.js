@@ -8,6 +8,14 @@ export default [
       component: () => import('@/components/UserAccount/pages/Tasks/Tasks.vue'),
    },
    {
+      path: '/user_account/github',
+      component: () => import('@/components/UserAccount/pages/GitHub/GitHub.vue'),
+   },
+   {
+      path: '/user_account/github/repository/:reposId',
+      component: () => import('@/components/UserAccount/pages/GitHub/ReposPage/ReposPage.vue'),
+   },
+   {
       path: '/user_account/calendar',
       component: () => import('@/components/UserAccount/pages/Calendar/Calendar.vue'),
    },

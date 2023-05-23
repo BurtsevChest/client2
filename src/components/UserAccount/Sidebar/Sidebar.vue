@@ -1,12 +1,16 @@
 <template>
+   <control :template="'@/components/UserAccount/Sidebar/templates/sidebarIcons.vue'" class="hide"/>
    <aside class="sidebar flex flex-column">
       <router-link class="white-color logo" to="/">
             ProjectManager      
       </router-link>
       <h3 class="menu_title">Menu</h3>
       <div class="menu">
-         <router-link  v-for="item in menuList" v-bind:key="item.id" :to="item.href" class="pl-8 white-color sidebar_button radius-block flex a-items-center">
-            <span class="material-icons">{{ item.icon }}</span>
+         <router-link  v-for="item in menuList" v-bind:key="item.id" :to="item.href" class="pl-8 white-color sidebar_button radius-block flex a-items-center" :class="{'active': $route.path.includes(item.href)}">
+            <svg v-if="item.customIcon" height="24" viewBox="0 0 24 24" width="24" >
+               <use :style="item.customIconUseStyle" :href="item.customIcon"/>
+            </svg>
+            <span v-else class="material-icons">{{ item.icon }}</span>
             <span class="sidebar_link">{{ $t(item.title) }}</span>
          </router-link>
       </div>
@@ -34,7 +38,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="less">
 .sidebar {
    min-width: 300px;
    background: var(--background-color);
@@ -62,10 +66,14 @@ export default {
    width: 100%;
    margin-bottom: 5px;
    color: var(--text-color);
-}
 
-.sidebar_button:hover {
-   background-color: var(--text-block-hover);
+   &:hover {
+      background-color: var(--text-block-hover);
+   }
+
+   &.active {
+      background-color: var(--text-block-hover);
+   }
 }
 
 .router-link-exact-active {
@@ -73,7 +81,7 @@ export default {
 }
 
 .router-link-exact-active>span {
-   color: white
+   color: var(--text-color)
 }
 
 .sidebar_link {
