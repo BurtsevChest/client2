@@ -1,8 +1,7 @@
 import { io } from "socket.io-client"
-import { protocol, socket_domain } from "@/components/Common/helpers/host";
 import store from '@/store';
 
-const URL = `${protocol}${socket_domain}`;
+const URL = `${process.env.VUE_APP_PROTOCOL}${process.env.VUE_APP_SOCKET_API}`;
 const socket = io(URL, {transports: ['websocket'], query: {"user_id": JSON.parse(localStorage.user).user_id} })
 
 socket.onAny((event, ...args) => {

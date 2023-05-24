@@ -1,7 +1,6 @@
-import { io } from "socket.io-client"
-import { protocol, chatApi } from "@/components/Common/helpers/host";
+import { io } from "socket.io-client";
 
-const URL = `${protocol}${chatApi}`;
+const URL = `${process.env.VUE_APP_PROTOCOL}${process.env.VUE_APP_CHAT_API}`;
 const socket = io(URL, {transports: ['websocket'], query: {"accessToken": localStorage.accessToken} })
 
 socket.onAny((event, ...args) => {

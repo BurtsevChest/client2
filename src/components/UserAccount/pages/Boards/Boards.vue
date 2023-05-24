@@ -9,7 +9,7 @@
          </div>
       </div>
       <div class="Boards-main pt-64">
-         <ScrollContainerNew>
+         <ScrollContainer>
             <template v-slot:content>
                <div class="Boards-main-list p-20 flex-container">
                   <div v-for="board in boards" v-bind:key="board.id" class="flex-col flex-col-4">
@@ -19,7 +19,7 @@
                   </div>
                </div>
             </template>
-         </ScrollContainerNew>
+         </ScrollContainer>
       </div>
    </div>
    <ModalDialog v-model:dialogStatus="dialogStatus" :title="'Новая доска'">

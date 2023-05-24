@@ -1,5 +1,5 @@
 <template>
-   <ScrollContainerNew :hideScrollBar="true">
+   <ScrollContainer :hideScrollBar="true">
       <template v-slot:content>
          <TaskItem
             v-for="item in tasks"
@@ -12,7 +12,7 @@
             :dateClass="dateClass"
          />
       </template>
-   </ScrollContainerNew>
+   </ScrollContainer>
 </template>
 <script>
 import TaskItem from '@/components/UserAccount/Common/TaskItems/templates/taskItem.vue';

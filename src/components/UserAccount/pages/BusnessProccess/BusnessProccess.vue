@@ -9,13 +9,13 @@
          <div class="flex-container height-100">
             <div class="flex-col height-100 flex-col-9">
                <div class="BusnessProccess-content-reglamentList p-20 height-100">
-                  <ScrollContainerNew :hideScrollBar="true">
+                  <ScrollContainer :hideScrollBar="true">
                      <template v-slot:content>
                         <router-link v-for="reglament in taskReglaments" v-bind:key="reglament.name" :to="`/user_account/business_proccess/${reglament.name}`" class="BusnessProccess-content-reglamentList-item block radius-block pointer mb-12 box-shadow-hover ph-10 pv-12">
                            {{ reglament.name }}
                         </router-link>
                      </template>
-                  </ScrollContainerNew>
+                  </ScrollContainer>
                </div>
             </div>
             <div class="flex-col height-100 flex-col-3">

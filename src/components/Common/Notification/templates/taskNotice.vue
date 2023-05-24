@@ -20,7 +20,7 @@
 
 <script>
 import { mapMutations } from 'vuex';
-import { openTask } from '@/websync/tasks';
+import { openTask } from '@/components/Common/helpers/tasks.js';
 
 export default {
    // eslint-disable-next-line

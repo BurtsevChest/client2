@@ -86,10 +86,10 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import { openTask } from '@/websync/tasks';
+import { openTask } from '@/components/Common/helpers/tasks.js';
 import TaskItems from '@/components/UserAccount/Common/TaskItems/TaskItems.vue';
 import { dateToNumbers, dayDiff } from '@/components/Common/helpers/dateToNumbers';
-import { getLocale } from "@/lang/lang";
+import { getLocale } from "@/lang";
 import mainSocket from "@/vue_socket/mainSocket";
 import Task from '@/api/task';
 import { getUser } from '@/components/Common/helpers/user';
@@ -200,7 +200,6 @@ export default {
       })
    },
    beforeRouteEnter(to, from, next) {
-      // Предзагрузка данных перед перходом по роутеру
       Task.getTasks(getUser().user_id)
       .then((res) => {
          next(vm => vm.setTasks(res.data));

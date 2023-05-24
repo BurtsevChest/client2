@@ -22,11 +22,11 @@
       <div class="GitHub-content empty_flex p-12">
          <div class="flex-container height-100">
             <div class="flex-col flex-col-9">
-               <ScrollContainerNew :hideScrollBar="true">
+               <ScrollContainer :hideScrollBar="true">
                   <template v-slot:content>
                      <repositoryItemVue v-for="item in reposList" v-bind:repos="item" v-bind:key="item.id" :itemStyle="'background-grey-hover pointer mb-12'"/>
                   </template>
-               </ScrollContainerNew>
+               </ScrollContainer>
             </div>
             <div class="flex-col flex-col-3">
                <div class="GitHub-filtres radius-block p-10 flex flex-column">
@@ -51,7 +51,7 @@
 <script>
 import {openAside} from '@/components/UserAccount/RightAside/index.js';
 import repositoryItemVue from '@/components/UserAccount/pages/GitHub/templates/repositoryItem.vue';
-import GitLabApi from '@/GitHubApi'; 
+import GitLabApi from '@/GitHubApi';
 
 export default {
    // eslint-disable-next-line
@@ -79,7 +79,15 @@ export default {
    },
    beforeRouteEnter(to, from, next) {
       GitLabApi.getRepos().then((response) => {
-         next(vm => vm.setPageData(response.data));
+         next(vm => {
+            vm.setPageData(response.data);
+         });
+      }).catch((err) => {
+         if(err.response.status === 401) {
+            next(vm => {
+               vm.dialogStatus = true;
+            })
+         }
       })
    }
 }

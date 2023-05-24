@@ -89,7 +89,7 @@ import { mapGetters } from 'vuex';
 import { openAddTask } from '@/components/Common/helpers/tasks';
 import addPullRequestVue from '@/components/UserAccount/RightAside/templates/taskPage/templates/addPullRequest.vue';
 import { dateToNumbers, dayDiff } from '@/components/Common/helpers/dateToNumbers';
-import { getLocale } from '@/lang/lang';
+import { getLocale } from '@/lang';
 import Task from '@/api/task';
 
 export default {

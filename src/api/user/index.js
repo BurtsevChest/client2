@@ -16,6 +16,10 @@ class User {
    async getCommandUsers() {
       return await AxiosRequest.get('userOnTeam/1');
    }
+
+   async setGitLabToken(token) {
+      return await AxiosRequest.post('addTokenGitLab', JSON.stringify({tokenGitLab: token}))
+   }
 }
 
 export default new User()

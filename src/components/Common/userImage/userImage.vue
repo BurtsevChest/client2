@@ -1,12 +1,11 @@
 <template>
    <div :style="{'width': width + 'px', 'height': height + 'px',}" class="userImage">
-      <img  ref="userAvatar" :src="userPhotoBaseUrl">
+      <img ref="userAvatar" :src="userPhotoBaseUrl">
    </div>
 </template>
 
 <script>
 import { downloadImageUser } from '@/components/Common/helpers/imageLoader';
-import { api_domain, protocol } from '@/components/Common/helpers/host';
 
 export default {
    // eslint-disable-next-line
@@ -24,12 +23,12 @@ export default {
    },
    watch: {
       user_id(newValue) {
-         this.userPhotoBaseUrl = `${protocol}${api_domain}/apiV0/photo/${newValue}`;
+         this.userPhotoBaseUrl = `${process.env.VUE_APP_PROTOCOL}${process.env.VUE_APP_MAIN_API}/apiV0/photo/${newValue}`;
       }
    },
    data() {
       return {
-         userPhotoBaseUrl: `${protocol}${api_domain}/apiV0/photo/${this.user_id}`
+         userPhotoBaseUrl: `${process.env.VUE_APP_PROTOCOL}${process.env.VUE_APP_MAIN_API}/apiV0/photo/${this.user_id}`
       }
    },
    mounted() {

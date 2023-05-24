@@ -10,6 +10,7 @@
          <component 
             :is="dialogTemplate"
             class="pb-10 pv-10"
+            @closeModalDialog="close"
          />
          <slot v-if="!template" name="content" class="pb-10 pv-10"></slot>
       </div>

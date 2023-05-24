@@ -31,7 +31,7 @@
                      </template>
                   </PopupBtn>
                </div>
-               <ScrollContainerNew :hideScrollBar="true">
+               <ScrollContainer :hideScrollBar="true">
                   <template v-slot:content>
                      <draggable item-key="task_id" :list="column.items" group="tasks" class="boardPage-column-body-drggabble">
                         <template #item="{ element }">
@@ -41,7 +41,7 @@
                         </template>
                      </draggable>
                   </template>
-               </ScrollContainerNew>
+               </ScrollContainer>
             </div>
          </div>
       </div>
@@ -57,7 +57,7 @@
 import TaskItem from '@/components/UserAccount/Common/TaskItems/templates/taskItem.vue';
 import draggable from 'vuedraggable';
 import { mapGetters } from 'vuex';
-import {openTask} from '@/websync/tasks';
+import {openTask} from '@/components/Common/helpers/tasks.js';
 import addColumnView from '@/components/UserAccount/pages/Boards/templates/addColumnView.vue';
 import { openAside } from '@/components/UserAccount/RightAside';
 

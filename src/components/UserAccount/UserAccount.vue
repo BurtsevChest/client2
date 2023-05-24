@@ -1,14 +1,9 @@
 <template>
    <div class="flex flex-nowrap app">
-    <!-- Sidebar -->
     <Sidebar/>
-
-    <!-- Content -->
     <main class="UserAccount-main">
       <router-view/>
     </main>
-
-    <!-- RightAside -->
     <RightAiside/>
   </div>
 </template>
@@ -20,9 +15,7 @@ import RightAiside from '@/components/UserAccount/RightAside/RightAside.vue';
 export default {
    // eslint-disable-next-line
    name: "UserAccount",
-   components: {
-      Sidebar, RightAiside
-   }
+   components: {Sidebar, RightAiside}
 }
 </script>
 

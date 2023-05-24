@@ -3,7 +3,7 @@ import AxiosRequest from '@/api/index';
 
 export default {
    actions: {
-      loginUser(state) {
+      authUser(state) {
          User.login()
             .then((res) => {
                const data = res.data;
@@ -20,12 +20,21 @@ export default {
             })
       },
       getUsersList(state) {
-         // Кэшируем список прилетевших юзеров. Кэш сбросится, когда пользователь обновит страницу
          if(!state.state.CommandUsersList) {
             User.getCommandUsers().then((res) => {
                state.commit('setCommandUsersList', res.data)
             })
          }
+      },
+      loginUser(state, param) {
+         User.signUp(param)
+         .then((res) => {
+            const data = res.data;
+            state.commit('setUser', data.user);
+            localStorage.accessToken = data.accessToken;
+            AxiosRequest.headers.Authorization = `Bearer ${data.accessToken}`;
+            state.commit('setAuth', true);
+         })
       }
    },
    mutations: {

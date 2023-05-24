@@ -1,10 +1,9 @@
 import axios from "axios";
-import { api_domain, protocol } from '@/components/Common/helpers/host';
 
 const token = localStorage.accessToken;
 
 const AxiosRequest = axios.create({
-   baseURL: `${protocol}${api_domain}/apiV0/`,
+   baseURL: `${process.env.VUE_APP_PROTOCOL}${process.env.VUE_APP_MAIN_API}/apiV0/`,
    withCredentials: true,
    headers: {
       "Authorization": "Bearer " + token,
@@ -23,7 +22,7 @@ AxiosRequest.interceptors.response.use((response) => {
    if(error.response) {
       if(error.response.status === 401 && !originalRequest._isRetry) {
          originalRequest._isRetry = true;
-         const response = await axios.get(`${protocol}${api_domain}/apiV0/refresh`, { withCredentials: true });
+         const response = await axios.get(`${process.env.VUE_APP_PROTOCOL}${process.env.VUE_APP_MAIN_API}/apiV0/refresh`, { withCredentials: true });
          localStorage.setItem('accessToken',  response.data.accessToken);
          originalRequest.headers['Authorization'] = `Bearer ${response.data.accessToken}`;
 

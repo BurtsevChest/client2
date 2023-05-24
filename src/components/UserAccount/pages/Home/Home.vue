@@ -57,7 +57,6 @@
 <script>
 import { openDialog } from '@/components/Common/modalView';
 import { downloadImageUser } from '@/components/Common/helpers/imageLoader';
-import { api_domain, protocol } from '@/components/Common/helpers/host';
 import { getUser } from '@/components/Common/helpers/user';
 import user from '@/api/user';
 import {openAside} from '@/components/UserAccount/RightAside/index.js';
@@ -68,7 +67,7 @@ export default {
    data() {
       return {
          user: getUser(),
-         userPhotoBaseUrl: `${protocol}${api_domain}/apiV0/photo/${getUser().user_id}`
+         userPhotoBaseUrl: `${process.env.VUE_APP_PROTOCOL}${process.env.VUE_APP_MAIN_API}/apiV0/photo/${getUser().user_id}`
       }
    },
    methods: {

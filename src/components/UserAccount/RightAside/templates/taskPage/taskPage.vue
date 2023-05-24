@@ -44,7 +44,7 @@
 <script>
 import DefaultTask from '@/components/UserAccount/RightAside/templates/taskPage/templates/defaultTask.vue';
 import TaskChat from '@/components/UserAccount/RightAside/templates/taskPage/templates/taskChat.vue';
-import { openTask } from '@/websync/tasks';
+import { openTask } from '@/components/Common/helpers/tasks.js';
 import { mapGetters } from 'vuex';
 import { getUser } from '@/components/Common/helpers/user';
 import Task from '@/api/task';

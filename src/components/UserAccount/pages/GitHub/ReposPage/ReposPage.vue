@@ -16,7 +16,7 @@
          </div>
       </div>
       <div class="empty_flex">
-         <ScrollContainerNew :hideScrollBar="true">
+         <ScrollContainer :hideScrollBar="true">
             <template v-slot:content>
                <div class="pv-20 pb-20">
                   <div class="flex-container">
@@ -39,7 +39,7 @@
                   </div>
                </div>
             </template>
-         </ScrollContainerNew>
+         </ScrollContainer>
       </div>
    </div>
 </template>
@@ -78,6 +78,11 @@ export default {
       ])
       .then(([repos, mergeList]) => {
          next(vm => vm.setPageData(repos.data, mergeList.data));
+      })
+      .catch((err) => {
+         if(err.status === 401) {
+            next('/user_account/github');
+         }
       })
    }
 }

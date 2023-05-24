@@ -65,9 +65,9 @@
 
 <script>
 import { openDialog } from '@/components/Common/modalView';
-import { openHeaderMenu, closeHeaderMenu } from '@/websync/header';
+import { openHeaderMenu, closeHeaderMenu } from '@/components/Index/Header/index.js';
 import { mapGetters } from 'vuex';
-import { loadLanguageAsync, getLocale, translatedlanguages } from '@/lang/lang';
+import { loadLanguageAsync, getLocale, translatedlanguages } from '@/lang';
 import { openRightAside } from '@/components/UserAccount/RightAside';
 
 export default {

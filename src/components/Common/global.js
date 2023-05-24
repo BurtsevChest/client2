@@ -2,9 +2,8 @@ import SelectUser from '@/components/Common/selectUsers/selectUsers.vue'
 import PopupBtn from '@/components/Common/PopupBtn/PopupBtn.vue'
 import SearchField from '@/components/Common/SearchField/SearchField.vue'
 import ModalDialog from '@/components/Common/ModalDialog/ModalDialog.vue'
-import ScrollContainer from '@/components/Common/ScrollContainer/ScrollContainer.vue'
 import ListItems from '@/components/Common/ListItems/ListItems.vue'
-import ScrollContainerNew from '@/components/Common/ScrollContainerNew/ScrollContainerNew.vue'
+import ScrollContainer from '@/components/Common/ScrollContainer/ScrollContainer.vue'
 import control from '@/components/Common/control/control.vue'
 import userImage from '@/components/Common/userImage/userImage.vue'
 import TextField from '@/components/Common/textarea/TextField.vue'
@@ -14,9 +13,8 @@ export default [
    PopupBtn,
    SearchField,
    ModalDialog,
-   ScrollContainer,
    ListItems,
-   ScrollContainerNew,
+   ScrollContainer,
    control,
    userImage,
    TextField

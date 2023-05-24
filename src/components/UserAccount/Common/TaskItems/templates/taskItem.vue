@@ -20,7 +20,6 @@
 <script>
 import { dateToMonthText } from '@/components/Common/helpers/dateToNumbers';
 import { downloadImageUser } from '@/components/Common/helpers/imageLoader';
-import { api_domain, protocol } from '@/components/Common/helpers/host';
 
 export default {
    // eslint-disable-next-line
@@ -50,7 +49,7 @@ export default {
    },
    data() {
       return {
-         userAvatar: `${protocol}${api_domain}/apiV0/photo/${this.task.creator_id}`
+         userAvatar: `${process.env.VUE_APP_PROTOCOL}${process.env.VUE_APP_MAIN_API}/apiV0/photo/${this.task.creator_id}`
       }
    },
    methods: {

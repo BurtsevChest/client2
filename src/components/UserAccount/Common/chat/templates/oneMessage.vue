@@ -22,7 +22,6 @@
 </template>
 
 <script>
-import { api_domain, protocol } from '@/components/Common/helpers/host';
 import { downloadImageUser } from '@/components/Common/helpers/imageLoader';
 import { dateToNumbers } from '@/components/Common/helpers/dateToNumbers';
 
@@ -42,8 +41,8 @@ export default {
    },
    data() {
       return {
-         userPhotoBaseUrl: `${protocol}${api_domain}/apiV0/photo/${this.user_id}`,
-         userPhotoBaseUrlSecond: `${protocol}${api_domain}/apiV0/photo/${this.message.creator_message_id}`
+         userPhotoBaseUrl: `${process.env.VUE_APP_PROTOCOL}${process.env.VUE_APP_MAIN_API}/apiV0/photo/${this.user_id}`,
+         userPhotoBaseUrlSecond: `${process.env.VUE_APP_PROTOCOL}${process.env.VUE_APP_MAIN_API}/apiV0/photo/${this.message.creator_message_id}`
       }
    },
    methods: {

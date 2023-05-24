@@ -1,6 +1,6 @@
 <template>
    <div class="Index">
-      <ScrollContainerNew :hideScrollBar="true" @_scroll="scrollPage" :newScrollValue="pageScroll">
+      <ScrollContainer :hideScrollBar="true" @_scroll="scrollPage" :newScrollValue="pageScroll">
          <template v-slot:content>
             <Header :scrollValue="pageScroll" v-if="!pageData?.hideHeader || false" />
             <router-view 
@@ -8,7 +8,7 @@
             />
             <Footer v-if="!pageData?.hideFooter || false" />
          </template>
-      </ScrollContainerNew>
+      </ScrollContainer>
    </div>
    <RightAiside/>
    <div v-if="pageScroll > 600" @click="setNewScrollValue" class="Index-top-btn pointer flex a-items-center flex-center">
@@ -19,7 +19,7 @@
 <script>
 import Header from '@/components/Index/Header/Header.vue';
 import Footer from '@/components/Index/Footer/Footer.vue';
-import { closeHeaderMenu } from '@/websync/header';
+import { closeHeaderMenu } from '@/components/Index/Header/index.js';
 import {default as getPageData} from '@/components/Index/pageOptions';
 import {default as SEO, setSeo} from '@/components/Common/helpers/meta';
 import RightAiside from '@/components/UserAccount/RightAside/RightAside.vue';

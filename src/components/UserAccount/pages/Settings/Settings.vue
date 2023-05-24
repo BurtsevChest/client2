@@ -33,7 +33,7 @@
 </template>
 
 <script>
-import { getLocale, loadLanguageAsync, translatedlanguages } from '@/lang/lang';
+import { getLocale, loadLanguageAsync, translatedlanguages } from '@/lang';
 
 export default {
    // eslint-disable-next-line

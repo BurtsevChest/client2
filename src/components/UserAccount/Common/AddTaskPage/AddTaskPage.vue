@@ -61,7 +61,7 @@
 
 <script>
 import { getUser } from '@/components/Common/helpers/user';
-import { getLocale } from "@/lang/lang";
+import { getLocale } from "@/lang";
 import { dateToNumbers, dayDiff } from '@/components/Common/helpers/dateToNumbers';
 import { getUsersList } from '@/websync/user';
 import { mapGetters } from "vuex"; 

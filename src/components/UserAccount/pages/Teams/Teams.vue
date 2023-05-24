@@ -30,7 +30,7 @@
          </div>
       </div>
       <div class="Teams-maincontent">
-         <ScrollContainerNew>
+         <ScrollContainer>
             <template v-slot:content>
                <div class="Teams-comandlist p-20">
                   <div class="flex-container flex-wrap">
@@ -42,7 +42,7 @@
                   </div>
                </div>
             </template>
-         </ScrollContainerNew>
+         </ScrollContainer>
       </div>
    </div>
    <ModalDialog
