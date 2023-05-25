@@ -3,21 +3,14 @@ import AxiosRequest from '@/api/index';
 
 export default {
    actions: {
-      authUser(state) {
-         User.login()
-            .then((res) => {
-               const data = res.data;
-               state.commit('setUser', data.user);
-               localStorage.accessToken = data.accessToken;
-               AxiosRequest.headers.Authorization = `Bearer ${data.accessToken}`;
-               state.commit('setAuth', true);
-            })
-            .catch(() => {
-               state.commit('setUser', {});
-               localStorage.removeItem('accessToken')
-               AxiosRequest.headers.Authorization = ` `;
-               state.commit('setAuth', false);
-            })
+      async authUser() {
+         const response = await AxiosRequest.get(`${process.env.VUE_APP_PROTOCOL}${process.env.VUE_APP_MAIN_API}/apiV0/refresh`, { withCredentials: true });
+         localStorage.setItem('accessToken',  response.data.accessToken);
+         AxiosRequest.interceptors.request.use((config) => {
+            config.headers.Authorization = `Bearer ${response.data.accessToken}`;
+            console.log(config.headers);
+            return config;
+         })
       },
       getUsersList(state) {
          if(!state.state.CommandUsersList) {

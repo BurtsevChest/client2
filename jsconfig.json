@@ -7,9 +7,6 @@
     "paths": {
       "@/*": [
         "src/*"
-      ],
-      "COMMON/*": [
-        "src/components/Common/*"
       ]
     },
     "lib": [

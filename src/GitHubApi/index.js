@@ -2,7 +2,7 @@ import { getUser } from "@/components/Common/helpers/user";
 import axios from "axios";
 
 const USER = getUser();
-// glpat-J43i_A8gMKRm6sgpENQc
+
 const GitLabRequest = axios.create({
    baseURL: 'https://gitlab.com/api/v4/',
    headers: {

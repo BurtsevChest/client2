@@ -1,23 +1,5 @@
 <template>
-   <div class="boardPage">
-      <div class="boardPage-header p-14 flex a-items-center">
-         <div @click="back" class="boardPage-header-backlink pointer fit-content">
-            <span class="material-icons">
-               arrow_back
-            </span>
-         </div>
-         <div @click="openAddColumnView()" class="boardPage-header-add flex flex-center a-items-center pointer ml-12">
-            <span class="material-icons boardPage-header-add-icon">
-               add
-            </span>
-         </div>
-      </div>
-      <div class="boardPage-content p-20 flex flex-nowrap">
-         <div v-for="column in columns" v-bind:key="column.name" class="boardPage-column ">
-            <div class="boardPage-column-body p-10 radius-block flex flex-nowrap flex-column">
-               <div class="boardPage-column-body-title text-center pb-20 flex a-items-center flex-grow-1">
-                  <div class="empty_flex">{{ column.name }}</div>
-                  <PopupBtn :closeAfterClick="true" :accessShow="true" :hideBtn="true" :right="'0px'" :top="'0'">
+   <!-- <PopupBtn :closeAfterClick="true" :accessShow="true" :hideBtn="true" :right="'0px'" :top="'0'">
                      <template v-slot:popupBtn>
                         <span class="material-icons boardPage-header-add-icon a-self-end pointer">
                            add
@@ -29,19 +11,24 @@
                            <div @click="addTask" class="boardPage-column-addPopup-item pointer radius-block ph-6 pv-10">Мои задачи</div>
                         </div>
                      </template>
-                  </PopupBtn>
-               </div>
-               <ScrollContainer :hideScrollBar="true">
-                  <template v-slot:content>
-                     <draggable item-key="task_id" :list="column.items" group="tasks" class="boardPage-column-body-drggabble">
-                        <template #item="{ element }">
-                           <div class="boardPage-column-body-item radius-block pointer">
-                              <TaskItem :task="element"  @openTask="openTask" :hideDate="true" :hideStatus="true"/>
-                           </div>
-                        </template>
-                     </draggable>
-                  </template>
-               </ScrollContainer>
+                  </PopupBtn> -->
+   <div class="boardPage flex flex-column">
+      <div class="boardPage-header p-14 flex a-items-center ">
+         <div @click="back" class="boardPage-header-backlink pointer fit-content">
+            <span class="material-icons">
+               arrow_back
+            </span>
+         </div>
+         <div @click="openAddColumnView()" class="boardPage-header-add flex flex-center a-items-center pointer ml-12">
+            <span class="material-icons boardPage-header-add-icon">
+               add
+            </span>
+         </div>
+      </div>
+      <div class="boardPage-content empty_flex pv-20 pb-20 flex flex-nowrap">
+         <div class="flex-container flex-nowrap">
+            <div v-for="column in columns" v-bind:key="column.name" class="flex-col pb-0">
+               <columnBoardVue v-bind:column="column"/>
             </div>
          </div>
       </div>
@@ -54,17 +41,16 @@
 </template>
 
 <script>
-import TaskItem from '@/components/UserAccount/Common/TaskItems/templates/taskItem.vue';
-import draggable from 'vuedraggable';
 import { mapGetters } from 'vuex';
 import {openTask} from '@/components/Common/helpers/tasks.js';
 import addColumnView from '@/components/UserAccount/pages/Boards/templates/addColumnView.vue';
 import { openAside } from '@/components/UserAccount/RightAside';
+import columnBoardVue from '@/components/UserAccount/pages/Boards/templates/columnBoard.vue';
 
 export default {
    // eslint-disable-next-line
    name: "boardPage",
-   components: {draggable, TaskItem, addColumnView},
+   components: {addColumnView, columnBoardVue},
    data() {
       return {
          dialogStatus: false,
@@ -73,198 +59,15 @@ export default {
          columns: [
             {
                name: 'To Do',
-               items: [
-                  {
-                     task_id: 1,
-                     creator_title: 'Джейсон ХренЗавалишь Стетхем',
-                     title: 'Тестовый таск',
-                     description: "тестим канбану",
-                     creator_id: 523,
-                     responsible_id: '',
-                     date_of_creation: new Date(),
-                     date_of_completion: new Date(),
-                     parent_id: null,
-                     status_task_id: null
-                  },
-                  {
-                     task_id: 2,
-                     creator_title: 'Джейсон ХренЗавалишь Стетхем',
-                     title: 'Тестовый таск',
-                     description: "тестим канбану",
-                     creator_id: 523,
-                     responsible_id: '',
-                     date_of_creation: new Date(),
-                     date_of_completion: new Date(),
-                     parent_id: null,
-                     status_task_id: null
-                  },
-                  {
-                     task_id: 3,
-                     creator_title: 'Джейсон ХренЗавалишь Стетхем',
-                     title: 'Тестовый таск',
-                     description: "тестим канбану",
-                     creator_id: 523,
-                     responsible_id: '',
-                     date_of_creation: new Date(),
-                     date_of_completion: new Date(),
-                     parent_id: null,
-                     status_task_id: null
-                  },
-                  {
-                     task_id: 4,
-                     creator_title: 'Джейсон ХренЗавалишь Стетхем',
-                     title: 'Тестовый таск',
-                     description: "тестим канбану",
-                     creator_id: 523,
-                     responsible_id: '',
-                     date_of_creation: new Date(),
-                     date_of_completion: new Date(),
-                     parent_id: null,
-                     status_task_id: null
-                  },
-                  {
-                     task_id: 5,
-                     creator_title: 'Джейсон ХренЗавалишь Стетхем',
-                     title: 'Тестовый таск',
-                     description: "тестим канбану",
-                     creator_id: 523,
-                     responsible_id: '',
-                     date_of_creation: new Date(),
-                     date_of_completion: new Date(),
-                     parent_id: null,
-                     status_task_id: null
-                  }
-               ]
+               items: []
             },
             {
                name: 'Doing',
-               items: [
-                  {
-                     task_id: 1,
-                     creator_title: 'Джейсон ХренЗавалишь Стетхем',
-                     title: 'Тестовый таск',
-                     description: "тестим канбану",
-                     creator_id: 523,
-                     responsible_id: '',
-                     date_of_creation: new Date(),
-                     date_of_completion: new Date(),
-                     parent_id: null,
-                     status_task_id: null
-                  },
-                  {
-                     task_id: 2,
-                     creator_title: 'Джейсон ХренЗавалишь Стетхем',
-                     title: 'Тестовый таск',
-                     description: "тестим канбану",
-                     creator_id: 523,
-                     responsible_id: '',
-                     date_of_creation: new Date(),
-                     date_of_completion: new Date(),
-                     parent_id: null,
-                     status_task_id: null
-                  },
-                  {
-                     task_id: 3,
-                     creator_title: 'Джейсон ХренЗавалишь Стетхем',
-                     title: 'Тестовый таск',
-                     description: "тестим канбану",
-                     creator_id: 523,
-                     responsible_id: '',
-                     date_of_creation: new Date(),
-                     date_of_completion: new Date(),
-                     parent_id: null,
-                     status_task_id: null
-                  },
-                  {
-                     task_id: 4,
-                     creator_title: 'Джейсон ХренЗавалишь Стетхем',
-                     title: 'Тестовый таск',
-                     description: "тестим канбану",
-                     creator_id: 523,
-                     responsible_id: '',
-                     date_of_creation: new Date(),
-                     date_of_completion: new Date(),
-                     parent_id: null,
-                     status_task_id: null
-                  },
-                  {
-                     task_id: 5,
-                     creator_title: 'Джейсон ХренЗавалишь Стетхем',
-                     title: 'Тестовый таск',
-                     description: "тестим канбану",
-                     creator_id: 523,
-                     responsible_id: '',
-                     date_of_creation: new Date(),
-                     date_of_completion: new Date(),
-                     parent_id: null,
-                     status_task_id: null
-                  }
-               ]
+               items: []
             },
             {
                name: 'Done',
-               items: [
-                  {
-                     task_id: 1,
-                     creator_title: 'Джейсон ХренЗавалишь Стетхем',
-                     title: 'Тестовый таск',
-                     description: "тестим канбану",
-                     creator_id: 523,
-                     responsible_id: '',
-                     date_of_creation: new Date(),
-                     date_of_completion: new Date(),
-                     parent_id: null,
-                     status_task_id: null
-                  },
-                  {
-                     task_id: 2,
-                     creator_title: 'Джейсон ХренЗавалишь Стетхем',
-                     title: 'Тестовый таск',
-                     description: "тестим канбану",
-                     creator_id: 523,
-                     responsible_id: '',
-                     date_of_creation: new Date(),
-                     date_of_completion: new Date(),
-                     parent_id: null,
-                     status_task_id: null
-                  },
-                  {
-                     task_id: 3,
-                     creator_title: 'Джейсон ХренЗавалишь Стетхем',
-                     title: 'Тестовый таск',
-                     description: "тестим канбану",
-                     creator_id: 523,
-                     responsible_id: '',
-                     date_of_creation: new Date(),
-                     date_of_completion: new Date(),
-                     parent_id: null,
-                     status_task_id: null
-                  },
-                  {
-                     task_id: 4,
-                     creator_title: 'Джейсон ХренЗавалишь Стетхем',
-                     title: 'Тестовый таск',
-                     description: "тестим канбану",
-                     creator_id: 523,
-                     responsible_id: '',
-                     date_of_creation: new Date(),
-                     date_of_completion: new Date(),
-                     parent_id: null,
-                     status_task_id: null
-                  },
-                  {
-                     task_id: 5,
-                     creator_title: 'Джейсон ХренЗавалишь Стетхем',
-                     title: 'Тестовый таск',
-                     description: "тестим канбану",
-                     creator_id: 523,
-                     responsible_id: '',
-                     date_of_creation: new Date(),
-                     date_of_completion: new Date(),
-                     parent_id: null,
-                     status_task_id: null
-                  }
-               ]
+               items: []
             }
          ]
       }
@@ -291,7 +94,7 @@ export default {
          this.addTaskPopup = false;
          openAside({
             template: 'components/UserAccount/pages/Boards/templates/addTaskRightAside.vue',
-            opener: 'kanbanBoardPage'
+            opener: this
          });
       }
    }
@@ -300,13 +103,9 @@ export default {
 
 <style lang="less">
 .boardPage {
-   height: 100vh;
-   width: 100%;
-   position: relative;
+   height: 100%;
 
    &-header {
-      position: absolute;
-
       &-add {
          cursor: pointer;
          width: 40px;
@@ -321,9 +120,6 @@ export default {
    }
 
    &-content {
-      height: 100%;
-      padding-top: 80px !important;
-      padding-bottom: 20px;
       width: 1620px;
       overflow: auto;
       overflow-x: auto;

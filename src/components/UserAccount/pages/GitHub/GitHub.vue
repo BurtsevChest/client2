@@ -72,20 +72,17 @@ export default {
       },
       openAddToken() {
          this.dialogStatus = true;
-      },
-      setPageData(reposList) {
-         this.reposList = reposList;
       }
    },
    beforeRouteEnter(to, from, next) {
       GitLabApi.getRepos().then((response) => {
-         next(vm => {
-            vm.setPageData(response.data);
+         next(component => {
+            component.reposList = response.data;
          });
       }).catch((err) => {
          if(err.response.status === 401) {
-            next(vm => {
-               vm.dialogStatus = true;
+            next(component => {
+               component.dialogStatus = true;
             })
          }
       })

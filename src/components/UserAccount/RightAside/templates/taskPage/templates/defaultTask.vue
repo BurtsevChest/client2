@@ -115,17 +115,7 @@ export default {
    watch: {
       task() {
          this.dialogStatus = false;
-         this.updateTaskParams = {
-            task_id: this.task.task_id,
-            title: this.task.title,
-            description: this.task.description,
-            creator_id: this.task.creator_id,
-            responsible_id: this.task.responsible_id,
-            date_of_creation: this.task.date_of_creation,
-            date_of_completion: this.task.date_of_completion,
-            parent_id: this.task.parent_id,
-            status_task_id: this.task.status_task_id,
-         };
+         this.updateTaskParams = {...this.task};
       },
       isEditMode(newValue) {
          if(!newValue) {
@@ -145,17 +135,7 @@ export default {
          ],
          dialogStatus: false,
          locale: getLocale(),
-         updateTaskParams: {
-            task_id: this.task.task_id,
-            title: this.task.title,
-            description: this.task.description,
-            creator_id: this.task.creator_id,
-            responsible_id: this.task.responsible_id,
-            date_of_creation: this.task.date_of_creation,
-            date_of_completion: this.task.date_of_completion,
-            parent_id: this.task.parent_id,
-            status_task_id: this.task.status_task_id,
-         },
+         updateTaskParams: {...this.task},
          errorParams: {
             date_of_completion: false
          },
@@ -179,7 +159,6 @@ export default {
       },
       setDate() {
          const daysDiff = dayDiff(this.updateTaskParams.date_of_completion, new Date());
-         console.log(daysDiff);
          if (daysDiff > 0) {
             this.errorParams.date_of_completion = false;
             this.paramsChecked = true;
@@ -187,7 +166,6 @@ export default {
             this.errorParams.date_of_completion = true;
             this.paramsChecked = false;
          }
-         console.log(this.updateTaskParams.date_of_completion);
       },
       updateDesc(newDesc) {
          if(newDesc) {
@@ -198,22 +176,14 @@ export default {
       },
       checkUpdateParams() {
          this.paramsChecked = true;
-         if(!this.paramsChecked) {
-            this.updateTaskParams = {
-               task_id: this.task.task_id,
-               title: this.task.title,
-               description: this.task.description,
-               creator_id: this.task.creator_id,
-               responsible_id: this.task.responsible_id,
-               date_of_creation: this.task.date_of_creation,
-               date_of_completion: this.task.date_of_completion,
-               parent_id: this.task.parent_id,
-               status_task_id: this.task.status_task_id,
-         };
-            this.errorParams.date_of_completion = false;
+         if((this.updateTaskParams.date_of_completion === this.task.date_of_completion) && (this.updateTaskParams.description === this.task.description)) {
+            this.updateTaskParams = {...this.task};
+         } else {
+            Task.updateTask(this.updateTaskParams).catch(() => {
+               this.updateTaskParams = {...this.task};
+            });
          }
-         Task.updateTask(this.updateTaskParams);
-      },
+      }
    }
 }
 </script>

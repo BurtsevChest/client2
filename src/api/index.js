@@ -25,7 +25,6 @@ AxiosRequest.interceptors.response.use((response) => {
          const response = await axios.get(`${process.env.VUE_APP_PROTOCOL}${process.env.VUE_APP_MAIN_API}/apiV0/refresh`, { withCredentials: true });
          localStorage.setItem('accessToken',  response.data.accessToken);
          originalRequest.headers['Authorization'] = `Bearer ${response.data.accessToken}`;
-
          return AxiosRequest.request(originalRequest);
       }
    }

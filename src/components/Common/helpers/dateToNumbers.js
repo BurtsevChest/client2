@@ -78,38 +78,3 @@ export function dayDiff(date1, date2) {
    }
    return Math.ceil((newDate1 - newDate2) / (1000 * 60 * 60 * 24));
 }
-
-// Дописать DateFormatter
-
-class DateFormatter {
-   _date = '';
-   _day = '';
-   _month = '';
-   _year = '';
-
-   constructor(date) {
-      this._date = date;
-
-      if(!(date instanceof Date)) {
-         this._date = new Date(date);
-      }
-
-      this._day = this._date.getDate();
-      this._month = this._date.getMonth() + 1;
-      this._year = this._date.getFullYear();
-   }
-
-   getDate() {
-      return this._day;
-   }
-
-   getMonthNumber() {
-      return this._month;
-   }
-
-   getMonthText() {
-      return monthDictionary[this._month];
-   }
-}
-
-export default DateFormatter

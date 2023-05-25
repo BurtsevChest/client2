@@ -11,12 +11,12 @@
                   </router-link>
                </div>
                <div class="flex a-items-center flex-col">
-                  <div class="flex a-items-center pointer mr-20">
-                     <span @click="openAside" class="material-icons">share</span>
+                  <div class="">
+                     <!-- {{ dateToMonthText(new Date()) }} -->
                   </div>
-                  <PopupBtn :positionStyle="'Header-popup'" v-model:show="showPopup" :hideBtn="true" >
+                  <PopupBtn :accessShow="true" :right="'0'" v-model:show="showPopup" :hideBtn="true" >
                      <template v-slot:popupBtn>
-                        <span class="flag-icon" :class="flag"></span>
+                        <span class="flag-icon" :class="currentLocale.flag"></span>
                      </template>
                      <template v-slot:popupTemplate>
                         <div class="Header-popup-template pv-8 ph-10 box-shadow radius-block">
@@ -67,8 +67,7 @@
 import { openDialog } from '@/components/Common/modalView';
 import { openHeaderMenu, closeHeaderMenu } from '@/components/Index/Header/index.js';
 import { mapGetters } from 'vuex';
-import { loadLanguageAsync, getLocale, translatedlanguages } from '@/lang';
-import { openRightAside } from '@/components/UserAccount/RightAside';
+import { loadLanguageAsync, getLocale, translatedlanguages, activeLocaleSettings } from '@/lang';
 
 export default {
    // eslint-disable-next-line
@@ -92,9 +91,9 @@ export default {
          stasusMenu: false,
          scrollPage: false,
          showPopup: false,
-         flag: 'flag-icon-',
          locale: getLocale(),
-         langItems: translatedlanguages
+         langItems: translatedlanguages,
+         currentLocale: activeLocaleSettings()
       }
    },
    methods: {
@@ -118,29 +117,12 @@ export default {
       closePopup(locale) {
          this.locale = locale;
          this.showPopup = false;
-         loadLanguageAsync(locale);
-         if(locale === 'en') {
-            locale = 'us'
-         }
-         this.flag = 'flag-icon-' + locale;
-      },
-      getFlag() {
-         var fl = getLocale();
-         if(fl === 'en') {
-            fl = 'us'
-         }
-         this.flag = 'flag-icon-' + fl;
-      },
-      openAside() {
-         openRightAside({
-            template: 'components/Common/ListItems/ListItems.vue'
+         loadLanguageAsync(locale).then(() => {
+            this.currentLocale = activeLocaleSettings();
          });
       }
    },
-   computed: mapGetters(['HeaderStatus']),
-   beforeMount() {
-      this.getFlag()
-   }
+   computed: mapGetters(['HeaderStatus'])
 }
 </script>
 

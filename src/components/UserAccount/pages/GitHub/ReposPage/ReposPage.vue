@@ -77,7 +77,7 @@ export default {
          GitLabApi.getReposMergeRequestList(to.params.reposId)
       ])
       .then(([repos, mergeList]) => {
-         next(vm => vm.setPageData(repos.data, mergeList.data));
+         next(component => component.setPageData(repos.data, mergeList.data));
       })
       .catch((err) => {
          if(err.status === 401) {

@@ -1,8 +1,8 @@
 <template>
    <div class="Index">
-      <ScrollContainer :hideScrollBar="true" @_scroll="scrollPage" :newScrollValue="pageScroll">
+      <Header :scrollValue="pageScroll" v-if="!pageData?.hideHeader || false" />
+      <ScrollContainer  @_scroll="scrollPage" :newScrollValue="pageScroll">
          <template v-slot:content>
-            <Header :scrollValue="pageScroll" v-if="!pageData?.hideHeader || false" />
             <router-view 
                v-bind:pageProps="pageData?.pageProps || {}"
             />

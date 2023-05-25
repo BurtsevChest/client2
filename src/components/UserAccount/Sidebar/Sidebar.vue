@@ -76,14 +76,6 @@ export default {
    }
 }
 
-.router-link-exact-active {
-   background-color: var(--text-block-hover);
-}
-
-.router-link-exact-active>span {
-   color: var(--text-color)
-}
-
 .sidebar_link {
    display: block;
    padding: 12px;

@@ -68,3 +68,8 @@ export const translatedlanguages = [
       name: 'English'
    }
 ];
+
+export function activeLocaleSettings() {
+   const locale = getLocale();
+   return translatedlanguages.find(item => item.locale === locale);
+}

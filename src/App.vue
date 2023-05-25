@@ -8,7 +8,7 @@
 <script>
 import ModalView from '@/components/Common/modalView/modalView.vue';
 import store from '@/store';
-import { startLocale } from '@/lang/lang';
+import { startLocale } from '@/lang';
 import Notification from '@/components/Common/Notification/Notification.vue';
 import FileReader from '@/components/Common/FileReader/FileReader.vue';
 
@@ -22,6 +22,7 @@ export default {
   components: {ModalView, Notification, FileReader},
   beforeCreate() {
     store.commit('setTheme', 'dark');
+    // store.dispatch('authUser');
     startLocale();
   }
 }

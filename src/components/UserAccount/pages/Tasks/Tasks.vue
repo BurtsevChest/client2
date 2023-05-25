@@ -86,14 +86,13 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import { openTask } from '@/components/Common/helpers/tasks.js';
+import { openTask, openAddTask } from '@/components/Common/helpers/tasks.js';
 import TaskItems from '@/components/UserAccount/Common/TaskItems/TaskItems.vue';
 import { dateToNumbers, dayDiff } from '@/components/Common/helpers/dateToNumbers';
 import { getLocale } from "@/lang";
 import mainSocket from "@/vue_socket/mainSocket";
 import Task from '@/api/task';
 import { getUser } from '@/components/Common/helpers/user';
-import { openAddTask } from '@/components/Common/helpers/tasks';
 
 export default {
    // eslint-disable-next-line
@@ -202,7 +201,7 @@ export default {
    beforeRouteEnter(to, from, next) {
       Task.getTasks(getUser().user_id)
       .then((res) => {
-         next(vm => vm.setTasks(res.data));
+         next(component => component.setTasks(res.data));
       })
    }
 }

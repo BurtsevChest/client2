@@ -2,8 +2,8 @@
    <div class="ScrollContainer">
       <div ref="ScrollContainer" class="ScrollContainer-content flex flex-column">
          <div ref="wrapper" :style="{'height': contentHeight + 'px'}" class="ScrollContainer-scroll">
-            <div class="height-100" ref="scrollContent">
-               <slot  name="content"></slot>
+            <div ref="scrollContent">
+               <slot name="content"></slot>
             </div>
          </div>
       </div>
@@ -36,8 +36,10 @@ export default {
          contentHeight: null,
          scrollValue: 0,
          scrollMoved: 0,
+         pos1: 0,
          pos2: 0,
-         scrollBarHeight: 0
+         scrollBarHeight: 0,
+         resizeObserver: null
       }
    },
    methods: {
@@ -58,39 +60,55 @@ export default {
          }
          this.$emit('_scroll', this.scrollValue);
       },
-      scrollbarDragStart(_event) {
-         _event.preventDefault();
-         this.scrollValue = _event.clientY;
-         document.addEventListener("mousemove", this.moveScrollBar);
-      },
-      moveScrollBar(event) {
-         this.pos2 = this.scrollMoved - event.clientY;
-         this.scrollMoved = event.clientY;
-         console.log(this.$refs.scrollbar.offsetTop + ' ' + this.pos2);
-         this.moveSidebar(this.$refs.scrollbar.offsetTop - this.pos2);
-      },
       stopScroll() {
          document.removeEventListener('mousemove', this.moveScrollBar);
+      },
+      setScrollBarHeight() {
+         // FIXME: хуйня какая-то с высчитываением скроллящейся области.
+         setTimeout(() => {
+            this.scrollBarHeight = this.$refs.wrapper.clientHeight * (this.$refs.wrapper.clientHeight / this.$refs.scrollContent.scrollHeight);
+            if(this.$refs.wrapper.clientHeight >= this.$refs.scrollContent.scrollHeight) {
+               this.scrollBarHeight = 0;
+            } else {
+               this.$refs.scrollbar.style.minHeight  = '40px';
+            }
+            this.$refs.scrollbar.style.height = this.scrollBarHeight + 'px';
+         }, 100);
+      },
+      dragStart(e) {
+         e.preventDefault();
+         this.pos1 = e.clientY;
+         document.addEventListener("mousemove", this.moveBar);
+      },
+      moveBar(e) {
+         e.preventDefault();
+         this.pos1 = this.pos2 - e.clientY;
+         this.pos2 = e.clientY;
+         this.moveSidebar(this.pos1);
+      },
+      stopDrag() {
+         document.removeEventListener("mousemove", this.moveBar);
+      },
+      start() {
+         this.setContentHeight();
+         window.addEventListener('resize', this.setContentHeight, true);
+         this.$refs.wrapper.addEventListener('scroll', this.whenPageScroll);
+
+         if(!this.hideScrollBar) {
+            this.setScrollBarHeight()
+         }
+
+         // this.$refs.scrollbar.addEventListener('mousedown', this.dragStart, true);
+         // document.addEventListener("mouseup", this.stopDrag, true);
       }
    },
    mounted() {
-      this.setContentHeight();
-      window.addEventListener('resize', this.setContentHeight, true);
-      this.$refs.wrapper.addEventListener('scroll', this.whenPageScroll);
-
-      if(!this.hideScrollBar) {
-         // FIXME: хуйня какая-то с высчитываением скроллящейся области. 
-         setTimeout(() => {
-            this.scrollBarHeight = this.$refs.wrapper.clientHeight * (this.$refs.wrapper.clientHeight / this.$refs.scrollContent.clientHeight);
-            this.$refs.scrollbar.style.height = this.scrollBarHeight + 'px';
-         }, 100);
-
-         this.$refs.scrollbar.addEventListener('mousedown', this.scrollbarDragStart);
-         document.addEventListener("mouseup", this.stopScroll);
-      }
+      this.resizeObserver = new ResizeObserver(this.start);
+      this.resizeObserver.observe(this.$refs.scrollContent);
    },
    beforeUnmount() {
       window.removeEventListener('resize', this.setContentHeight, true);
+      this.resizeObserver.unobserve(this.$refs.scrollContent);
    }
 }
 </script>
@@ -126,8 +144,7 @@ export default {
 
       &-scrollbar {
          width: 100%;
-         min-height: 40px;
-         background-color: rgba(0, 0, 0, 0.3);
+         background-color: rgba(255, 255, 255, 0.3);
          border-radius: 16px;
       }
    }

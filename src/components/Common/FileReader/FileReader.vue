@@ -23,7 +23,7 @@ export default {
       return {
          type: 'image' || 'word, pdf' || 'video' || 'pull request',
          files: [],
-         status: false,
+         status: false
       }
    },
    methods: {

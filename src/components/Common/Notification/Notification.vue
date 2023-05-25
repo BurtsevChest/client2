@@ -8,9 +8,6 @@
 
 <script>
 import { mapGetters, mapMutations } from 'vuex';
-import Task from '@/api/task';
-import { getUser } from '@/components/Common/helpers/user';
-import { dayDiff } from '@/components/Common/helpers/dateToNumbers';
 
 export default {
    // eslint-disable-next-line
@@ -18,25 +15,6 @@ export default {
    computed: mapGetters(['showNotificate', 'noticeTemplate', 'noticeData']),
    methods: {
       ...mapMutations(['showNotice', 'closeNotice'])
-   },
-   mounted() {
-      if(localStorage.accessToken) {
-         const user_id = getUser().user_id;
-         Task.getTasks(user_id).then((res) => {
-            const userTasks = res.data.filter((item) => {
-               const daysDiff = dayDiff(new Date(), item.date_of_completion);
-               if(item.responsible_id === user_id && (daysDiff > -1)) {
-                  return true;
-               }
-            });
-            if(userTasks.length > 0) {
-               this.showNotice({
-                  data: userTasks,
-                  event: 'task_deadline'
-               });
-            }
-      })
-      }
    }
 }
 </script>
